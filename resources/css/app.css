@@ -1,0 +1,205 @@
+@import '../../vendor/livewire/flux/dist/flux.css';
+@import 'lenis/dist/lenis.css';
+@import "tailwindcss";
+
+@font-face {
+    font-family: 'BrandDisplay';
+    src: url('../fonts/Iosevka-Regular.woff2');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@variant dark (&:where(.dark, .dark *));
+
+[x-cloak] { display: none !important; }
+
+ @utility no-scrollbar {
+   -ms-overflow-style: none;
+   scrollbar-width: none;
+   &::-webkit-scrollbar {
+     display: none;
+   }
+ }
+
+ @theme {
+  --color-pale-night-green: #c3e88d;
+  --color-pale-night-yellow: #ffcb6b;
+  --color-pale-night-red: #f07178;
+  --color-pale-night-blue: #82aaff;
+  --color-pale-night-purple: #c792ea;
+  --color-pale-night-teal: #89ddff;
+  --color-pale-night-white: #fefefe;
+  --color-pale-night-black: #292D3E;
+  --color-pale-night-darker: #212432;
+  --color-blh-blue: #0021A5;
+  --color-blh-orange: #FA4616;
+  --color-blh-purple: #ba62fc;
+  --color-blh-red: #f2416b;
+
+  --font-brand: "BrandDisplay", ui-sans-serif, system-ui, sans-serif;
+}
+
+html, body {
+  height: auto;
+  overflow: visible;
+  margin: 0;
+  padding: 0;
+  background-color: var(--color-pale-night-white);
+  color: var(--color-pale-night-black);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+html.dark, html.dark body {
+  background-color: var(--color-pale-night-black);
+  color: var(--color-pale-night-white);
+}
+
+#app {
+  position: relative;
+}
+
+.panel {
+  height: 100vh;
+  position: relative;
+}
+
+canvas#particles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+  will-change: transform;
+  background-color: var(--color-pale-night-white);
+}
+
+html.dark canvas#particles {
+  background-color: var(--color-pale-night-black);
+}
+
+.panel-content {
+  position: relative;
+}
+
+.gradient {
+  width: 128px;
+  height: 128px;
+  box-decoration-break: clone;
+  background-image: linear-gradient(108deg,#0090f7 8.25%,#ba62fc,#f2416b 66%,#FA4616);
+  border-radius: 50%;
+  z-index: 1;
+}
+
+.slow-spin {
+  animation: slow-spin 1.5s linear infinite;
+}
+
+#avatar {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  width: calc(100% - 16px);
+  height: calc(100% - 16px);
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+#avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  z-index: 200;
+}
+
+.typing-animation {
+  display: inline-block;
+  white-space: nowrap;
+  position: relative;
+  font-family: var(--font-brand);
+}
+
+.typing-animation::before {
+  content: ">";
+  color: #0090f7;
+  padding-right: 0.25em;
+}
+
+.typing-animation::after {
+  content: "";
+  background: #FA4616;
+  width: 12px;
+  height: 100%;
+  animation: pulse 1s infinite;
+  position: absolute;
+  right: -12px;
+  opacity: 0;
+}
+
+.typing-animation.visible::after {
+    opacity: 1;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 1; }
+}
+
+
+@keyframes phase {
+  from, to { transform: translateY(0); }
+  50% { transform: translateY(-10%); }
+}
+
+.panel-content > .arrow > p::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 2px;
+  height: 100%;
+  background-color: rgb(199, 146, 234);
+  transform: scaleY(0);
+  transform-origin: top;
+  animation: draw-line 2s ease-out infinite;
+}
+
+@keyframes draw-line {
+  0% { transform: scaleY(0); }
+  50% { transform: scaleY(1); }
+  100% { transform: scaleY(0); }
+}
+
+@keyframes phase {
+  from, to { background: transparent; }
+  50% {background: rgb(199, 146, 234);}
+}
+
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes slow-spin {
+  from { transform: rotate(0deg);}
+  to {transform: rotate(359deg);}
+  /*to {transform: rotate(0deg);}*/
+}
+
+/* Modal Backdrop Fix */
+::backdrop {
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+html.dark ::backdrop {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
