@@ -347,7 +347,7 @@ function getRandomChar() {
 function getParticleBitmap(txt) {
 	if (particleBitmapCache.has(txt)) return particleBitmapCache.get(txt);
 	const factor = DPR;
-	const scale = { width: 12, height: 16 };
+	const scale = { width: 20, height: 16 };
 	const off = new OffscreenCanvas(scale.width * factor, scale.height * factor);
 	const ctx = off.getContext('2d');
 	
