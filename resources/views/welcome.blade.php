@@ -51,7 +51,7 @@
                 <section id="expertise" class="space-y-8">
                     <x-carousel>
                         <x-slot name="header">
-                    <h2 class="typing-animation text-pale-night-black dark:text-pale-night-white text-2xl font-bold md:mb-6 md:text-4xl">
+                            <h2 class="typing-animation text-pale-night-black dark:text-pale-night-white text-2xl font-bold md:mb-6 md:text-4xl">
                                 Core Expertise & Systems
                             </h2>
                         </x-slot>
