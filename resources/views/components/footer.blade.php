@@ -6,7 +6,7 @@
                     <span class="sr-only">GitHub</span>
                     <flux:icon.github class="h-6 w-6" />
                 </a>
-                <a href="https://linkedin.com/in/brandonhamm" class="text-zinc-400 hover:text-zinc-500">
+                <a href="https://www.linkedin.com/in/blhamm/" class="text-zinc-400 hover:text-zinc-500">
                     <span class="sr-only">LinkedIn</span>
                     <flux:icon.linkedin class="h-6 w-6" />
                 </a>
