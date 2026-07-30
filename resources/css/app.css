@@ -22,6 +22,10 @@
    }
  }
 
+ @utility glass-pane {
+    @apply bg-white/5 dark:bg-pale-night-darker/40 backdrop-blur-md border border-white/10 dark:border-zinc-800/50 ring-1 ring-inset ring-white/5;
+ }
+
  @theme {
   --color-pale-night-green: #c3e88d;
   --color-pale-night-yellow: #ffcb6b;
