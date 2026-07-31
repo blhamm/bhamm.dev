@@ -4,8 +4,8 @@
 
 @font-face {
     font-family: 'BrandDisplay';
-    src: url('../fonts/Iosevka-Regular.woff2');
-    font-weight: normal;
+    src: url('../fonts/Iosevka-Regular.woff2') format('woff2');
+    font-weight: 100 900;
     font-style: normal;
     font-display: swap;
 }
@@ -49,6 +49,9 @@ html, body {
   overflow: visible;
   margin: 0;
   padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
   background-color: var(--color-pale-night-white);
   color: var(--color-pale-night-black);
   transition: background-color 0.3s ease, color 0.3s ease;
