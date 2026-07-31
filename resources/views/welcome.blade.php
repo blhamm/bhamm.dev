@@ -55,7 +55,7 @@
 
         <x-content>
             {{-- Scroll Scaled Image Section --}}
-            <x-scroll-scaled-image src="/images/gradial.webp" alt="Code on a screen" />
+            <x-scroll-scaled-image src="/images/gradial.webp" alt="Ship It!" />
 
             <div class="relative z-20 mx-auto w-full max-w-7xl space-y-24 px-4 pb-24 sm:px-6 lg:px-8">
                 <section id="expertise" class="space-y-8">

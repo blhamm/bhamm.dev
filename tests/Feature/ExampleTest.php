@@ -1,7 +1,10 @@
 <?php
 
-it('returns a successful response', function () {
+it('returns a welcome page', function () {
     $response = $this->get('/');
+
+	$response->assertSee("Hey, I'm Brandon.", false);
+	$response->assertSee("Ship It!", false);
 
     $response->assertStatus(200);
 });
