@@ -13,6 +13,7 @@
         "ext-pdo": "*",
         "intervention/image": "^4.0",
         "laravel/framework": "^13.0",
+        "laravel/nightwatch": "^1.28",
         "laravel/tinker": "^3.0",
         "livewire/blaze": "^1.0",
         "livewire/flux": "^2.1.1",
