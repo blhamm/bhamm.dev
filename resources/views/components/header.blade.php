@@ -13,6 +13,7 @@
             <flux:navlist variant="pills" class="flex-row items-center">
                 <flux:navlist.item href="#hero">Home</flux:navlist.item>
                 <flux:navlist.item href="#expertise">Expertise</flux:navlist.item>
+                <flux:navlist.item href="#kit">My Tools</flux:navlist.item>
                 <flux:navlist.item href="#about">About</flux:navlist.item>
                 <flux:navlist.item href="#experience">Experience</flux:navlist.item>
             </flux:navlist>
