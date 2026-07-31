@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html
     lang="{{ str_replace('_', '-', app()->getLocale()) }}"
+    @use('Illuminate\Support\Facades\Image')
     x-data="{
         darkMode: window.matchMedia('(prefers-color-scheme: dark)').matches,
         init() {
@@ -25,7 +26,16 @@
                     <div class="avatar-container relative h-0 w-0">
                         <div class="gradient opacity-0"></div>
                         <div id="avatar" class="h-0 w-0 opacity-0">
-                            <img src="/images/me.jpg" alt="Brandon Hamm" class="rounded-full" />
+                            @php
+                                $avatar = Image::fromPath(public_path('images/me.webp'));
+                            @endphp
+                            <img
+                                src="/images/me.webp"
+                                alt="Brandon Hamm"
+                                width="{{ $avatar->width() }}"
+                                height="{{ $avatar->height() }}"
+                                class="rounded-full"
+                            />
                         </div>
                     </div>
                 </div>
@@ -45,7 +55,7 @@
 
         <x-content>
             {{-- Scroll Scaled Image Section --}}
-            <x-scroll-scaled-image src="/images/gradial.png" alt="Code on a screen" />
+            <x-scroll-scaled-image src="/images/gradial.webp" alt="Code on a screen" />
 
             <div class="relative z-20 mx-auto w-full max-w-7xl space-y-24 px-4 pb-24 sm:px-6 lg:px-8">
                 <section id="expertise" class="space-y-8">
@@ -59,7 +69,7 @@
                         <x-project-card
                             title="API & Backend System Design"
                             description="Architecting resilient, discoverable APIs. Expert-level implementation of OAuth2, event-driven architectures, and distributed systems designed for high-throughput and failure tolerance."
-                            image="/images/cloud.png"
+                            image="/images/cloud.webp"
                             :tags="['REST', 'OAuth', 'Redis', 'Event-Driven']"
                             size="w-xs md:w-xl"
                             modal="api-modal"
@@ -68,7 +78,7 @@
                         <x-project-card
                             title="Database Mastery & Data Layer"
                             description="Polyglot data strategy focusing on relational integrity and high-performance caching. From complex PostgreSQL schemas to low-latency Redis implementations, ensuring data safety and query efficiency."
-                            image="/images/db.png"
+                            image="/images/db.webp"
                             :tags="['PostgreSQL', 'MySQL', 'Redis', 'SQLite']"
                             size="w-xs md:w-xl"
                             modal="database-modal"
@@ -77,7 +87,7 @@
                         <x-project-card
                             title="Observability & System Reliability"
                             description="Engineering for reliability through total visibility. Implementing OpenTelemetry (OTLP) for distributed tracing and metrics. Moving beyond simple monitoring to proactive system health."
-                            image="/images/observability.png"
+                            image="/images/observability.webp"
                             :tags="['Grafana', 'OTLP', 'Observability', 'SRE']"
                             size="w-xs md:w-xl"
                             modal="observability-modal"
@@ -86,7 +96,7 @@
                         <x-project-card
                             title="DevOps, Deployment & Infrastructure"
                             description="Infrastructure as code and container-native workflows. Streamlining delivery with GitHub Actions and Ansible. Building reproducible, self-healing environments across AWS and DigitalOcean."
-                            image="/images/devops.png"
+                            image="/images/devops.webp"
                             :tags="['Docker', 'AWS', 'GitHub Actions', 'Tailscale']"
                             size="w-xs md:w-xl"
                             modal="devops-modal"
@@ -95,7 +105,7 @@
                         <x-project-card
                             title="Laravel & PHP Expertise"
                             description="Deep-domain expertise in the Laravel ecosystem since v3.2. Architecting high-performance PHP applications by leveraging the framework's core strengths and knowing when to extend them."
-                            image="/images/php.png"
+                            image="/images/php.webp"
                             :tags="['Laravel', 'PHP', 'Eloquent', 'Livewire']"
                             size="w-xs md:w-xl"
                             modal="laravel-modal"
@@ -104,7 +114,7 @@
                         <x-project-card
                             title="Engineering Standards & Craft"
                             description="Strict adherence to SOLID principles and type-safe development. Using testing (Pest/PHPUnit) as a primary design tool. Driving team velocity through clean code and strict static analysis."
-                            image="/images/gradial.png"
+                            image="/images/gradial.webp"
                             :tags="['Testing', 'SOLID', 'PHPStan', 'TypeScript']"
                             size="w-xs md:w-xl"
                             modal="engineering-modal"
@@ -113,7 +123,7 @@
                         <x-project-card
                             title="Frontend Architecture & Design Systems"
                             description="Bridging high-end design with reactive engineering. Meticulous implementation of design systems using Vue, React, and Tailwind CSS. Crafting pixel-perfect, accessible interfaces from Figma to production."
-                            image="/images/front-end.png"
+                            image="/images/front-end.webp"
                             :tags="['Vue', 'React', 'TypeScript', 'Tailwind']"
                             size="w-xs md:w-xl"
                             modal="frontend-modal"
@@ -130,7 +140,7 @@
                         <a href="https://www.apple.com/macbook-pro/" target="_blank" class="glass-pane group relative flex min-h-[350px] flex-col justify-end overflow-hidden rounded-3xl p-8 md:col-span-8 md:row-span-2 transition-all hover:ring-2 hover:ring-pale-night-blue/50">
                             <div class="absolute inset-0 z-0 overflow-hidden">
                                 <div class="absolute inset-0 z-10 bg-gradient-to-t from-pale-night-black/80 to-transparent"></div>
-                                <img src="/images/gradial.png" alt="MacBook Pro" class="h-full w-full object-cover opacity-40 transition-transform duration-700 group-hover:scale-110" />
+                                <img src="/images/gradial.webp" alt="MacBook Pro" class="h-full w-full object-cover opacity-40 transition-transform duration-700 group-hover:scale-110" />
                             </div>
                             <div class="relative z-20 space-y-2">
                                 <div class="flex items-center gap-3">
@@ -209,7 +219,7 @@
                         <a href="https://www.apple.com/airpods-max/" target="_blank" class="glass-pane group relative flex flex-col justify-end overflow-hidden rounded-3xl p-6 transition-all hover:ring-2 hover:ring-white/50 md:col-span-3">
                              <div class="absolute inset-0 z-0 overflow-hidden">
                                 <div class="absolute inset-0 z-10 bg-gradient-to-t from-pale-night-black/60 to-transparent"></div>
-                                <img src="/images/kit/bento_1_airpod_max_midnight__4jy1tkqh9qay_xlarge_2x.jpg" alt="AirPods Max" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                                <img src="/images/kit/bento_1_airpod_max_midnight__4jy1tkqh9qay_xlarge_2x.webp" alt="AirPods Max" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" />
                              </div>
                              <div class="relative z-20">
                                 <flux:heading level="4" size="sm" class="text-white">AirPods Max</flux:heading>
@@ -247,7 +257,7 @@
                         <div class="glass-pane flex flex-col items-center justify-center space-y-4 rounded-3xl p-8 text-center md:col-span-3">
                             <div class="flex gap-4">
                                  <a href="https://bear.app/" target="_blank" class="flex size-12 items-center justify-center transition-all hover:scale-110">
-                                    <img src="/images/kit/bear-icon.png" alt="Bear" class="size-10" />
+                                    <img src="/images/kit/bear-icon.webp" alt="Bear" class="size-10" />
                                 </a>
                                 <a href="https://obsidian.md/" target="_blank">
                                     <img src="https://cdn.simpleicons.org/obsidian/c792ea" alt="Obsidian" class="size-12 grayscale transition-all hover:grayscale-0" />
@@ -265,7 +275,7 @@
                             <div class="flex items-center gap-4">
                                 <div class="flex items-center gap-3">
                                     <img src="/images/kit/creative-cloud-64.svg" alt="Adobe CC" class="size-10" />
-                                    <img src="images/kit/creator-studio.png" alt="Adobe CC" class="size-10" />
+                                    <img src="/images/kit/creator-studio.webp" alt="Adobe CC" class="size-10" />
 {{--                                    <flux:icon.swatch class="size-8 text-pale-night-blue" />--}}
                                 </div>
                                 <div>
@@ -281,7 +291,7 @@
                         <a href="https://paktbags.com/products/everyday-22l-backpack" target="_blank" class="glass-pane flex items-center gap-6 rounded-3xl p-8 transition-all hover:ring-2 hover:ring-zinc-500/50 md:col-span-8">
                             <div class="flex items-center">
                                 <img src="/images/kit/pakt-white.png" alt="Pakt" class="h-auto w-10 hidden dark:block" />
-                                <img src="/images/kit/packt-black.png" alt="Pakt" class="h-auto w-10 block dark:hidden" />
+                                <img src="/images/kit/packt-black.webp" alt="Pakt" class="h-auto w-10 block dark:hidden" />
                             </div>
                             <div>
                                 <flux:heading level="3" size="md">Pakt Everyday 22L Backpack</flux:heading>
@@ -336,22 +346,22 @@
             <section id="experience" class="pt-12" aria-label="Brand Partnerships">
                 <x-marquee>
                     <img
-                        src="/images/brands/American_Express_logo.svg.png"
+                        src="/images/brands/American_Express_logo.svg.webp"
                         alt="American Express"
                         class="h-8 w-auto opacity-50 grayscale transition-opacity hover:opacity-100 md:h-12 dark:invert"
                     />
                     <img
-                        src="/images/brands/Starbucks_Coffee_Logo.svg.png"
+                        src="/images/brands/Starbucks_Coffee_Logo.svg.webp"
                         alt="Starbucks"
                         class="h-8 w-auto opacity-50 grayscale transition-opacity hover:opacity-100 md:h-12 dark:invert"
                     />
                     <img
-                        src="/images/brands/Uber_logo_2018.svg.png"
+                        src="/images/brands/Uber_logo_2018.svg.webp"
                         alt="Uber"
                         class="h-4 w-auto opacity-50 grayscale transition-opacity hover:opacity-100 md:h-6 dark:invert"
                     />
                     <img
-                        src="/images/brands/Chase_logo_2007.svg.png"
+                        src="/images/brands/Chase_logo_2007.svg.webp"
                         alt="Chase"
                         class="h-4 w-auto opacity-50 grayscale transition-opacity hover:opacity-100 md:h-6 dark:invert"
                     />
@@ -361,32 +371,32 @@
                         class="h-4 w-auto opacity-50 grayscale transition-opacity hover:opacity-100 md:h-6 dark:invert"
                     />
                     <img
-                        src="/images/brands/Emirates_Logo.svg.png"
+                        src="/images/brands/Emirates_Logo.svg.webp"
                         alt="Emirates"
                         class="h-8 w-auto opacity-50 grayscale transition-opacity hover:opacity-100 md:h-12 dark:invert"
                     />
                     <img
-                        src="/images/brands/Marriott_hotels_logo14.svg.png"
+                        src="/images/brands/Marriott_hotels_logo14.svg.webp"
                         alt="Marriott"
                         class="h-8 w-auto opacity-50 grayscale transition-opacity hover:opacity-100 md:h-12 dark:invert"
                     />
                     <img
-                        src="/images/brands/Lufthansa_Logo_2018.svg.png"
+                        src="/images/brands/Lufthansa_Logo_2018.svg.webp"
                         alt="Lufthansa"
                         class="h-4 w-auto opacity-50 grayscale transition-opacity hover:opacity-100 md:h-6 dark:invert"
                     />
                     <img
-                        src="/images/brands/Air_Canada_2017.svg.png"
+                        src="/images/brands/Air_Canada_2017.svg.webp"
                         alt="Air Canada"
                         class="h-4 w-auto opacity-50 grayscale transition-opacity hover:opacity-100 md:h-6 dark:invert"
                     />
                     <img
-                        src="/images/brands/Singapore_Airlines_Logo.svg.png"
+                        src="/images/brands/Singapore_Airlines_Logo.svg.webp"
                         alt="Singapore Airlines"
                         class="h-4 w-auto opacity-50 grayscale transition-opacity hover:opacity-100 md:h-6 dark:invert"
                     />
                     <img
-                        src="/images/brands/Cathay_Pacific_logo.svg.png"
+                        src="/images/brands/Cathay_Pacific_logo.svg.webp"
                         alt="Cathay Pacific"
                         class="h-4 w-auto opacity-50 grayscale transition-opacity hover:opacity-100 md:h-6 dark:invert"
                     />

@@ -19,4 +19,4 @@ Route::get('/', function () {
 //    Volt::route('settings/appearance', 'settings.appearance')->name('settings.appearance');
 //});
 
-require __DIR__.'/auth.php';
+//require __DIR__.'/auth.php';
