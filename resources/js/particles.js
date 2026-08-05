@@ -1,6 +1,6 @@
 const canvas = document.getElementById('particles');
 const ctx = canvas ? canvas.getContext('2d') : null;
-const DPR = window.devicePixelRatio || 1;
+const DPR = Math.min(window.devicePixelRatio || 1, 2);
 const BASE_SPEED = 1 * DPR;
 const SPEED_MULTIPLIER = 60;
 const SPEED_VARIATION = 1.25 * DPR;
@@ -18,7 +18,7 @@ let particleSpawnAccumulator = 0;
 let particles = new Array(PARTICLE_MAX * 2);
 let particleCount = 0;
 let mouse = { x: null, y: null };
-let lastTime = performance.now();
+let lastTime = 16.66;
 let cw = 0;
 let ch = 0;
 
@@ -195,16 +195,14 @@ function handleMovement(p) {
 		}
 	}
 	
-	// movement logic
-	if (p.vx !== 0 || p.vy !== 0) { // bursts.
-		p.x += p.vx * dt;
-		p.y += (p.vy - p.speed) * dt;
-		p.vx *= Math.pow(0.95, dt);
-		p.vy *= Math.pow(0.95, dt);
-	} else { // generic movement.
-		p.x += p.speed * Math.sin(p.angle || 0) * dt;
-		p.y -= p.speed * dt;
-	}
+	// Unified movement: Combine base floating speed with active velocity
+	p.x += (p.vx + p.speed * Math.sin(p.angle || 0)) * dt;
+	p.y += (p.vy - p.speed) * dt;
+	
+	// Use linear damping approximation for better stability and performance
+	const damping = Math.max(0, 1 - 0.05 * dt);
+	p.vx *= damping;
+	p.vy *= damping;
 }
 
 function drawParticles() {
@@ -221,11 +219,30 @@ function update() {
 	generate(lastTime);
 }
 
-export function particleUp(deltaTime = 0, trace = false) {
+function tracePerformance(end, start) {
+	traces.push(end - start);
+
+	if (end > logTimer) {
+	 logTimer = end + 1000;
+	 
+	 setTimeout(() => {
+	  const count = traces.length;
+	  const hasTraces = count > 0;
+	  const avg = hasTraces ? traces.reduce((acc, val) => acc + val) / count : 0;
+	  if (hasTraces) traces = [];
+	  console.log(`FPS: ${count} | Frame time avg: ${avg.toFixed(2)}ms | ${particleCount} particles`);
+	 }, 0);
+	}
+}
+
+export function particleUp(deltaTime = 0, trace = true) {
 	if (!ctx) return;
 	const start = trace ? performance.now() : null;
 	let write = 0;
-	lastTime = deltaTime;
+	
+	// Clamp and smooth delta to prevent jitter (Safari) and explosions during frame drops
+	const clampedDelta = Math.min(deltaTime, 33.33); 
+	lastTime = (lastTime * 0.8) + (clampedDelta * 0.2);
 	
 	ctx.clearRect(0, 0, cw, ch);
 	
@@ -348,16 +365,33 @@ function getParticleBitmap(txt) {
 	if (particleBitmapCache.has(txt)) return particleBitmapCache.get(txt);
 	const factor = DPR;
 	const scale = { width: 20, height: 16 };
-	const off = new OffscreenCanvas(scale.width * factor, scale.height * factor);
-	const ctx = off.getContext('2d');
+	const width = scale.width * factor;
+	const height = scale.height * factor;
 	
-	ctx.font = `${9 * factor}px monospace, monospace`;
-	ctx.textBaseline = 'middle';
-	ctx.antialias = 'subpixel';
-	ctx.fillStyle = getRandomColor();
-	ctx.fillText(txt, 0, (scale.height * factor) / 2);
-	
-	const bitmap = off.transferToImageBitmap();
+	let canvasEl, bitmap;
+
+	if (typeof OffscreenCanvas !== 'undefined') {
+		const off = new OffscreenCanvas(width, height);
+		const octx = off.getContext('2d');
+		octx.font = `${12 * factor}px BrandDisplay, monospace, monospace`;
+		octx.textBaseline = 'middle';
+		octx.antialias = 'subpixel';
+		octx.fillStyle = getRandomColor();
+		octx.fillText(txt, 0, height / 2);
+		bitmap = off.transferToImageBitmap();
+	} else {
+		canvasEl = document.createElement('canvas');
+		canvasEl.width = width;
+		canvasEl.height = height;
+		const octx = canvasEl.getContext('2d');
+		octx.font = `${12 * factor}px BrandDisplay, monospace, monospace`;
+		octx.textBaseline = 'middle';
+		octx.antialias = 'subpixel';
+		octx.fillStyle = getRandomColor();
+		octx.fillText(txt, 0, height / 2);
+		bitmap = canvasEl;
+	}
+
 	particleBitmapCache.set(txt, bitmap);
 	return bitmap;
 }

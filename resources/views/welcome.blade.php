@@ -26,15 +26,11 @@
                     <div class="avatar-container relative h-0 w-0">
                         <div class="gradient opacity-0"></div>
                         <div id="avatar" class="h-0 w-0 opacity-0">
-                            @php
-                                $avatar = Image::fromPath(public_path('images/me.webp'));
-                            @endphp
                             <img
-                                src="/images/me.webp"
+                                src="images/me.webp"
                                 alt="Brandon Hamm"
-                                width="{{ $avatar->width() }}"
-                                height="{{ $avatar->height() }}"
-                                class="rounded-full"
+                                width="auto"
+                                height="auto"
                             />
                         </div>
                     </div>

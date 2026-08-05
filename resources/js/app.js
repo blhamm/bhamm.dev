@@ -19,7 +19,7 @@ const frameInterval = 1000 / targetFPS;
 const lenis = new Lenis({ lerp: 0.1 });
 window.lenis = lenis;
 
-const trace = false;
+const trace = true;
 let lastTime = performance.now();
 let particlesOn = false;
 
