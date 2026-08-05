@@ -19,7 +19,7 @@ const frameInterval = 1000 / targetFPS;
 const lenis = new Lenis({ lerp: 0.1 });
 window.lenis = lenis;
 
-const trace = true;
+const trace = false;
 let lastTime = performance.now();
 let particlesOn = false;
 
@@ -193,6 +193,31 @@ if (headerDev) {
     duration: 12,
     repeat: -1,
     ease: "none"
+  });
+}
+
+// Color theme gradient tween for hero typing text
+if (heroText) {
+  gsap.to(heroText, {
+    backgroundPosition: '200% center',
+    duration: 10,
+    repeat: -1,
+    ease: "none"
+  });
+}
+
+// Hero Terminal Parallax
+const terminal = document.querySelector('.terminal-window');
+if (terminal) {
+  gsap.to(terminal, {
+    y: -120,
+    ease: "none",
+    scrollTrigger: {
+      trigger: "#hero",
+      start: "top top",
+      end: "bottom top",
+      scrub: true
+    }
   });
 }
 

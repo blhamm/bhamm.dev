@@ -11,6 +11,8 @@ const CELL_SIZE = 80 * DPR;
 const particleBitmapCache = new Map();
 let traces = [];
 let logTimer = 0;
+let physicsAccumulator = 0;
+const PHYSICS_STEP = 1000 / 120; // 120Hz cap for physics/collisions
 let gridCols = 0;
 let gridRows = 0;
 let grid = [];
@@ -25,17 +27,35 @@ let ch = 0;
 //Listeners
 window.addEventListener('resize', resizeCanvas);
 
-export function emitFromElement(el) {
+export function emitFromElement(el, e = null) {
 	if (!el || !ctx) return;
 	const rect = el.getBoundingClientRect();
-	const x = (rect.left + rect.width / 2) * DPR;
-	const y = (rect.top + rect.height / 2) * DPR;
+	const canvasRect = canvas ? canvas.getBoundingClientRect() : { left: 0, top: 0 };
+
+	let x, y;
+
+	if (e) {
+		const touch = (e.touches && e.touches[0]) || (e.changedTouches && e.changedTouches[0]);
+		const clientX = e.clientX !== undefined ? e.clientX : (touch ? touch.clientX : null);
+		const clientY = e.clientY !== undefined ? e.clientY : (touch ? touch.clientY : null);
+
+		if (clientX !== null && clientY !== null) {
+			x = (clientX - canvasRect.left) * DPR;
+			y = (clientY - canvasRect.top) * DPR;
+		}
+	}
+
+	if (x === undefined || y === undefined) {
+		x = (rect.left + rect.width / 2 - canvasRect.left) * DPR;
+		y = (rect.top + rect.height / 2 - canvasRect.top) * DPR;
+	}
+
 	emitParticles(x, y);
 }
 
 const emitTrigger = document.getElementById('hero-typing');
 if (emitTrigger) {
-	const handleEmit = () => emitFromElement(emitTrigger);
+	const handleEmit = (e) => emitFromElement(emitTrigger, e);
 	emitTrigger.addEventListener('mouseenter', handleEmit);
 	emitTrigger.addEventListener('touchend', handleEmit);
 }
@@ -68,6 +88,13 @@ function resizeCanvas() {
 	canvas.width = cw;
 	canvas.height = ch;
 	ctx.setTransform(1, 0, 0, 1, 0, 0);
+
+	particleBitmapCache.clear();
+	for (let i = 0; i < particleCount; i++) {
+		const p = particles[i];
+		p.bitmap = getParticleBitmap(p.char);
+	}
+
 	initGrid();
 }
 
@@ -181,8 +208,8 @@ function generate(deltaTime) {
 	}
 }
 
-function handleMovement(p) {
-	const dt = (lastTime / 1000) * SPEED_MULTIPLIER;
+function handleMovement(p, dt) {
+	const dtFactor = (dt / 1000) * SPEED_MULTIPLIER;
 	if (mouse.x !== null && mouse.y !== null) {
 		const dx = p.x - mouse.x;
 		const dy = p.y - mouse.y;
@@ -190,17 +217,17 @@ function handleMovement(p) {
 		const repulsionRadius = 75 * DPR;
 		if (dist2 < repulsionRadius * repulsionRadius && dist2 > 0.01) {
 			const inv = 1 / Math.sqrt(dist2);
-			p.vx += (dx * inv * 0.5 * DPR) * dt;
-			p.vy += (dy * inv * 0.5 * DPR) * dt;
+			p.vx += (dx * inv * 0.5 * DPR) * dtFactor;
+			p.vy += (dy * inv * 0.5 * DPR) * dtFactor;
 		}
 	}
 	
 	// Unified movement: Combine base floating speed with active velocity
-	p.x += (p.vx + p.speed * Math.sin(p.angle || 0)) * dt;
-	p.y += (p.vy - p.speed) * dt;
+	p.x += (p.vx + p.speed * Math.sin(p.angle || 0)) * dtFactor;
+	p.y += (p.vy - p.speed) * dtFactor;
 	
 	// Use linear damping approximation for better stability and performance
-	const damping = Math.max(0, 1 - 0.05 * dt);
+	const damping = Math.max(0, 1 - 0.05 * dtFactor);
 	p.vx *= damping;
 	p.vy *= damping;
 }
@@ -209,14 +236,10 @@ function drawParticles() {
 	for (let i = 0; i < particleCount; i++) drawParticle(particles[i]);
 }
 
-function update() {
+function updatePhysics(dt) {
 	populateGrid();
-	
 	resolveCollisions();
-	
-	drawParticles();
-	
-	generate(lastTime);
+	generate(dt);
 }
 
 function tracePerformance(end, start) {
@@ -238,27 +261,32 @@ function tracePerformance(end, start) {
 export function particleUp(deltaTime = 0, trace = true) {
 	if (!ctx) return;
 	const start = trace ? performance.now() : null;
-	let write = 0;
 	
-	// Clamp and smooth delta to prevent jitter (Safari) and explosions during frame drops
+	// Aggressive smoothing (95/5) to ignore Safari's erratic RAF timing
 	const clampedDelta = Math.min(deltaTime, 33.33); 
-	lastTime = (lastTime * 0.8) + (clampedDelta * 0.2);
+	lastTime = (lastTime * 0.95) + (clampedDelta * 0.05);
 	
+	physicsAccumulator += lastTime;
+
 	ctx.clearRect(0, 0, cw, ch);
 	
-	for (let i = 0; i < particleCount; i++) {
-		const p = particles[i];
+	if (physicsAccumulator >= PHYSICS_STEP) {
+		const physicsDelta = physicsAccumulator;
+		physicsAccumulator = 0;
 		
-		if (outOfBounds(p)) continue;
+		let write = 0;
+		for (let i = 0; i < particleCount; i++) {
+			const p = particles[i];
+			if (outOfBounds(p)) continue;
+			handleMovement(p, physicsDelta);
+			particles[write++] = p;
+		}
+		particleCount = write;
 		
-		handleMovement(p);
-		
-		particles[write++] = p;
+		updatePhysics(physicsDelta);
 	}
 	
-	particleCount = write;
-	
-	update();
+	drawParticles();
 	
 	trace ? tracePerformance(performance.now(), start) : null;
 }
@@ -298,6 +326,7 @@ function createParticle(
 	vx = 0,
 	vy = 0,
 ) {
+	const char = getRandomChar();
 	return {
 		x: x ?? Math.random() * cw,
 		y: y ?? ch + 20 * DPR,
@@ -307,17 +336,17 @@ function createParticle(
 		vx,
 		vy,
 		color: getRandomColor(),
-		char: getRandomChar()
+		char,
+		bitmap: getParticleBitmap(char)
 	};
 }
 
 function drawParticle(p) {
-	if (!ctx) return;
-	const bmp = getParticleBitmap(p.char);
+	if (!ctx || !p.bitmap) return;
 	ctx.drawImage(
-		bmp,
-		p.x - bmp.width / 2,
-		p.y - bmp.height / 2
+		p.bitmap,
+		p.x - p.bitmap.width / 2,
+		p.y - p.bitmap.height / 2
 	);
 }
 

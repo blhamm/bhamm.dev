@@ -130,6 +130,7 @@ html.dark canvas#particles {
   white-space: nowrap;
   position: relative;
   font-family: var(--font-brand);
+  padding-bottom: 0.2em;
 }
 
 .typing-animation::before {
@@ -140,13 +141,20 @@ html.dark canvas#particles {
 
 .typing-animation::after {
   content: "";
-  background: #FA4616;
-  width: 12px;
-  height: 100%;
-  animation: pulse 1s infinite;
+  background: linear-gradient(180deg, #ba62fc, #f2416b, #FA4616, #ba62fc);
+  background-size: 100% 400%;
+  width: 0.5em;
+  height: 1.2em;
+  top: 0.05em;
+  animation: pulse 1s infinite, caret-gradient 4s linear infinite;
   position: absolute;
-  right: -12px;
+  right: -0.6em;
   opacity: 0;
+}
+
+@keyframes caret-gradient {
+  0% { background-position: 0% 0%; }
+  100% { background-position: 0% 100%; }
 }
 
 .typing-animation.visible::after {
