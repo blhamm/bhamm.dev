@@ -22,10 +22,10 @@
         {{-- Intro Section --}}
         <section id="hero" class="relative flex h-screen flex-col items-center justify-end overflow-hidden">
             {{-- Avatar and Helper text container --}}
-            <div class="z-20 mb-8 flex flex-col items-center gap-4 text-center">
-                <div class="avatar-container relative h-0 w-0">
+            <div class="z-20 mb-8 md:mb-4 flex flex-col items-center gap-4 text-center">
+                <div class="avatar-container relative scale-0 opacity-0">
                     <div class="gradient opacity-0"></div>
-                    <div id="avatar" class="h-0 w-0 opacity-0">
+                    <div id="avatar" class="opacity-0">
                         <img
                             src="images/me.webp"
                             alt="Brandon Hamm"
@@ -40,21 +40,23 @@
             </div>
 
             {{-- Terminal Window --}}
-            <div class="terminal-window relative z-10 mx-auto w-full max-w-5xl translate-y-24 overflow-hidden rounded-t-[2.5rem] border-t border-white/50 border-x border-white bg-white/5 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.15),0_-20px_50px_-20px_rgba(0,0,0,0.1)] backdrop-blur-sm dark:border-t-white/5 dark:border-x-white/5 dark:bg-black/15 dark:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.3),0_-20px_50px_-20px_rgba(0,0,0,0.4)] pb-64 -mb-64 ring-1 ring-inset ring-white/20 dark:ring-white/10">
-                <div class="terminal-header flex items-center border-b border-pale-night-black/5 dark:border-white/10 px-8 py-6">
-                    <div class="flex gap-3">
-                        <div class="h-3.5 w-3.5 rounded-full bg-[#ff5f56] shadow-inner"></div>
-                        <div class="h-3.5 w-3.5 rounded-full bg-[#ffbd2e] shadow-inner"></div>
-                        <div class="h-3.5 w-3.5 rounded-full bg-[#27c93f] shadow-inner"></div>
+            <div class="terminal-parallax-wrapper relative z-10 mx-auto w-full max-w-5xl translate-y-24 md:translate-y-12">
+                <div class="terminal-window relative opacity-0 overflow-hidden rounded-t-[2.5rem] border-t border-white/50 border-x border-white bg-white/5 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.15),0_-20px_50px_-20px_rgba(0,0,0,0.1)] backdrop-blur-sm dark:border-t-white/5 dark:border-x-white/5 dark:bg-black/15 dark:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.3),0_-20px_50px_-20px_rgba(0,0,0,0.4)] pb-64 -mb-64 ring-1 ring-inset ring-white/20 dark:ring-white/10">
+                    <div class="terminal-header flex items-center border-b border-pale-night-black/5 dark:border-white/10 px-8 py-6">
+                        <div class="flex gap-3">
+                            <div class="h-3.5 w-3.5 rounded-full bg-[#ff5f56] shadow-inner"></div>
+                            <div class="h-3.5 w-3.5 rounded-full bg-[#ffbd2e] shadow-inner"></div>
+                            <div class="h-3.5 w-3.5 rounded-full bg-[#27c93f] shadow-inner"></div>
+                        </div>
                     </div>
-                </div>
-                <div class="terminal-body min-h-[320px] px-6 py-12 md:px-12 md:py-20">
-                    <h1
-                        class="typing-animation m-0 leading-tight bg-gradient-to-r from-pale-night-blue via-blh-purple via-blh-orange via-pale-night-purple to-pale-night-blue bg-clip-text text-transparent bg-[length:200%_auto] text-2xl font-bold md:text-6xl"
-                        id="hero-typing"
-                    >
-                        Hey, I'm Brandon.
-                    </h1>
+                    <div class="terminal-body min-h-[320px] px-6 py-12 md:px-12 md:py-20">
+                        <h1
+                            class="typing-animation m-0 leading-tight bg-gradient-to-r from-pale-night-blue via-blh-purple via-blh-orange via-pale-night-purple to-pale-night-blue bg-clip-text text-transparent bg-[length:200%_auto] text-2xl font-bold md:text-6xl opacity-0"
+                            id="hero-typing"
+                        >
+                            Hey, I'm Brandon.
+                        </h1>
+                    </div>
                 </div>
             </div>
         </section>

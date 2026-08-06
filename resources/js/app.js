@@ -73,42 +73,23 @@ function showScrollHelperText() {
 
 function showAvatar() {
   if (container && gradient && avatar) {
-    gsap.fromTo(container, {
-      width: 1,
-      height: 1,
-      paddingRight: "128px",
-    }, {
-      width: 128,
-      height: 128,
-      paddingRight: 0,
-      duration: .25,
+    // drive primarily by container scale with moderate overshoot
+    gsap.to(container, {
+      scale: 1,
+      autoAlpha: 1,
+      duration: 0.7,
+      ease: "back.out(1.2)"
     });
 
-    gsap.fromTo(gradient, {
-      autoAlpha: 0,
-      y: 150,
-      scale: 0
-    }, {
+    // Fade in children with a slight stagger to ensure they feel connected but layered
+    gsap.to([gradient, avatar], {
       autoAlpha: 1,
-      y: 0,
-      scale: 1,
-      ease: 'circ',
-      duration: .25,
+      duration: 0.5,
+      stagger: 0.1,
+      ease: "power2.out",
       onComplete: () => {
         gradient.classList.add('slow-spin');
-      },
-    });
-
-    gsap.fromTo(avatar, {
-      autoAlpha: 0,
-      y: 150,
-      scale: 0
-    }, {
-      autoAlpha: 1,
-      y: 0,
-      scale: 1,
-      ease: 'circ',
-      duration: .25,
+      }
     });
   }
 }
@@ -148,6 +129,8 @@ function typeText(el, onComplete = null, initialDelay = 0.75, textOverride = nul
 }
 
 const heroText = document.querySelector('#hero-typing');
+const terminal = document.querySelector('.terminal-window');
+const terminalWrapper = document.querySelector('.terminal-parallax-wrapper');
 const heroStrings = [
   "Hey, I'm Brandon.",
   "I write, test and ship code.",
@@ -157,8 +140,10 @@ const heroStrings = [
 ];
 let heroIndex = 0;
 
-function cycleHeroText() {
+function cycleHeroText(firstDelay = null) {
   if (!heroText) return;
+  
+  const delay = firstDelay !== null ? firstDelay : (heroIndex === 0 ? 0.75 : 0.5);
   
   typeText(heroText, () => {
     if (heroIndex === 0) {
@@ -170,11 +155,51 @@ function cycleHeroText() {
         heroIndex = (heroIndex + 1) % heroStrings.length;
         cycleHeroText();
     });
-  }, heroIndex === 0 ? 0.75 : 0.5, heroStrings[heroIndex]);
+  }, delay, heroStrings[heroIndex]);
+}
+
+function startHeroIntro() {
+  if (!terminal) {
+    gsap.set(heroText, { autoAlpha: 1 });
+    cycleHeroText();
+    return;
+  }
+
+  const tl = gsap.timeline({
+    delay: 0.5,
+    onStart: () => {
+      particlesOn = true;
+    }
+  });
+
+  tl.fromTo(terminal, {
+    autoAlpha: 0,
+    y: 120,
+  }, {
+    autoAlpha: 1,
+    y: 0,
+    duration: 1.4,
+    ease: "back.out(1.7)"
+  });
+
+  tl.addLabel("settled", "+=0.2");
+
+  tl.add(() => {
+    if (!avatarShown) {
+      showAvatar();
+      showScrollHelperText();
+      avatarShown = true;
+    }
+  }, "settled");
+
+  tl.add(() => {
+    gsap.to(heroText, { autoAlpha: 1, duration: 0.4 });
+    cycleHeroText(0.2); // Snappier first type after intro
+  }, "settled+=0.1");
 }
 
 if (heroText) {
-  cycleHeroText();
+  startHeroIntro();
 }
 
 // Header .dev color tween
@@ -207,9 +232,8 @@ if (heroText) {
 }
 
 // Hero Terminal Parallax
-const terminal = document.querySelector('.terminal-window');
-if (terminal) {
-  gsap.to(terminal, {
+if (terminalWrapper) {
+  gsap.to(terminalWrapper, {
     y: -120,
     ease: "none",
     scrollTrigger: {
