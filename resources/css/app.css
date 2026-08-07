@@ -23,7 +23,41 @@
  }
 
  @utility glass-pane {
-    @apply bg-white/5 dark:bg-pale-night-darker/40 backdrop-blur-md border border-white/10 dark:border-zinc-800/50 ring-1 ring-inset ring-white/5;
+    @apply bg-white/12 dark:bg-white/8 backdrop-blur-md border border-white/20 dark:border-white/10 ring-1 ring-inset ring-white/10;
+ }
+
+ @utility bg-animated-gradient {
+    background: linear-gradient(-45deg, #0021A5, #FA4616, #ba62fc, #f2416b, #82aaff, #c792ea, #f07178, #ffcb6b);
+    background-size: 400% 400%;
+    animation: gradient-flow 10s ease infinite;
+ }
+
+ @utility text-gradient-api {
+    @apply bg-gradient-to-r from-pale-night-blue via-pale-night-purple to-pale-night-teal bg-clip-text text-transparent;
+ }
+ @utility text-gradient-db {
+    @apply bg-gradient-to-r from-pale-night-yellow to-blh-orange bg-clip-text text-transparent;
+ }
+ @utility text-gradient-obs {
+    @apply bg-gradient-to-r from-pale-night-red via-blh-red to-pale-night-red bg-clip-text text-transparent;
+ }
+ @utility text-gradient-devops {
+    @apply bg-gradient-to-r from-pale-night-green via-pale-night-teal to-pale-night-blue bg-clip-text text-transparent;
+ }
+ @utility text-gradient-laravel {
+    @apply bg-gradient-to-r from-blh-orange to-blh-red bg-clip-text text-transparent;
+ }
+ @utility text-gradient-eng {
+    @apply bg-gradient-to-r from-pale-night-blue via-pale-night-purple to-blh-purple bg-clip-text text-transparent;
+ }
+ @utility text-gradient-fe {
+    @apply bg-gradient-to-r from-pale-night-teal via-pale-night-blue to-pale-night-purple bg-clip-text text-transparent;
+ }
+
+ @keyframes gradient-flow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
  }
 
  @theme {

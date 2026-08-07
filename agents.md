@@ -28,6 +28,13 @@
 - **Media:** `Hero`, `Carousel`, `Card`, `ProjectCard`, `Media` (with srcset support), `VideoComponent`, `Modal`, `Marquee`, `Tag`.
 - **Logic:** `GsapWrapper`.
 
+## Phase 3: Expertise Redesign
+- **Visual Overhaul:** Transition from static images to high-end GSAP animations.
+- **Glass-Morphism:** Shared "terminal" container for the expertise cards to maintain a clean interface.
+- **Animated Gradient:** Continuous animated background for the section using the brand palette.
+- **Micro-Animations:** Topic-specific animations for each card (Observability, API, DB, Laravel, DevOps, Engineering, Frontend).
+
+
 ## Recent Updates & Technical Implementation
 
 ### Theme Management

@@ -1,5 +1,5 @@
 @props([])
-<div {{ $attributes->class(['relative overflow-hidden rounded-3xl border border-zinc-200 dark:border-zinc-800 bg-pale-night-black/5 shadow-sm transition-all hover:shadow-md flex flex-col ring-1 ring-inset ring-pale-night-black/10']) }}>
+<div {{ $attributes->class(['glass-pane relative overflow-hidden rounded-3xl shadow-sm transition-all hover:shadow-md flex flex-col']) }}>
     @isset($background)
         <div class="absolute inset-0 z-0">
             {{ $background }}
@@ -11,7 +11,7 @@
         <div class="z-10 w-full shrink-0">{{ $image }}</div>
     @endisset
 
-    <div class="p-6 flex-1 flex flex-col z-10 @isset($background) text-white @endisset">
+    <div class="p-6 flex-1 flex flex-col z-10">
         @isset($tags)
             <div class="mb-3 flex flex-wrap gap-2">{{ $tags }}</div>
         @endisset
@@ -21,7 +21,7 @@
         @endisset
 
         @isset($description)
-            <div class="text-sm @isset($background) text-zinc-200 @else text-zinc-600 @endisset mb-4">
+            <div class="text-sm text-pale-night-black/70 dark:text-pale-night-white/70 mb-4">
                 {{ $description }}
             </div>
         @endisset

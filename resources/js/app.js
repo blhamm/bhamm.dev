@@ -3,6 +3,7 @@ import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 import ScrollToPlugin from 'gsap/ScrollToPlugin';
 import Draggable from 'gsap/Draggable';
+import MotionPathPlugin from 'gsap/MotionPathPlugin';
 
 // Expose to window for global access (Livewire components, Alpine.js)
 // Done before other imports to ensure availability
@@ -10,9 +11,12 @@ window.gsap = gsap;
 window.ScrollTrigger = ScrollTrigger;
 window.ScrollToPlugin = ScrollToPlugin;
 window.Draggable = Draggable;
+window.MotionPathPlugin = MotionPathPlugin;
 window.Lenis = Lenis;
 
 import { emitParticles, particleUp, emitFromElement } from '@/particles.js';
+import { initExpertiseAnimations } from '@/expertise-animations.js';
+import { initDotMatrix } from '@/dot-matrix.js';
 
 const targetFPS = 60;
 const frameInterval = 1000 / targetFPS;
@@ -23,7 +27,7 @@ const trace = false;
 let lastTime = performance.now();
 let particlesOn = false;
 
-gsap.registerPlugin(ScrollTrigger, ScrollToPlugin, Draggable);
+gsap.registerPlugin(ScrollTrigger, ScrollToPlugin, Draggable, MotionPathPlugin);
 gsap.ticker.lagSmoothing(0);
 
 // Sync Lenis with ScrollTrigger
@@ -39,7 +43,10 @@ gsap.ticker.add((time, deltaTime, frame) => {
   }
 });
 
-window.addEventListener('load', () => ScrollTrigger.refresh());
+window.addEventListener('load', () => {
+    ScrollTrigger.refresh();
+    initDotMatrix();
+});
 
 const avatar = document.getElementById('avatar');
 const gradient = document.querySelector('.gradient');
@@ -256,4 +263,7 @@ sectionHeadings.forEach((el) => {
   });
 });
 
-// Main loop is now handled by gsap.ticker above
+// main loop is now handled by gsap.ticker above
+
+// Initialize Expertise animations
+initExpertiseAnimations();

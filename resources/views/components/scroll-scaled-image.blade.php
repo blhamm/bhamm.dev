@@ -138,13 +138,13 @@
         <img x-ref="img" src="{{ $src }}" alt="{{ $alt }}" class="h-full w-full object-cover" />
 
         {{-- The Theme Background Mask --}}
-        <div x-ref="mask" class="pointer-events-none absolute inset-0 z-10 origin-center" aria-hidden="true">
+        <div x-ref="mask" class="pointer-events-none absolute inset-0 z-10 perspective-origin-center perspective-[1500px]" aria-hidden="true">
             <svg viewBox="0 0 2000 1000" preserveAspectRatio="xMidYMid slice" class="h-full w-full" shape-rendering="geometricPrecision" style="
                     overflow: hidden;
                 ">
                 <defs>
                     <mask id="{{ $maskId }}">
-                        <rect x="-10" y="-10" width="2020" height="1020" fill="white" />
+                        <rect x="-10" y="-10" width="2100" height="1100" fill="white" />
                         <text
                             x="1000"
                             y="500"
@@ -175,8 +175,8 @@
                 <rect
                     x="-10"
                     y="-10"
-                    width="2020"
-                    height="1020"
+                    width="2100"
+                    height="1100"
                     fill="currentColor"
                     mask="url(#{{ $maskId }})"
                     class="text-pale-night-white dark:text-pale-night-black"

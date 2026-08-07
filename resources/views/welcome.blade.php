@@ -67,81 +67,120 @@
             {{-- Scroll Scaled Image Section --}}
             <x-scroll-scaled-image src="/images/gradial.webp" alt="Ship It!" />
 
-            <div class="relative z-20 mx-auto w-full max-w-7xl space-y-24 px-4 pb-24 sm:px-6 lg:px-8">
-                <section id="expertise" class="space-y-8">
-                    <x-carousel>
-                        <x-slot name="header">
-                            <h2 class="typing-animation text-pale-night-black dark:text-pale-night-white text-2xl font-bold md:mb-6 md:text-4xl">
-                                Core Expertise & Systems
-                            </h2>
-                        </x-slot>
+            <div class="relative z-20 space-y-24 pb-24">
+                <section id="expertise" class="relative">
+                    <div class="relative overflow-hidden py-24">
+                        <x-dot-matrix />
+                        <x-carousel>
+                            <x-slot name="header">
+                                <h2 class="typing-animation text-pale-night-black dark:text-pale-night-white relative z-10 text-2xl font-bold md:mb-6 md:text-4xl">
+                                    Core Expertise & Systems
+                                </h2>
+                            </x-slot>
 
-                        <x-project-card
-                            title="API & Backend System Design"
-                            description="Architecting resilient, discoverable APIs. Expert-level implementation of OAuth2, event-driven architectures, and distributed systems designed for high-throughput and failure tolerance."
-                            image="/images/cloud.webp"
-                            :tags="['REST', 'OAuth', 'Redis', 'Event-Driven']"
-                            size="w-xs md:w-xl"
-                            modal="api-modal"
-                        />
+                            <x-project-card
+                                title="API & Backend System Design"
+                                description="Architecting resilient, discoverable APIs. Expert-level implementation of OAuth2, event-driven architectures, and distributed systems designed for high-throughput and failure tolerance."
+                                {{-- image="/images/cloud.webp" --}}
+                                :tags="['REST', 'OAuth', 'Redis', 'Event-Driven']"
+                                size="w-72 md:w-sm"
+                                modal="api-modal"
+                                titleClass="text-gradient-api"
+                            >
+                                <x-slot name="animation">
+                                    <x-expertise.api />
+                                </x-slot>
+                            </x-project-card>
 
-                        <x-project-card
-                            title="Database Mastery & Data Layer"
-                            description="Polyglot data strategy focusing on relational integrity and high-performance caching. From complex PostgreSQL schemas to low-latency Redis implementations, ensuring data safety and query efficiency."
-                            image="/images/db.webp"
-                            :tags="['PostgreSQL', 'MySQL', 'Redis', 'SQLite']"
-                            size="w-xs md:w-xl"
-                            modal="database-modal"
-                        />
+                            <x-project-card
+                                title="Database Mastery & Data Layer"
+                                description="Polyglot data strategy focusing on relational integrity and high-performance caching. From complex PostgreSQL schemas to low-latency Redis implementations, ensuring data safety and query efficiency."
+                                {{-- image="/images/db.webp" --}}
+                                :tags="['PostgreSQL', 'MySQL', 'Redis', 'SQLite']"
+                                size="w-72 md:w-sm"
+                                modal="database-modal"
+                                titleClass="text-gradient-db"
+                            >
+                                <x-slot name="animation">
+                                    <x-expertise.database />
+                                </x-slot>
+                            </x-project-card>
 
-                        <x-project-card
-                            title="Observability & System Reliability"
-                            description="Engineering for reliability through total visibility. Implementing OpenTelemetry (OTLP) for distributed tracing and metrics. Moving beyond simple monitoring to proactive system health."
-                            image="/images/observability.webp"
-                            :tags="['Grafana', 'OTLP', 'Observability', 'SRE']"
-                            size="w-xs md:w-xl"
-                            modal="observability-modal"
-                        />
+                            <x-project-card
+                                title="Observability & System Reliability"
+                                description="Engineering for reliability through total visibility. Implementing OpenTelemetry (OTLP) for distributed tracing and metrics. Moving beyond simple monitoring to proactive system health."
+                                {{-- image="/images/observability.webp" --}}
+                                :tags="['Grafana', 'OTLP', 'Observability', 'SRE']"
+                                size="w-72 md:w-sm"
+                                modal="observability-modal"
+                                titleClass="text-gradient-obs"
+                            >
+                                <x-slot name="animation">
+                                    <x-expertise.observability />
+                                </x-slot>
+                            </x-project-card>
 
-                        <x-project-card
-                            title="DevOps, Deployment & Infrastructure"
-                            description="Infrastructure as code and container-native workflows. Streamlining delivery with GitHub Actions and Ansible. Building reproducible, self-healing environments across AWS and DigitalOcean."
-                            image="/images/devops.webp"
-                            :tags="['Docker', 'AWS', 'GitHub Actions', 'Tailscale']"
-                            size="w-xs md:w-xl"
-                            modal="devops-modal"
-                        />
+                            <x-project-card
+                                title="DevOps, Deployment & Infrastructure"
+                                description="Infrastructure as code and container-native workflows. Streamlining delivery with GitHub Actions and Ansible. Building reproducible, self-healing environments across AWS and DigitalOcean."
+                                {{-- image="/images/devops.webp" --}}
+                                :tags="['Docker', 'AWS', 'GitHub Actions']"
+                                size="w-72 md:w-sm"
+                                modal="devops-modal"
+                                titleClass="text-gradient-devops"
+                            >
+                                <x-slot name="animation">
+                                    <x-expertise.devops />
+                                </x-slot>
+                            </x-project-card>
 
-                        <x-project-card
-                            title="Laravel & PHP Expertise"
-                            description="Deep-domain expertise in the Laravel ecosystem since v3.2. Architecting high-performance PHP applications by leveraging the framework's core strengths and knowing when to extend them."
-                            image="/images/php.webp"
-                            :tags="['Laravel', 'PHP', 'Eloquent', 'Livewire']"
-                            size="w-xs md:w-xl"
-                            modal="laravel-modal"
-                        />
+                            <x-project-card
+                                title="Laravel & PHP Expertise"
+                                description="Deep-domain expertise in the Laravel ecosystem since v3.2. Architecting high-performance PHP applications by leveraging the framework's core strengths and knowing when to extend them."
+                                {{-- image="/images/php.webp" --}}
+                                :tags="['Laravel', 'PHP', 'Eloquent', 'Livewire']"
+                                size="w-72 md:w-sm"
+                                modal="laravel-modal"
+                                titleClass="text-gradient-laravel"
+                            >
+                                <x-slot name="animation">
+                                    <x-expertise.laravel />
+                                </x-slot>
+                            </x-project-card>
 
-                        <x-project-card
-                            title="Engineering Standards & Craft"
-                            description="Strict adherence to SOLID principles and type-safe development. Using testing (Pest/PHPUnit) as a primary design tool. Driving team velocity through clean code and strict static analysis."
-                            image="/images/gradial.webp"
-                            :tags="['Testing', 'SOLID', 'PHPStan', 'TypeScript']"
-                            size="w-xs md:w-xl"
-                            modal="engineering-modal"
-                        />
+                            <x-project-card
+                                title="Engineering Standards & Craft"
+                                description="Strict adherence to SOLID principles and type-safe development. Using testing (Pest/PHPUnit) as a primary design tool. Driving team velocity through clean code and strict static analysis."
+                                {{-- image="/images/gradial.webp" --}}
+                                :tags="['Testing', 'SOLID', 'PHPStan', 'TypeScript']"
+                                size="w-72 md:w-sm"
+                                modal="engineering-modal"
+                                titleClass="text-gradient-eng"
+                            >
+                                <x-slot name="animation">
+                                    <x-expertise.engineering />
+                                </x-slot>
+                            </x-project-card>
 
-                        <x-project-card
-                            title="Frontend Architecture & Design Systems"
-                            description="Bridging high-end design with reactive engineering. Meticulous implementation of design systems using Vue, React, and Tailwind CSS. Crafting pixel-perfect, accessible interfaces from Figma to production."
-                            image="/images/front-end.webp"
-                            :tags="['Vue', 'React', 'TypeScript', 'Tailwind']"
-                            size="w-xs md:w-xl"
-                            modal="frontend-modal"
-                        />
-                    </x-carousel>
+                            <x-project-card
+                                title="Frontend Architecture & Design Systems"
+                                description="Bridging high-end design with reactive engineering. Meticulous implementation of design systems using Vue, React, and Tailwind CSS. Crafting pixel-perfect, accessible interfaces from Figma to production."
+                                {{-- image="/images/front-end.webp" --}}
+                                :tags="['Vue', 'React', 'TypeScript', 'Tailwind']"
+                                size="w-72 md:w-sm"
+                                modal="frontend-modal"
+                                titleClass="text-gradient-fe"
+                            >
+                                <x-slot name="animation">
+                                    <x-expertise.frontend />
+                                </x-slot>
+                            </x-project-card>
+                        </x-carousel>
+                    </div>
                 </section>
 
-                <section id="kit" class="space-y-8">
+                <div class="relative mx-auto w-full max-w-7xl space-y-24 px-4 sm:px-6 lg:px-8">
+                    <section id="kit" class="space-y-8">
                     <h2 class="typing-animation text-pale-night-black dark:text-pale-night-white text-2xl font-bold md:mb-6 md:text-4xl">
                         My Tool Kit
                     </h2>
@@ -346,6 +385,10 @@
                         </div>
                     </section>
                 </x-gsap-wrapper>
+
+{{--                <section id="guestbook" class="space-y-8">--}}
+{{--                    <livewire:guestbook-map />--}}
+{{--                </section>--}}
             </div>
 
             {{-- Example of Video Component --}}
@@ -577,6 +620,15 @@
         </p>
     </x-modal>
 
+{{--    @if(request()->has('guestbook') && request()->has('user_id'))--}}
+{{--        <flux:modal name="guestbook-modal" show class="md:w-lg">--}}
+{{--            <div class="space-y-6">--}}
+{{--                <livewire:guestbook-form :user-id="request()->integer('user_id')" />--}}
+{{--            </div>--}}
+{{--        </flux:modal>--}}
+{{--    @endif--}}
+
     @fluxScripts
+    @stack('scripts')
 </body>
 </html>
