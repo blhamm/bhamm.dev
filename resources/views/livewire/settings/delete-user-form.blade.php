@@ -30,9 +30,9 @@ new class extends Component
     </div>
 
     <flux:modal.trigger name="confirm-user-deletion">
-        <flux:button variant="danger" x-data="" x-on:click.prevent="$dispatch('open-modal', 'confirm-user-deletion')">
+        <x-button class="bg-pale-night-red text-pale-night-black hover:bg-pale-night-red/80 ring-pale-night-red/20" x-data="" x-on:click.prevent="$dispatch('open-modal', 'confirm-user-deletion')">
             {{ __('Delete account') }}
-        </flux:button>
+        </x-button>
     </flux:modal.trigger>
 
     <flux:modal name="confirm-user-deletion" :show="$errors->isNotEmpty()" focusable class="max-w-lg">
@@ -49,10 +49,12 @@ new class extends Component
 
             <div class="flex justify-end space-x-2 rtl:space-x-reverse">
                 <flux:modal.close>
-                    <flux:button variant="filled">{{ __('Cancel') }}</flux:button>
+                    <x-button class="text-pale-night-black dark:text-pale-night-white ring-pale-night-black/10 dark:ring-white/20 hover:bg-pale-night-black/5 dark:hover:bg-white/5">{{ __('Cancel') }}</x-button>
                 </flux:modal.close>
 
-                <flux:button variant="danger" type="submit">{{ __('Delete account') }}</flux:button>
+                <x-button type="submit" class="bg-pale-night-red text-pale-night-black hover:bg-pale-night-red/80 ring-pale-night-red/20">
+                    {{ __('Delete account') }}
+                </x-button>
             </div>
         </form>
     </flux:modal>

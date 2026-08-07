@@ -44,7 +44,9 @@ new #[Layout('components.layouts.auth')] class extends Component
             viewable
         />
 
-        <flux:button variant="primary" type="submit" class="w-full">{{ __('Email password reset link') }}</flux:button>
+        <x-button type="submit" class="w-full bg-pale-night-blue text-pale-night-black ring-pale-night-black/10 dark:ring-white/20">
+            {{ __('Email password reset link') }}
+        </x-button>
     </form>
 
     <div class="space-x-1 text-center text-sm text-zinc-400 rtl:space-x-reverse">

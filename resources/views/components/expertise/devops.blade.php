@@ -1,7 +1,7 @@
-<div class="expertise-animation-container absolute inset-0 z-0 opacity-70 dark:opacity-60 scale-125 origin-bottom-right" data-type="devops">
-    <svg viewBox="0 0 400 300" class="h-full w-full" preserveAspectRatio="xMidYMid slice">
+<div class="expertise-animation-container absolute inset-0 z-0 opacity-70 dark:opacity-60 scale-125 origin-bottom-right translate-x-12 translate-y-12 md:translate-x-20 md:translate-y-20" data-type="devops">
+    <svg viewBox="0 0 400 300" class="h-full w-full" preserveAspectRatio="xMaxYMax slice">
         <defs>
-            <filter id="devops-glow" x="-50%" y="-50%" width="200%" height="200%">
+            <filter id="devops-glow" x="-100%" y="-100%" width="300%" height="300%">
                 <feGaussianBlur stdDeviation="3" result="blur" />
                 <feMerge>
                     <feMergeNode in="blur" />
@@ -19,8 +19,8 @@
         
         <circle class="devops-node fill-pale-night-green" cx="250" cy="250" r="4" filter="url(#devops-glow)" />
         <circle class="devops-node fill-pale-night-green" cx="350" cy="250" r="4" filter="url(#devops-glow)" />
-        <circle class="devops-node fill-pale-night-green" cx="300" cy="220" r="3" filter="url(#devops-glow)" />
-        <circle class="devops-node fill-pale-night-green" cx="300" cy="280" r="3" filter="url(#devops-glow)" />
+        <circle class="devops-node fill-pale-night-green" cx="300" cy="212.5" r="3" filter="url(#devops-glow)" />
+        <circle class="devops-node fill-pale-night-green" cx="300" cy="287.5" r="3" filter="url(#devops-glow)" />
         <circle class="devops-node fill-pale-night-green" cx="220" cy="250" r="2" filter="url(#devops-glow)" />
         <circle class="devops-node fill-pale-night-green" cx="380" cy="250" r="2" filter="url(#devops-glow)" />
 

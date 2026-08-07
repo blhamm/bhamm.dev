@@ -92,9 +92,9 @@ new #[Layout('components.layouts.auth')] class extends Component
             viewable
         />
 
-        <div class="flex items-center justify-end">
-            <flux:button type="submit" variant="primary" class="w-full"> {{ __('Create account') }} </flux:button>
-        </div>
+        <x-button type="submit" class="w-full bg-pale-night-blue text-pale-night-black ring-pale-night-black/10 dark:ring-white/20">
+            {{ __('Create account') }}
+        </x-button>
     </form>
 
     <div class="space-x-1 text-center text-sm text-zinc-600 rtl:space-x-reverse dark:text-zinc-400">

@@ -111,59 +111,68 @@ function animateObservability(svg) {
     const needle = svg.querySelector('.gauge-needle');
     const bars = svg.querySelectorAll('.metric-bar');
 
-    // Radar scan effect
+    // Radar scan effect - slowed down
     gsap.fromTo(scans, 
-        { scale: 0.5, opacity: 0.8 },
-        { scale: 3, opacity: 0, duration: 3, stagger: 1, repeat: -1, ease: "power1.out" }
+        { scale: 0.5, opacity: 0.6 },
+        { 
+            scale: 3, 
+            opacity: 0, 
+            duration: 4, 
+            stagger: 1.5, 
+            repeat: -1, 
+            ease: "power1.out",
+            transformOrigin: "center center" 
+        }
     );
 
-    // Pulse central hub
+    // Pulse central hub - subtle
     gsap.to(central, {
-        scale: 1.1,
-        opacity: 0.4,
-        duration: 2,
+        scale: 1.05,
+        opacity: 0.5,
+        duration: 3,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
+        transformOrigin: "center center"
+    });
+
+    // Gauge needle movement - less jittery
+    gsap.to(needle, {
+        rotation: "random(-40, 40)",
+        transformOrigin: "bottom center",
+        duration: 1.5,
         repeat: -1,
         yoyo: true,
         ease: "sine.inOut"
     });
 
-    // Gauge needle movement
-    gsap.to(needle, {
-        rotation: "random(-50, 50)",
+    // Metric bars pulsing - smoothed
+    gsap.to(bars, {
+        scaleY: "random(0.7, 1.3)",
         transformOrigin: "bottom center",
         duration: 0.8,
         repeat: -1,
         yoyo: true,
-        ease: "power2.inOut"
-    });
-
-    // Metric bars pulsing
-    gsap.to(bars, {
-        scaleY: "random(0.5, 1.5)",
-        transformOrigin: "bottom center",
-        duration: 0.4,
-        repeat: -1,
-        yoyo: true,
-        stagger: 0.1,
+        stagger: 0.15,
         ease: "sine.inOut"
     });
 
-    // Move nodes
+    // Move nodes - more predictable
     nodes.forEach(node => {
         gsap.to(node, {
-            x: "random(-4, 4)",
-            y: "random(-4, 4)",
-            duration: "random(2, 4)",
+            x: "random(-3, 3)",
+            y: "random(-3, 3)",
+            duration: "random(3, 5)",
             repeat: -1,
             yoyo: true,
             ease: "sine.inOut"
         });
     });
 
-    // Animate flow lines
+    // Animate flow lines - slowed
     gsap.to(lines, {
         strokeDashoffset: -20,
-        duration: 1.5,
+        duration: 2.5,
         repeat: -1,
         ease: "none"
     });
@@ -191,14 +200,16 @@ function animateDevOps(svg) {
         ease: "none"
     });
 
-    // Pulse nodes
+    // Pulse nodes - with stable transform origin
     gsap.to(nodes, {
         scale: 1.2,
-        duration: 1,
+        transformOrigin: "center center",
+        force3D: false,
+        duration: 1.2,
         repeat: -1,
         yoyo: true,
-        stagger: 0.1,
-        ease: "power1.inOut"
+        stagger: 0.15,
+        ease: "sine.inOut"
     });
 
     // Failure / Scaling timeline
@@ -210,14 +221,16 @@ function animateDevOps(svg) {
           scale: 1.1, 
           stagger: 0.2, 
           duration: 0.5,
-          ease: "back.out(2)" 
+          ease: "back.out(2)",
+          transformOrigin: "center center" 
       }) // Scale up
       .to(status, { fill: "#c3e88d", duration: 0.5, delay: 2 }) // Back to healthy (Green)
       .to(replicas, { 
           opacity: 0, 
           scale: 0.8, 
           stagger: -0.1, 
-          duration: 0.5 
+          duration: 0.5,
+          transformOrigin: "center center"
       }); // Scale down
 }
 
@@ -293,6 +306,7 @@ function animateEngineering(svg) {
     gsap.to(nodes, {
         opacity: 0.3,
         scale: 1.5,
+        transformOrigin: "center center",
         duration: 1,
         repeat: -1,
         yoyo: true,
@@ -310,11 +324,12 @@ function animateFrontend(svg) {
     // Morph timeline
     const tl = gsap.timeline({ repeat: -1, repeatDelay: 2 });
 
-    tl.to(container, { attr: { x: 290, y: 105, width: 70, height: 130 }, duration: 1.5, ease: "power2.inOut" }, 0)
-      .to(topBar, { attr: { x: 300, y: 115, width: 50, height: 8 }, duration: 1.5, ease: "power2.inOut" }, 0)
-      .to(content, { attr: { x: 300, y: 130, width: 50, height: 95 }, duration: 1.5, ease: "power2.inOut" }, 0)
-      .to([nodes[0], leds[0]], { attr: { cx: 300, cy: 115 }, duration: 1.5, ease: "power2.inOut" }, 0)
-      .to([nodes[1], leds[1]], { attr: { cx: 350, cy: 225 }, duration: 1.5, ease: "power2.inOut" }, 0)
+    // Morph "inplace" by staying centered around the same area
+    tl.to(container, { attr: { x: 270, y: 180, width: 60, height: 110 }, duration: 1.5, ease: "power2.inOut" }, 0)
+      .to(topBar, { attr: { x: 280, y: 190, width: 40, height: 8 }, duration: 1.5, ease: "power2.inOut" }, 0)
+      .to(content, { attr: { x: 280, y: 205, width: 40, height: 75 }, duration: 1.5, ease: "power2.inOut" }, 0)
+      .to([nodes[0], leds[0]], { attr: { cx: 280, cy: 190 }, duration: 1.5, ease: "power2.inOut" }, 0)
+      .to([nodes[1], leds[1]], { attr: { cx: 320, cy: 280 }, duration: 1.5, ease: "power2.inOut" }, 0)
       .to(container, { attr: { x: 220, y: 200, width: 160, height: 80 }, duration: 1.5, ease: "power2.inOut", delay: 2 })
       .to(topBar, { attr: { x: 235, y: 215, width: 40, height: 10 }, duration: 1.5, ease: "power2.inOut" }, "<")
       .to(content, { attr: { x: 235, y: 235, width: 130, height: 30 }, duration: 1.5, ease: "power2.inOut" }, "<")
@@ -323,7 +338,9 @@ function animateFrontend(svg) {
 
     // LED pulses
     gsap.to(nodes, {
-        filter: "brightness(2)",
+        opacity: 0.4,
+        scale: 1.2,
+        transformOrigin: "center center",
         duration: 0.5,
         repeat: -1,
         yoyo: true,

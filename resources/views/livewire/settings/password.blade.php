@@ -73,7 +73,9 @@ new #[Layout('components.layouts.app')] class extends Component
 
             <div class="flex items-center gap-4">
                 <div class="flex items-center justify-end">
-                    <flux:button variant="primary" type="submit" class="w-full">{{ __('Save') }}</flux:button>
+                    <x-button type="submit" class="w-full bg-pale-night-blue text-pale-night-black ring-pale-night-black/10 dark:ring-white/20">
+                        {{ __('Save') }}
+                    </x-button>
                 </div>
 
                 <x-action-message class="me-3" on="password-updated"> {{ __('Saved.') }} </x-action-message>

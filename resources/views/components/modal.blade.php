@@ -1,4 +1,8 @@
-@props(['name' => 'modal-default', 'title' => 'Modal Title'])
+@props([
+    'name' => 'modal-default', 
+    'title' => 'Modal Title',
+    'titleClass' => null,
+])
 
 <flux:modal 
     name="{{ $name }}" 
@@ -10,26 +14,36 @@
 >
     <div class="h-full w-full overflow-y-auto overscroll-contain flex flex-col" data-lenis-prevent>
         <div class="flex min-h-full w-full items-start justify-center p-4 md:p-10">
-            <div class="relative my-auto w-full max-w-4xl bg-pale-night-white dark:bg-pale-night-black rounded-3xl shadow-2xl p-6 md:p-10 space-y-8 flex flex-col">
-                <div class="flex items-start justify-between">
-                    <flux:heading
-                        size="xl"
-                        class="text-pale-night-black dark:text-pale-night-white font-bold"
-                    >{{ $title }}</flux:heading>
+            <div class="relative my-auto w-full max-w-4xl bg-pale-night-white dark:bg-pale-night-black rounded-3xl shadow-2xl p-6 md:p-10 space-y-8 flex flex-col overflow-hidden">
+                @if (isset($animation))
+                    <div class="absolute inset-0 z-0 pointer-events-none opacity-40 dark:opacity-30">
+                        {{ $animation }}
+                    </div>
+                @endif
+
+                <div class="relative z-10 flex flex-col-reverse md:flex-row md:items-start justify-between gap-6">
+                    <div class="flex-1 space-y-4">
+                        <flux:heading
+                            size="xl"
+                            class="font-bold {{ $titleClass ?? 'text-pale-night-black dark:text-pale-night-white' }}"
+                        >{{ $title }}</flux:heading>
+                    </div>
     
                     <flux:modal.close>
-                        <flux:button variant="ghost" icon="x-mark" class="md:hidden" />
+                        <x-button class="size-10 p-0 md:hidden" aria-label="Close">
+                            <flux:icon.x-mark variant="outline" />
+                        </x-button>
                     </flux:modal.close>
                 </div>
     
-                <div class="text-pale-night-black/80 dark:text-pale-night-white/80 max-w-none space-y-4 text-base leading-relaxed md:text-lg flex-1">
+                <div class="relative z-10 text-pale-night-black/80 dark:text-pale-night-white/80 max-w-none space-y-4 text-base leading-relaxed md:text-lg flex-1">
                     {{ $slot }}
                 </div>
     
-                <div class="flex pb-8 md:pb-0">
+                <div class="relative z-10 flex pb-8 md:pb-0">
                     <flux:spacer />
                     <flux:modal.close>
-                        <flux:button variant="ghost">Close</flux:button>
+                        <x-button class="bg-pale-night-black/5 dark:bg-white/5 text-pale-night-black dark:text-pale-night-white ring-pale-night-black/10 dark:ring-white/20 hover:bg-pale-night-black/10 dark:hover:bg-white/10">Close</x-button>
                     </flux:modal.close>
                 </div>
             </div>

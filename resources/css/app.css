@@ -23,7 +23,7 @@
  }
 
  @utility glass-pane {
-    @apply bg-white/12 dark:bg-white/8 backdrop-blur-md border border-white/20 dark:border-white/10 ring-1 ring-inset ring-white/10;
+    @apply bg-pale-night-white/12 dark:bg-pale-night-black/8 backdrop-blur-md border border-pale-night-white/20 dark:border-pale-night-white/5 ring-1 ring-inset ring-white/10 dark:ring-pale-night-black/20;
  }
 
  @utility bg-animated-gradient {
@@ -53,6 +53,22 @@
  @utility text-gradient-fe {
     @apply bg-gradient-to-r from-pale-night-teal via-pale-night-blue to-pale-night-purple bg-clip-text text-transparent;
  }
+
+ @utility bg-gradient-api { @apply bg-gradient-to-r from-pale-night-blue via-pale-night-purple to-pale-night-teal; }
+ @utility bg-gradient-db { @apply bg-gradient-to-r from-pale-night-yellow to-blh-orange; }
+ @utility bg-gradient-obs { @apply bg-gradient-to-r from-pale-night-red via-blh-red to-pale-night-red; }
+ @utility bg-gradient-devops { @apply bg-gradient-to-r from-pale-night-green via-pale-night-teal to-pale-night-blue; }
+ @utility bg-gradient-laravel { @apply bg-gradient-to-r from-blh-orange to-blh-red; }
+ @utility bg-gradient-eng { @apply bg-gradient-to-r from-pale-night-blue via-pale-night-purple to-blh-purple; }
+ @utility bg-gradient-fe { @apply bg-gradient-to-r from-pale-night-teal via-pale-night-blue to-pale-night-purple; }
+
+ @utility hover-theme-api { @apply hover:bg-pale-night-blue hover:text-pale-night-black hover:opacity-100; }
+ @utility hover-theme-db { @apply hover:bg-pale-night-yellow hover:text-pale-night-black hover:opacity-100; }
+ @utility hover-theme-obs { @apply hover:bg-pale-night-red hover:text-pale-night-black hover:opacity-100; }
+ @utility hover-theme-devops { @apply hover:bg-pale-night-green hover:text-pale-night-black hover:opacity-100; }
+ @utility hover-theme-laravel { @apply hover:bg-pale-night-red hover:text-pale-night-black hover:opacity-100; }
+ @utility hover-theme-eng { @apply hover:bg-pale-night-purple hover:text-pale-night-black hover:opacity-100; }
+ @utility hover-theme-fe { @apply hover:bg-pale-night-teal hover:text-pale-night-black hover:opacity-100; }
 
  @keyframes gradient-flow {
     0% { background-position: 0% 50%; }

@@ -9,7 +9,7 @@
                 >bhamm<span class="header-dev text-indigo-500">.dev</span></a>
         </div>
 
-        <nav class="hidden items-center gap-8 text-zinc-600 md:flex dark:text-zinc-400">
+        <nav class="hidden items-center gap-8 text-pale-night-black md:flex dark:text-zinc-400">
             <flux:navlist variant="pills" class="flex-row items-center">
                 <flux:navlist.item href="#hero">Home</flux:navlist.item>
                 <flux:navlist.item href="#expertise">Expertise</flux:navlist.item>
@@ -20,27 +20,23 @@
         </nav>
 
         <div class="relative z-30 flex items-center gap-2">
-            <flux:button
-                variant="ghost"
-                size="sm"
+            <x-button
                 x-on:click="darkMode = ! darkMode"
-                square
                 aria-label="Toggle dark mode"
+                class="size-10 p-0 text-pale-night-black dark:text-white ring-transparent hover:bg-pale-night-black/5 dark:hover:bg-white/5"
             >
                 <flux:icon.sun class="hidden size-5 dark:block" />
                 <flux:icon.moon class="block size-5 dark:hidden" />
-            </flux:button>
+            </x-button>
 
-            <flux:button
-                variant="ghost"
-                class="md:hidden"
+            <x-button
+                class="md:hidden size-10 p-0 text-pale-night-black dark:text-white ring-transparent hover:bg-pale-night-black/5 dark:hover:bg-white/5"
                 x-on:click="mobileMenuOpen = ! mobileMenuOpen"
-                square
                 aria-label="Toggle menu"
             >
                 <flux:icon.bars-3 x-show="! mobileMenuOpen" class="size-6" />
                 <flux:icon.x-mark x-show="mobileMenuOpen" class="size-6" x-cloak />
-            </flux:button>
+            </x-button>
         </div>
     </div>
 

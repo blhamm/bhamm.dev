@@ -8,6 +8,7 @@
     'size' => 'w-64 md:w-sm',
     'modal' => null,
     'titleClass' => null,
+    'buttonClass' => null,
 ])
 
 <div class="snap-start shrink-0 {{ $size }}">
@@ -39,25 +40,24 @@
         </x-slot>
 
         @if ($buttonText)
+            @php
+                $btnClasses = "bg-pale-night-black/5 text-pale-night-black dark:bg-white/5 dark:text-pale-night-white my-6 ring-pale-night-black/10 dark:ring-white/20 hover:ring-transparent " . ($buttonClass ?? '');
+            @endphp
             @if ($modal)
                 <flux:modal.trigger name="{{ $modal }}">
-                    <flux:button
-                        variant="primary"
-                        class="bg-pale-night-black/10 text-pale-night-black/70 dark:bg-white/10 dark:text-white/70 hover:bg-pale-night-black/40 hover:text-pale-night-white dark:hover:bg-white/40 my-6 cursor-pointer rounded-4xl transition-colors"
-                    >
-                        <flux:icon.plus-circle variant="mini" />
+                    <x-button class="{{ $btnClasses }}">
+                        <flux:icon.plus-circle variant="outline" class="mr-2 size-4" />
                         {{ $buttonText }}
-                    </flux:button>
+                    </x-button>
                 </flux:modal.trigger>
             @else
-                <flux:button
+                <x-button
                     href="{{ $href }}"
-                    variant="primary"
-                    class="bg-pale-night-black/10 text-pale-night-black/70 dark:bg-white/10 dark:text-white/70 hover:bg-pale-night-black/40 hover:text-pale-night-white dark:hover:bg-white/40 my-6 cursor-pointer rounded-4xl transition-colors"
+                    class="{{ $btnClasses }}"
                 >
-                    <flux:icon.plus-circle variant="mini" />
+                    <flux:icon.plus-circle variant="outline" class="mr-2 size-4" />
                     {{ $buttonText }}
-                </flux:button>
+                </x-button>
             @endif
         @endif
     </x-card>

@@ -116,9 +116,9 @@ new #[Layout('components.layouts.auth')] class extends Component
         <!-- Remember Me -->
         <flux:checkbox wire:model="remember" :label="__('Remember me')" />
 
-        <div class="flex items-center justify-end">
-            <flux:button variant="primary" type="submit" class="w-full">{{ __('Log in') }}</flux:button>
-        </div>
+        <x-button type="submit" class="w-full bg-pale-night-blue text-pale-night-black ring-pale-night-black/10 dark:ring-white/20">
+            {{ __('Log in') }}
+        </x-button>
     </form>
 
     @if (Route::has('register'))

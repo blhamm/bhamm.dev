@@ -64,9 +64,6 @@
         <x-header />
 
         <x-content>
-            {{-- Scroll Scaled Image Section --}}
-            <x-scroll-scaled-image src="/images/gradial.webp" alt="Ship It!" />
-
             <div class="relative z-20 space-y-24 pb-24">
                 <section id="expertise" class="relative">
                     <div class="relative overflow-hidden py-24">
@@ -86,6 +83,7 @@
                                 size="w-72 md:w-sm"
                                 modal="api-modal"
                                 titleClass="text-gradient-api"
+                                buttonClass="hover-theme-api"
                             >
                                 <x-slot name="animation">
                                     <x-expertise.api />
@@ -100,6 +98,7 @@
                                 size="w-72 md:w-sm"
                                 modal="database-modal"
                                 titleClass="text-gradient-db"
+                                buttonClass="hover-theme-db"
                             >
                                 <x-slot name="animation">
                                     <x-expertise.database />
@@ -114,6 +113,7 @@
                                 size="w-72 md:w-sm"
                                 modal="observability-modal"
                                 titleClass="text-gradient-obs"
+                                buttonClass="hover-theme-obs"
                             >
                                 <x-slot name="animation">
                                     <x-expertise.observability />
@@ -128,6 +128,7 @@
                                 size="w-72 md:w-sm"
                                 modal="devops-modal"
                                 titleClass="text-gradient-devops"
+                                buttonClass="hover-theme-devops"
                             >
                                 <x-slot name="animation">
                                     <x-expertise.devops />
@@ -142,6 +143,7 @@
                                 size="w-72 md:w-sm"
                                 modal="laravel-modal"
                                 titleClass="text-gradient-laravel"
+                                buttonClass="hover-theme-laravel"
                             >
                                 <x-slot name="animation">
                                     <x-expertise.laravel />
@@ -156,6 +158,7 @@
                                 size="w-72 md:w-sm"
                                 modal="engineering-modal"
                                 titleClass="text-gradient-eng"
+                                buttonClass="hover-theme-eng"
                             >
                                 <x-slot name="animation">
                                     <x-expertise.engineering />
@@ -170,6 +173,7 @@
                                 size="w-72 md:w-sm"
                                 modal="frontend-modal"
                                 titleClass="text-gradient-fe"
+                                buttonClass="hover-theme-fe"
                             >
                                 <x-slot name="animation">
                                     <x-expertise.frontend />
@@ -178,6 +182,9 @@
                         </x-carousel>
                     </div>
                 </section>
+
+                {{-- Scroll Scaled Image Section --}}
+            <x-scroll-scaled-image src="/images/gradial.webp" alt="Ship It!" />
 
                 <div class="relative mx-auto w-full max-w-7xl space-y-24 px-4 sm:px-6 lg:px-8">
                     <section id="kit" class="space-y-8">
@@ -460,7 +467,10 @@
         <x-footer />
     </main>
 
-    <x-modal name="frontend-modal" title="Frontend Architecture & Design Systems">
+    <x-modal name="frontend-modal" title="Frontend Architecture & Design Systems" titleClass="text-gradient-fe">
+        <x-slot name="animation">
+            <x-expertise.frontend />
+        </x-slot>
         <p>
             Modern UI must do more than look good—it must <em>think</em> and scale. I approach frontend development through
             the lens of design systems: component architecture, design tokens, and accessible patterns that provide
@@ -489,7 +499,10 @@
         </p>
     </x-modal>
 
-    <x-modal name="api-modal" title="API & Backend System Design">
+    <x-modal name="api-modal" title="API & Backend System Design" titleClass="text-gradient-api">
+        <x-slot name="animation">
+            <x-expertise.api />
+        </x-slot>
         <p>
             Well-designed APIs are read like novels. They are about <em>discovery</em>—a developer should understand your system’s
             capabilities by exploring your endpoints, not by digging through stale documentation.
@@ -515,7 +528,10 @@
         </p>
     </x-modal>
 
-    <x-modal name="database-modal" title="Database Mastery & Data Layer">
+    <x-modal name="database-modal" title="Database Mastery & Data Layer" titleClass="text-gradient-db">
+        <x-slot name="animation">
+            <x-expertise.database />
+        </x-slot>
         <p>
             Data persistence is the foundation of any serious application. Choosing the right tool for the access pattern is <em>essential</em>.
         </p>
@@ -540,7 +556,10 @@
         </p>
     </x-modal>
 
-    <x-modal name="devops-modal" title="DevOps, Deployment & Infrastructure">
+    <x-modal name="devops-modal" title="DevOps, Deployment & Infrastructure" titleClass="text-gradient-devops">
+        <x-slot name="animation">
+            <x-expertise.devops />
+        </x-slot>
         <p>
             Infrastructure is no longer a separate department—it's part of the application. <strong>Docker</strong> mastery means understanding image
             optimization, security scanning, and multi-stage builds to ensure lean, secure deployments.
@@ -561,7 +580,10 @@
         </p>
     </x-modal>
 
-    <x-modal name="observability-modal" title="Observability & System Reliability">
+    <x-modal name="observability-modal" title="Observability & System Reliability" titleClass="text-gradient-obs">
+        <x-slot name="animation">
+            <x-expertise.observability />
+        </x-slot>
         <p>
             You can't fix what you can't see. Modern observability is about understanding your
             system through high-cardinality telemetry, not just pretty dashboards.
@@ -584,7 +606,10 @@
         </p>
     </x-modal>
 
-    <x-modal name="engineering-modal" title="Engineering Standards & Craft">
+    <x-modal name="engineering-modal" title="Engineering Standards & Craft" titleClass="text-gradient-eng">
+        <x-slot name="animation">
+            <x-expertise.engineering />
+        </x-slot>
         <p>Engineering excellence starts with professional taste—knowing what "good" looks like and having the discipline to maintain it.</p>
         <p>
             <strong>Type Safety</strong> as a non-negotiable foundation. <strong>TypeScript</strong> on the frontend and
@@ -609,7 +634,10 @@
         </p>
     </x-modal>
 
-    <x-modal name="laravel-modal" title="Laravel & PHP Expertise">
+    <x-modal name="laravel-modal" title="Laravel & PHP Expertise" titleClass="text-gradient-laravel">
+        <x-slot name="animation">
+            <x-expertise.laravel />
+        </x-slot>
         <p>
             You don't stay with a framework for over a decade unless it consistently delivers value. I am a
             <strong>Laravel veteran since v3.2</strong>, having witnessed the ecosystem’s evolution from a Rails-inspired MVC to a
