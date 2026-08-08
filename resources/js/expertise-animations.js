@@ -384,10 +384,11 @@ function animateFrontend(svg) {
     const sidebar = svg.querySelector('.fe-sidebar');
     const content = svg.querySelector('.fe-content');
     const details = svg.querySelectorAll('.fe-detail');
+    const uiDots = svg.querySelectorAll('.fe-ui-dot');
     const nodes = svg.querySelectorAll('.fe-node');
     const leds = svg.querySelectorAll('.fe-led');
 
-    gsap.killTweensOf([container, topBar, sidebar, content, details, nodes, leds]);
+    gsap.killTweensOf([container, topBar, sidebar, content, details, uiDots, nodes, leds]);
 
     // Morph timeline
     const tl = gsap.timeline({ repeat: -1, repeatDelay: 2 });
@@ -401,6 +402,9 @@ function animateFrontend(svg) {
       .to(details[0], { attr: { x: 280, y: 230, width: 40 }, duration: 1.5, ease: "power2.inOut" }, 0)
       .to(details[1], { attr: { x: 280, y: 238, width: 30 }, duration: 1.5, ease: "power2.inOut" }, 0)
       .to(details[2], { attr: { x: 280, y: 246, width: 40 }, duration: 1.5, ease: "power2.inOut" }, 0)
+      .to(uiDots[0], { attr: { cx: 280, cy: 192.5 }, duration: 1.5, ease: "power2.inOut" }, 0)
+      .to(uiDots[1], { attr: { cx: 285, cy: 192.5 }, duration: 1.5, ease: "power2.inOut" }, 0)
+      .to(uiDots[2], { attr: { cx: 290, cy: 192.5 }, duration: 1.5, ease: "power2.inOut" }, 0)
       .to([nodes[0], leds[0]], { attr: { cx: 275, cy: 185 }, duration: 1.5, ease: "power2.inOut" }, 0)
       .to([nodes[1], leds[1]], { attr: { cx: 325, cy: 285 }, duration: 1.5, ease: "power2.inOut" }, 0)
       
@@ -411,6 +415,9 @@ function animateFrontend(svg) {
       .to(details[0], { attr: { x: 275, y: 230, width: 85 }, duration: 1.5, ease: "power2.inOut" }, "<")
       .to(details[1], { attr: { x: 275, y: 238, width: 60 }, duration: 1.5, ease: "power2.inOut" }, "<")
       .to(details[2], { attr: { x: 275, y: 246, width: 85 }, duration: 1.5, ease: "power2.inOut" }, "<")
+      .to(uiDots[0], { attr: { cx: 240, cy: 215 }, duration: 1.5, ease: "power2.inOut" }, "<")
+      .to(uiDots[1], { attr: { cx: 245, cy: 215 }, duration: 1.5, ease: "power2.inOut" }, "<")
+      .to(uiDots[2], { attr: { cx: 250, cy: 215 }, duration: 1.5, ease: "power2.inOut" }, "<")
       .to([nodes[0], leds[0]], { attr: { cx: 230, cy: 205 }, duration: 1.5, ease: "power2.inOut" }, "<")
       .to([nodes[1], leds[1]], { attr: { cx: 375, cy: 275 }, duration: 1.5, ease: "power2.inOut" }, "<");
 

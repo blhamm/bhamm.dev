@@ -27,9 +27,9 @@
             <rect class="fe-detail fill-pale-night-teal/30" x="275" y="246" width="85" height="4" rx="1" />
             
             <!-- Small UI dots in top bar -->
-            <circle class="fill-pale-night-teal/40" cx="240" cy="215" r="1.5" />
-            <circle class="fill-pale-night-teal/40" cx="245" cy="215" r="1.5" />
-            <circle class="fill-pale-night-teal/40" cx="250" cy="215" r="1.5" />
+            <circle class="fe-ui-dot fill-pale-night-teal/40" cx="240" cy="215" r="1.5" />
+            <circle class="fe-ui-dot fill-pale-night-teal/40" cx="245" cy="215" r="1.5" />
+            <circle class="fe-ui-dot fill-pale-night-teal/40" cx="250" cy="215" r="1.5" />
         </g>
         
         <!-- Interactive nodes - repositioned to align with UI -->
