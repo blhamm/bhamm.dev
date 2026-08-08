@@ -274,7 +274,7 @@
                         <a href="https://www.apple.com/airpods-max/" target="_blank" class="glass-pane group relative flex flex-col justify-end overflow-hidden rounded-3xl p-6 transition-all hover:ring-2 hover:ring-white/50 md:col-span-3">
                              <div class="absolute inset-0 z-0 overflow-hidden">
                                 <div class="absolute inset-0 z-10 bg-gradient-to-t from-pale-night-black/60 to-transparent"></div>
-                                <img src="/images/kit/bento_1_airpod_max_midnight__4jy1tkqh9qay_xlarge_2x.webp" alt="AirPods Max" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                                <img src="/images/kit/airpods-max-midnight.svg" alt="AirPods Max" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" />
                              </div>
                              <div class="relative z-20">
                                 <flux:heading level="4" size="sm" class="text-white">AirPods Max</flux:heading>
