@@ -1,37 +1,55 @@
 import gsap from 'gsap';
 
-export function initExpertiseAnimations() {
-    const containers = document.querySelectorAll('.expertise-animation-container');
-    
-    containers.forEach(container => {
-        const type = container.dataset.type;
-        const svg = container.querySelector('svg');
-        
-        if (!svg) return;
+let observer = null;
 
-        switch(type) {
-            case 'api':
-                animateApi(svg);
-                break;
-            case 'database':
-                animateDatabase(svg);
-                break;
-            case 'observability':
-                animateObservability(svg);
-                break;
-            case 'devops':
-                animateDevOps(svg);
-                break;
-            case 'laravel':
-                animateLaravel(svg);
-                break;
-            case 'engineering':
-                animateEngineering(svg);
-                break;
-            case 'frontend':
-                animateFrontend(svg);
-                break;
-        }
+export function initExpertiseAnimations() {
+    const containers = document.querySelectorAll('.expertise-animation-container:not([data-observed])');
+    
+    if (!observer) {
+        observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                const container = entry.target;
+                const type = container.dataset.type;
+                const svg = container.querySelector('svg');
+                
+                if (!svg) return;
+
+                if (entry.isIntersecting) {
+                    // Start or Resume animation
+                    switch(type) {
+                        case 'api':
+                            animateApi(svg);
+                            break;
+                        case 'database':
+                            animateDatabase(svg);
+                            break;
+                        case 'observability':
+                            animateObservability(svg);
+                            break;
+                        case 'devops':
+                            animateDevOps(svg);
+                            break;
+                        case 'laravel':
+                            animateLaravel(svg);
+                            break;
+                        case 'engineering':
+                            animateEngineering(svg);
+                            break;
+                        case 'frontend':
+                            animateFrontend(svg);
+                            break;
+                    }
+                } else {
+                    // Stop animation to save resources
+                    gsap.killTweensOf(svg.querySelectorAll('*'));
+                }
+            });
+        }, { threshold: 0.05 });
+    }
+
+    containers.forEach(container => {
+        container.setAttribute('data-observed', 'true');
+        observer.observe(container);
     });
 }
 
@@ -39,6 +57,8 @@ function animateApi(svg) {
     const packets = svg.querySelectorAll('.packet');
     const nodes = svg.querySelectorAll('.api-node');
     const paths = svg.querySelectorAll('.api-path');
+
+    gsap.killTweensOf([packets, nodes]);
 
     // Pulse nodes
     gsap.to(nodes, {
@@ -50,20 +70,24 @@ function animateApi(svg) {
         ease: "sine.inOut"
     });
 
-    // Animate packets along paths
+    // Animate packets along paths - more robust for hidden elements (modals)
     packets.forEach((packet, index) => {
         const path = paths[index % paths.length];
-        gsap.set(packet, { opacity: 1 });
-        gsap.to(packet, {
-            motionPath: {
-                path: path,
-                align: path,
-                alignOrigin: [0.5, 0.5]
-            },
-            duration: 3 + Math.random() * 2,
-            repeat: -1,
-            delay: index * 1.2,
-            ease: "none"
+        
+        // Use a small delay to ensure SVG measurements are available if modal is opening
+        gsap.delayedCall(0.1, () => {
+            gsap.set(packet, { opacity: 1 });
+            gsap.to(packet, {
+                motionPath: {
+                    path: path,
+                    align: path,
+                    alignOrigin: [0.5, 0.5]
+                },
+                duration: 3 + Math.random() * 2,
+                repeat: -1,
+                delay: index * 1.2,
+                ease: "none"
+            });
         });
     });
 }
@@ -72,6 +96,8 @@ function animateDatabase(svg) {
     const groups = svg.querySelectorAll('.db-layer-group');
     const leds = svg.querySelectorAll('.db-led');
     const flows = svg.querySelectorAll('.db-flow');
+
+    gsap.killTweensOf([groups, flows, leds]);
 
     // Float groups (layers + leds)
     gsap.to(groups, {
@@ -106,10 +132,13 @@ function animateDatabase(svg) {
 function animateObservability(svg) {
     const central = svg.querySelector('.obs-central');
     const nodes = svg.querySelectorAll('.obs-node-group');
-    const lines = svg.querySelectorAll('.obs-line');
+    const pulses = svg.querySelectorAll('.obs-pulse');
+    const paths = svg.querySelectorAll('.obs-path');
+    const packets = svg.querySelectorAll('.obs-packet');
     const scans = svg.querySelectorAll('.obs-scan');
     const needle = svg.querySelector('.gauge-needle');
-    const bars = svg.querySelectorAll('.metric-bar');
+
+    gsap.killTweensOf([central, nodes, pulses, paths, packets, scans, needle]);
 
     // Radar scan effect - slowed down
     gsap.fromTo(scans, 
@@ -125,10 +154,10 @@ function animateObservability(svg) {
         }
     );
 
-    // Pulse central hub - subtle
+    // Hub pulse - very subtle
     gsap.to(central, {
         scale: 1.05,
-        opacity: 0.5,
+        opacity: 0.4,
         duration: 3,
         repeat: -1,
         yoyo: true,
@@ -136,45 +165,66 @@ function animateObservability(svg) {
         transformOrigin: "center center"
     });
 
-    // Gauge needle movement - less jittery
+    // Node pulsing - Pulsing from nodes symmetrically
+    gsap.fromTo(pulses, 
+        { scale: 1, opacity: 0.5 },
+        { 
+            scale: 2.5, 
+            opacity: 0, 
+            duration: 2, 
+            stagger: 0.4, 
+            repeat: -1, 
+            ease: "sine.out",
+            transformOrigin: "center center" 
+        }
+    );
+
+    // Gauge needle movement - smoother
     gsap.to(needle, {
-        rotation: "random(-40, 40)",
+        rotation: "random(-45, 45)",
         transformOrigin: "bottom center",
-        duration: 1.5,
+        duration: 1.2,
         repeat: -1,
         yoyo: true,
         ease: "sine.inOut"
     });
 
-    // Metric bars pulsing - smoothed
-    gsap.to(bars, {
-        scaleY: "random(0.7, 1.3)",
-        transformOrigin: "bottom center",
-        duration: 0.8,
-        repeat: -1,
-        yoyo: true,
-        stagger: 0.15,
-        ease: "sine.inOut"
+    // Symmetrical inward data flow
+    packets.forEach((packet, i) => {
+        const startX = parseFloat(packet.getAttribute('cx'));
+        const startY = parseFloat(packet.getAttribute('cy'));
+        
+        gsap.fromTo(packet, 
+            { attr: { cx: startX, cy: startY }, opacity: 1 },
+            {
+                attr: { cx: 330, cy: 210 },
+                opacity: 0,
+                duration: 1.5 + Math.random(),
+                repeat: -1,
+                delay: i * 0.4,
+                ease: "power1.in"
+            }
+        );
     });
 
-    // Move nodes - more predictable
+    // Path flow effect
+    gsap.to(paths, {
+        strokeDashoffset: -20,
+        duration: 2,
+        repeat: -1,
+        ease: "none"
+    });
+    
+    // Subtle node drift - maintaining symmetry but adding life
     nodes.forEach(node => {
         gsap.to(node, {
-            x: "random(-3, 3)",
-            y: "random(-3, 3)",
-            duration: "random(3, 5)",
+            x: "random(-4, 4)",
+            y: "random(-4, 4)",
+            duration: "random(2, 4)",
             repeat: -1,
             yoyo: true,
             ease: "sine.inOut"
         });
-    });
-
-    // Animate flow lines - slowed
-    gsap.to(lines, {
-        strokeDashoffset: -20,
-        duration: 2.5,
-        repeat: -1,
-        ease: "none"
     });
 }
 
@@ -185,6 +235,8 @@ function animateDevOps(svg) {
     const status = svg.querySelector('.devops-status');
     const replicas = svg.querySelectorAll('.devops-replica');
     
+    gsap.killTweensOf([nodes, activePath, activePath2, status, replicas]);
+
     // Rotate/Pulse active paths
     gsap.to(activePath, {
         strokeDashoffset: -210,
@@ -240,6 +292,8 @@ function animateLaravel(svg) {
     const nodes = svg.querySelectorAll('.laravel-node');
     const floatDots = svg.querySelectorAll('.laravel-float-dot');
 
+    gsap.killTweensOf([group, path, nodes, floatDots]);
+
     // Floating logo
     gsap.to(group, {
         y: -20,
@@ -292,15 +346,25 @@ function animateEngineering(svg) {
     const lines = svg.querySelectorAll('.eng-line');
     const nodes = svg.querySelectorAll('.eng-node');
 
-    // Draw lines sequentially
-    gsap.from(lines, {
+    gsap.killTweensOf([lines, nodes]);
+
+    // Draw lines sequentially and hold - increased visibility
+    const tl = gsap.timeline({ repeat: -1 });
+    
+    tl.from(lines, {
         strokeDasharray: "0, 400",
-        duration: 2,
+        duration: 1.5,
         stagger: 0.1,
-        repeat: -1,
-        yoyo: true,
         ease: "power2.inOut"
-    });
+    })
+    .to({}, { duration: 2 }) // Hold fully drawn
+    .to(lines, {
+        strokeDasharray: "0, 400",
+        duration: 1.5,
+        stagger: -0.1, // Reverse stagger for undrawing
+        ease: "power2.inOut"
+    })
+    .to({}, { duration: 1 }); // Hold empty
 
     // Pulse nodes on connection
     gsap.to(nodes, {
@@ -317,24 +381,38 @@ function animateEngineering(svg) {
 function animateFrontend(svg) {
     const container = svg.querySelector('.fe-container');
     const topBar = svg.querySelector('.fe-top-bar');
+    const sidebar = svg.querySelector('.fe-sidebar');
     const content = svg.querySelector('.fe-content');
+    const details = svg.querySelectorAll('.fe-detail');
     const nodes = svg.querySelectorAll('.fe-node');
     const leds = svg.querySelectorAll('.fe-led');
+
+    gsap.killTweensOf([container, topBar, sidebar, content, details, nodes, leds]);
 
     // Morph timeline
     const tl = gsap.timeline({ repeat: -1, repeatDelay: 2 });
 
-    // Morph "inplace" by staying centered around the same area
+    // Morph "inplace" - transitioning from widescreen to mobile-style vertical layout
+    // Centered around x=300 for a true "inplace" feel
     tl.to(container, { attr: { x: 270, y: 180, width: 60, height: 110 }, duration: 1.5, ease: "power2.inOut" }, 0)
-      .to(topBar, { attr: { x: 280, y: 190, width: 40, height: 8 }, duration: 1.5, ease: "power2.inOut" }, 0)
-      .to(content, { attr: { x: 280, y: 205, width: 40, height: 75 }, duration: 1.5, ease: "power2.inOut" }, 0)
-      .to([nodes[0], leds[0]], { attr: { cx: 280, cy: 190 }, duration: 1.5, ease: "power2.inOut" }, 0)
-      .to([nodes[1], leds[1]], { attr: { cx: 320, cy: 280 }, duration: 1.5, ease: "power2.inOut" }, 0)
+      .to(topBar, { attr: { x: 275, y: 190, width: 50, height: 5 }, duration: 1.5, ease: "power2.inOut" }, 0)
+      .to(sidebar, { attr: { x: 275, y: 200, width: 50, height: 15 }, duration: 1.5, ease: "power2.inOut" }, 0)
+      .to(content, { attr: { x: 275, y: 220, width: 50, height: 60 }, duration: 1.5, ease: "power2.inOut" }, 0)
+      .to(details[0], { attr: { x: 280, y: 230, width: 40 }, duration: 1.5, ease: "power2.inOut" }, 0)
+      .to(details[1], { attr: { x: 280, y: 238, width: 30 }, duration: 1.5, ease: "power2.inOut" }, 0)
+      .to(details[2], { attr: { x: 280, y: 246, width: 40 }, duration: 1.5, ease: "power2.inOut" }, 0)
+      .to([nodes[0], leds[0]], { attr: { cx: 275, cy: 185 }, duration: 1.5, ease: "power2.inOut" }, 0)
+      .to([nodes[1], leds[1]], { attr: { cx: 325, cy: 285 }, duration: 1.5, ease: "power2.inOut" }, 0)
+      
       .to(container, { attr: { x: 220, y: 200, width: 160, height: 80 }, duration: 1.5, ease: "power2.inOut", delay: 2 })
-      .to(topBar, { attr: { x: 235, y: 215, width: 40, height: 10 }, duration: 1.5, ease: "power2.inOut" }, "<")
-      .to(content, { attr: { x: 235, y: 235, width: 130, height: 30 }, duration: 1.5, ease: "power2.inOut" }, "<")
-      .to([nodes[0], leds[0]], { attr: { cx: 230, cy: 210 }, duration: 1.5, ease: "power2.inOut" }, "<")
-      .to([nodes[1], leds[1]], { attr: { cx: 370, cy: 270 }, duration: 1.5, ease: "power2.inOut" }, "<");
+      .to(topBar, { attr: { x: 235, y: 212, width: 130, height: 6 }, duration: 1.5, ease: "power2.inOut" }, "<")
+      .to(sidebar, { attr: { x: 235, y: 225, width: 30, height: 45 }, duration: 1.5, ease: "power2.inOut" }, "<")
+      .to(content, { attr: { x: 270, y: 225, width: 95, height: 45 }, duration: 1.5, ease: "power2.inOut" }, "<")
+      .to(details[0], { attr: { x: 275, y: 230, width: 85 }, duration: 1.5, ease: "power2.inOut" }, "<")
+      .to(details[1], { attr: { x: 275, y: 238, width: 60 }, duration: 1.5, ease: "power2.inOut" }, "<")
+      .to(details[2], { attr: { x: 275, y: 246, width: 85 }, duration: 1.5, ease: "power2.inOut" }, "<")
+      .to([nodes[0], leds[0]], { attr: { cx: 230, cy: 205 }, duration: 1.5, ease: "power2.inOut" }, "<")
+      .to([nodes[1], leds[1]], { attr: { cx: 375, cy: 275 }, duration: 1.5, ease: "power2.inOut" }, "<");
 
     // LED pulses
     gsap.to(nodes, {

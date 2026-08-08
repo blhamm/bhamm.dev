@@ -47,7 +47,17 @@ export function initDotMatrix() {
         setTimeout(triggerWave, 2000 + Math.random() * 3000);
     }
 
+    let isVisible = false;
+    const observer = new IntersectionObserver((entries) => {
+        isVisible = entries[0].isIntersecting;
+    }, { threshold: 0.01 });
+    observer.observe(canvas);
+
     function draw() {
+        if (!isVisible) {
+            requestAnimationFrame(draw);
+            return;
+        }
         ctx.clearRect(0, 0, width, height);
         const now = performance.now();
         const isDark = document.documentElement.classList.contains('dark');
@@ -62,10 +72,17 @@ export function initDotMatrix() {
             waves.forEach(w => {
                 const elapsed = (now - w.startTime) / 1000;
                 const waveRadius = w.speed * elapsed;
-                const dist = Math.sqrt((dot.x - w.x)**2 + (dot.y - w.y)**2);
                 
-                const diff = Math.abs(dist - waveRadius);
-                if (diff < w.thickness) {
+                const dx = dot.x - w.x;
+                const dy = dot.y - w.y;
+                const distSquared = dx*dx + dy*dy;
+                
+                const inner = Math.max(0, waveRadius - w.thickness);
+                const outer = waveRadius + w.thickness;
+
+                if (distSquared > inner*inner && distSquared < outer*outer) {
+                    const dist = Math.sqrt(distSquared);
+                    const diff = Math.abs(dist - waveRadius);
                     const strength = Math.pow(1 - (diff / w.thickness), 3);
                     if (strength > maxStrength) {
                         maxStrength = strength;

@@ -45,7 +45,7 @@
             @endphp
             @if ($modal)
                 <flux:modal.trigger name="{{ $modal }}">
-                    <x-button class="{{ $btnClasses }}">
+                    <x-button class="{{ $btnClasses }}" x-on:click="setTimeout(() => initExpertiseAnimations(), 100)">
                         <flux:icon.plus-circle variant="outline" class="mr-2 size-4" />
                         {{ $buttonText }}
                     </x-button>

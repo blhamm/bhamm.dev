@@ -19,6 +19,7 @@ let grid = [];
 let particleSpawnAccumulator = 0;
 let particles = new Array(PARTICLE_MAX * 2);
 let particleCount = 0;
+let needsClear = true;
 let mouse = { x: null, y: null };
 let lastTime = 16.66;
 let cw = 0;
@@ -260,6 +261,17 @@ function tracePerformance(end, start) {
 
 export function particleUp(deltaTime = 0, trace = true) {
 	if (!ctx) return;
+	
+	if (particleCount === 0) {
+		if (needsClear) {
+			ctx.clearRect(0, 0, cw, ch);
+			needsClear = false;
+		}
+		physicsAccumulator = 0;
+		return;
+	}
+	
+	needsClear = true;
 	const start = trace ? performance.now() : null;
 	
 	// Aggressive smoothing (95/5) to ignore Safari's erratic RAF timing

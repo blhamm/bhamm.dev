@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html
     lang="{{ str_replace('_', '-', app()->getLocale()) }}"
-    @use('Illuminate\Support\Facades\Image')
     x-data="{
         darkMode: window.matchMedia('(prefers-color-scheme: dark)').matches,
         init() {
@@ -121,7 +120,7 @@
                             </x-project-card>
 
                             <x-project-card
-                                title="DevOps, Deployment & Infrastructure"
+                                title="Deployment & Infrastructure"
                                 description="Infrastructure as code and container-native workflows. Streamlining delivery with GitHub Actions and Ansible. Building reproducible, self-healing environments across AWS and DigitalOcean."
                                 {{-- image="/images/devops.webp" --}}
                                 :tags="['Docker', 'AWS', 'GitHub Actions']"

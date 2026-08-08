@@ -20,8 +20,14 @@ import { initDotMatrix } from '@/dot-matrix.js';
 
 const targetFPS = 60;
 const frameInterval = 1000 / targetFPS;
-const lenis = new Lenis({ lerp: 0.1 });
+const lenis = new Lenis({
+    lerp: 0.1,
+    syncTouch: true,
+    autoRaf: false,
+    normalizeWheel: true
+});
 window.lenis = lenis;
+window.initExpertiseAnimations = initExpertiseAnimations;
 
 const trace = false;
 let lastTime = performance.now();
@@ -146,10 +152,17 @@ const heroStrings = [
   "Thanks for stopping by!",
 ];
 let heroIndex = 0;
+let isHeroVisible = true;
 
 function cycleHeroText(firstDelay = null) {
   if (!heroText) return;
   
+  if (!isHeroVisible && heroIndex !== 0) {
+    // If not visible and not the first text, just wait
+    gsap.delayedCall(1, () => cycleHeroText());
+    return;
+  }
+
   const delay = firstDelay !== null ? firstDelay : (heroIndex === 0 ? 0.75 : 0.5);
   
   typeText(heroText, () => {
@@ -206,6 +219,13 @@ function startHeroIntro() {
 }
 
 if (heroText) {
+  const heroSection = document.querySelector('#hero');
+  if (heroSection) {
+      const observer = new IntersectionObserver((entries) => {
+          isHeroVisible = entries[0].isIntersecting;
+      }, { threshold: 0 });
+      observer.observe(heroSection);
+  }
   startHeroIntro();
 }
 

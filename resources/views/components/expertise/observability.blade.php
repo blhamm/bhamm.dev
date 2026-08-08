@@ -1,73 +1,92 @@
-<div class="expertise-animation-container absolute inset-0 z-0 opacity-70 dark:opacity-60 scale-125 origin-bottom-right translate-x-12 translate-y-12 md:translate-x-20 md:translate-y-20" data-type="observability">
+<div class="expertise-animation-container absolute inset-0 z-0 opacity-70 dark:opacity-60 scale-125 origin-bottom-right translate-x-12 translate-y-6 md:translate-x-20 md:translate-y-10" data-type="observability">
     <svg viewBox="0 0 400 300" class="h-full w-full" preserveAspectRatio="xMaxYMax slice">
         <defs>
             <filter id="obs-glow" x="-50%" y="-50%" width="200%" height="200%">
-                <feGaussianBlur stdDeviation="2" result="blur" />
+                <feGaussianBlur stdDeviation="3" result="coloredBlur" />
                 <feMerge>
-                    <feMergeNode in="blur" />
+                    <feMergeNode in="coloredBlur" />
                     <feMergeNode in="SourceGraphic" />
                 </feMerge>
             </filter>
-            <radialGradient id="obs-radar" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stop-color="var(--color-pale-night-red)" stop-opacity="0.3" />
-                <stop offset="100%" stop-color="var(--color-pale-night-red)" stop-opacity="0" />
-            </radialGradient>
         </defs>
 
-        <!-- Scanning Beam -->
-        <circle class="obs-scan fill-none stroke-pale-night-red/40 stroke-1" cx="340" cy="240" r="10" />
-        <circle class="obs-scan fill-none stroke-pale-night-red/20 stroke-1" cx="340" cy="240" r="30" />
-        <circle class="obs-scan fill-none stroke-pale-night-red/10 stroke-1" cx="340" cy="240" r="50" />
-
-        <!-- Monitoring nodes focused in lower right -->
-        <circle class="obs-central fill-pale-night-red/20 stroke-pale-night-red/40 stroke-1" cx="340" cy="240" r="35" />
-        
-        <!-- Simplified Gauge inside center -->
-        <g class="obs-gauge" transform="translate(340, 240)">
-            <path class="gauge-arc fill-none stroke-pale-night-red/40 stroke-2" d="M -15 0 A 15 15 0 0 1 15 0" />
-            <line class="gauge-needle stroke-pale-night-red stroke-2" x1="0" y1="0" x2="0" y2="-12" />
-            <circle class="fill-pale-night-red" cx="0" cy="0" r="2" />
-        </g>
-
-        <!-- Metric Bars inside hub -->
-        <g class="obs-metrics" transform="translate(330, 255)">
-            <rect class="metric-bar fill-pale-night-red/40" x="0" y="0" width="3" height="10" rx="1" />
-            <rect class="metric-bar fill-pale-night-red/60" x="6" y="-3" width="3" height="13" rx="1" />
-            <rect class="metric-bar fill-pale-night-red/40" x="12" y="2" width="3" height="8" rx="1" />
-            <rect class="metric-bar fill-pale-night-red/60" x="18" y="-1" width="3" height="11" rx="1" />
+        <!-- Monitoring Hub Decorative Rings -->
+        <g class="obs-hub-decoration">
+            <circle class="fill-none stroke-blh-orange/20 stroke-[0.5]" cx="330" cy="210" r="50" />
+            <circle class="fill-none stroke-pale-night-red/10 stroke-[0.5]" cx="330" cy="210" r="65" />
         </g>
         
-        <line class="obs-line stroke-pale-night-red/50 stroke-1" x1="280" y1="200" x2="315" y2="225" stroke-dasharray="4,4" />
-        <line class="obs-line stroke-pale-night-red/50 stroke-1" x1="380" y1="180" x2="355" y2="210" stroke-dasharray="4,4" />
-        <line class="obs-line stroke-pale-night-red/50 stroke-1" x1="260" y1="270" x2="315" y2="255" stroke-dasharray="4,4" />
-        <line class="obs-line stroke-pale-night-red/50 stroke-1" x1="390" y1="280" x2="365" y2="265" stroke-dasharray="4,4" />
-        <line class="obs-line stroke-pale-night-red/50 stroke-1" x1="310" y1="210" x2="325" y2="220" stroke-dasharray="4,4" />
-        <line class="obs-line stroke-pale-night-red/50 stroke-1" x1="360" y1="265" x2="350" y2="255" stroke-dasharray="4,4" />
+        <!-- Radar Scan -->
+        <circle class="obs-scan fill-none stroke-blh-orange/30 stroke-1" cx="330" cy="210" r="10" />
+        <circle class="obs-scan fill-none stroke-pale-night-red/10 stroke-1" cx="330" cy="210" r="40" />
 
-        <!-- Floating nodes with LEDs -->
+        <!-- Symmetrical Connection Paths -->
+        <g class="obs-paths">
+            <!-- Top -->
+            <path class="obs-path stroke-pale-night-red/30 stroke-1 fill-none" d="M 330 140 L 330 185" stroke-dasharray="4,4" />
+            <!-- Top Right -->
+            <path class="obs-path stroke-blh-orange/30 stroke-1 fill-none" d="M 390 175 L 355 195" stroke-dasharray="4,4" />
+            <!-- Bottom Right -->
+            <path class="obs-path stroke-pale-night-yellow/30 stroke-1 fill-none" d="M 390 245 L 355 225" stroke-dasharray="4,4" />
+            <!-- Bottom -->
+            <path class="obs-path stroke-pale-night-red/30 stroke-1 fill-none" d="M 330 280 L 330 235" stroke-dasharray="4,4" />
+            <!-- Bottom Left -->
+            <path class="obs-path stroke-blh-orange/30 stroke-1 fill-none" d="M 270 245 L 305 225" stroke-dasharray="4,4" />
+            <!-- Top Left -->
+            <path class="obs-path stroke-pale-night-yellow/30 stroke-1 fill-none" d="M 270 175 L 305 195" stroke-dasharray="4,4" />
+        </g>
+
+        <!-- Data Packets -->
+        <g class="obs-packets">
+            <circle class="obs-packet fill-pale-night-red" r="2.5" cx="330" cy="140" />
+            <circle class="obs-packet fill-blh-orange" r="2.5" cx="390" cy="175" />
+            <circle class="obs-packet fill-pale-night-yellow" r="2.5" cx="390" cy="245" />
+            <circle class="obs-packet fill-pale-night-red" r="2.5" cx="330" cy="280" />
+            <circle class="obs-packet fill-blh-orange" r="2.5" cx="270" cy="245" />
+            <circle class="obs-packet fill-pale-night-yellow" r="2.5" cx="270" cy="175" />
+        </g>
+
+        <!-- Main Hub Body -->
+        <circle class="obs-central fill-pale-night-black/40 stroke-blh-orange/40 stroke-1" cx="330" cy="210" r="35" />
+        
+        <!-- Gauge (Centered) -->
+        <g class="obs-gauge" transform="translate(330, 210)">
+            <path class="gauge-arc fill-none stroke-pale-night-yellow/40 stroke-2" d="M -18 0 A 18 18 0 0 1 18 0" />
+            <path class="gauge-arc-track fill-none stroke-pale-night-red/20 stroke-2" d="M -18 0 A 18 18 0 0 0 18 0" opacity="0.5" />
+            <line class="gauge-needle stroke-blh-orange stroke-2" x1="0" y1="0" x2="0" y2="-15" />
+            <circle class="fill-pale-night-red" cx="0" cy="0" r="2.5" />
+        </g>
+
+        <!-- Peripheral Nodes -->
         <g class="obs-node-group">
-            <circle class="obs-node fill-pale-night-red" cx="280" cy="200" r="4" filter="url(#obs-glow)" />
-            <circle class="obs-led fill-white" cx="280" cy="200" r="1.5" />
+            <circle class="obs-pulse fill-pale-night-red/30" cx="330" cy="140" r="5" />
+            <circle class="obs-node fill-pale-night-red" cx="330" cy="140" r="5" filter="url(#obs-glow)" />
+            <circle class="obs-led fill-white" cx="330" cy="140" r="1.5" />
         </g>
         <g class="obs-node-group">
-            <circle class="obs-node fill-pale-night-red" cx="380" cy="180" r="3" filter="url(#obs-glow)" />
-            <circle class="obs-led fill-white" cx="380" cy="180" r="1" />
+            <circle class="obs-pulse fill-blh-orange/30" cx="390" cy="175" r="4" />
+            <circle class="obs-node fill-blh-orange" cx="390" cy="175" r="4" filter="url(#obs-glow)" />
+            <circle class="obs-led fill-white" cx="390" cy="175" r="1" />
         </g>
         <g class="obs-node-group">
-            <circle class="obs-node fill-pale-night-red" cx="260" cy="270" r="5" filter="url(#obs-glow)" />
-            <circle class="obs-led fill-white" cx="260" cy="270" r="2" />
+            <circle class="obs-pulse fill-pale-night-yellow/30" cx="390" cy="245" r="5" />
+            <circle class="obs-node fill-pale-night-yellow" cx="390" cy="245" r="5" filter="url(#obs-glow)" />
+            <circle class="obs-led fill-white" cx="390" cy="245" r="2" />
         </g>
         <g class="obs-node-group">
-            <circle class="obs-node fill-pale-night-red" cx="390" cy="280" r="4" filter="url(#obs-glow)" />
-            <circle class="obs-led fill-white" cx="390" cy="280" r="1.5" />
+            <circle class="obs-pulse fill-pale-night-red/30" cx="330" cy="280" r="4" />
+            <circle class="obs-node fill-pale-night-red" cx="330" cy="280" r="4" filter="url(#obs-glow)" />
+            <circle class="obs-led fill-white" cx="330" cy="280" r="1.5" />
         </g>
         <g class="obs-node-group">
-            <circle class="obs-node fill-pale-night-red" cx="310" cy="210" r="3" filter="url(#obs-glow)" />
-            <circle class="obs-led fill-white" cx="310" cy="210" r="1" />
+            <circle class="obs-pulse fill-blh-orange/30" cx="270" cy="245" r="4" />
+            <circle class="obs-node fill-blh-orange" cx="270" cy="245" r="4" filter="url(#obs-glow)" />
+            <circle class="obs-led fill-white" cx="270" cy="245" r="1" />
         </g>
         <g class="obs-node-group">
-            <circle class="obs-node fill-pale-night-red" cx="360" cy="265" r="2" filter="url(#obs-glow)" />
-            <circle class="obs-led fill-white" cx="360" cy="265" r="0.5" />
+            <circle class="obs-pulse fill-pale-night-yellow/30" cx="270" cy="175" r="5" />
+            <circle class="obs-node fill-pale-night-yellow" cx="270" cy="175" r="5" filter="url(#obs-glow)" />
+            <circle class="obs-led fill-white" cx="270" cy="175" r="2" />
         </g>
     </svg>
 </div>
