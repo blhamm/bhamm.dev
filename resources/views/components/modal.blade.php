@@ -2,6 +2,7 @@
     'name' => 'modal-default', 
     'title' => 'Modal Title',
     'titleClass' => null,
+    'tags' => [],
 ])
 
 <flux:modal 
@@ -21,19 +22,27 @@
                     </div>
                 @endif
 
-                <div class="relative z-10 flex flex-col-reverse md:flex-row md:items-start justify-between gap-6">
+                <div class="relative z-10 flex flex-col md:flex-row md:items-start gap-6">
+                    <flux:modal.close>
+                        <x-button class="size-10 p-0 bg-pale-night-black/5 dark:bg-white/5 text-pale-night-black dark:text-pale-night-white ring-pale-night-black/10 dark:ring-white/20 hover:bg-pale-night-black/10 dark:hover:bg-white/10" aria-label="Close">
+                            <flux:icon.x-mark variant="outline" />
+                        </x-button>
+                    </flux:modal.close>
+
                     <div class="flex-1 space-y-4">
+                        @if (! empty($tags))
+                            <div class="flex flex-wrap gap-2">
+                                @foreach ($tags as $tag)
+                                    <x-tag>{{ $tag }}</x-tag>
+                                @endforeach
+                            </div>
+                        @endif
+
                         <flux:heading
                             size="xl"
                             class="font-bold {{ $titleClass ?? 'text-pale-night-black dark:text-pale-night-white' }}"
                         >{{ $title }}</flux:heading>
                     </div>
-    
-                    <flux:modal.close>
-                        <x-button class="size-10 p-0 md:hidden" aria-label="Close">
-                            <flux:icon.x-mark variant="outline" />
-                        </x-button>
-                    </flux:modal.close>
                 </div>
     
                 <div class="relative z-10 text-pale-night-black/80 dark:text-pale-night-white/80 max-w-none space-y-4 text-base leading-relaxed md:text-lg flex-1">
