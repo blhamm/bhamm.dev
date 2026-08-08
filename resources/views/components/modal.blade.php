@@ -3,10 +3,12 @@
     'title' => 'Modal Title',
     'titleClass' => null,
     'tags' => [],
+    'show' => false,
 ])
 
 <flux:modal 
     name="{{ $name }}" 
+    :show="$show"
     class="w-full h-dvh p-0 m-0 overflow-hidden bg-transparent border-none outline-none max-h-none max-w-none" 
     variant="bare"
     x-on:modal-show.document="window.lenis?.stop()"

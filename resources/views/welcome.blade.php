@@ -733,13 +733,11 @@
 	</p>
 </x-modal>
 
-{{--    @if(request()->has('guestbook') && request()->has('user_id'))--}}
-{{--        <flux:modal name="guestbook-modal" show class="md:w-lg">--}}
-{{--            <div class="space-y-6">--}}
-{{--                <livewire:guestbook-form :user-id="request()->integer('user_id')" />--}}
-{{--            </div>--}}
-{{--        </flux:modal>--}}
-{{--    @endif--}}
+	@if(request()->has('guestbook') && request()->has('user_id'))
+		<x-modal name="guestbook-modal" title="Sign the Guestbook" show>
+			<livewire:guestbook-form :user-id="request()->integer('user_id')" />
+		</x-modal>
+	@endif
 
 @fluxScripts
 @stack('scripts')
