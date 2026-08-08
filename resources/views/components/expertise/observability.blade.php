@@ -16,10 +16,6 @@
             <circle class="fill-none stroke-pale-night-red/10 stroke-[0.5]" cx="330" cy="210" r="65" />
         </g>
         
-        <!-- Radar Scan -->
-        <circle class="obs-scan fill-none stroke-blh-orange/30 stroke-1" cx="330" cy="210" r="10" />
-        <circle class="obs-scan fill-none stroke-pale-night-red/10 stroke-1" cx="330" cy="210" r="40" />
-
         <!-- Symmetrical Connection Paths -->
         <g class="obs-paths">
             <!-- Top -->
@@ -47,7 +43,7 @@
         </g>
 
         <!-- Main Hub Body -->
-        <circle class="obs-central fill-pale-night-black/40 stroke-blh-orange/40 stroke-1" cx="330" cy="210" r="35" />
+        <circle class="obs-central fill-none stroke-blh-orange/40 stroke-1" cx="330" cy="210" r="35" />
         
         <!-- Gauge (Centered) -->
         <g class="obs-gauge" transform="translate(330, 210)">

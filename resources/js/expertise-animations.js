@@ -130,40 +130,13 @@ function animateDatabase(svg) {
 }
 
 function animateObservability(svg) {
-    const central = svg.querySelector('.obs-central');
     const nodes = svg.querySelectorAll('.obs-node-group');
     const pulses = svg.querySelectorAll('.obs-pulse');
     const paths = svg.querySelectorAll('.obs-path');
     const packets = svg.querySelectorAll('.obs-packet');
-    const scans = svg.querySelectorAll('.obs-scan');
     const needle = svg.querySelector('.gauge-needle');
 
-    gsap.killTweensOf([central, nodes, pulses, paths, packets, scans, needle]);
-
-    // Radar scan effect - slowed down
-    gsap.fromTo(scans, 
-        { scale: 0.5, opacity: 0.6 },
-        { 
-            scale: 3, 
-            opacity: 0, 
-            duration: 4, 
-            stagger: 1.5, 
-            repeat: -1, 
-            ease: "power1.out",
-            transformOrigin: "center center" 
-        }
-    );
-
-    // Hub pulse - very subtle
-    gsap.to(central, {
-        scale: 1.05,
-        opacity: 0.4,
-        duration: 3,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut",
-        transformOrigin: "center center"
-    });
+    gsap.killTweensOf([nodes, pulses, paths, packets, needle]);
 
     // Node pulsing - Pulsing from nodes symmetrically
     gsap.fromTo(pulses, 
