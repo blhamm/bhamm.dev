@@ -1,22 +1,22 @@
 <?php
 
-use App\Models\GuestBookUser;
+use App\Models\Signee;
 use Livewire\Volt\Component;
 
 new class extends Component {
     public function with(): array
     {
         return [
-            'entries' => GuestBookUser::where('private', false)
-                ->whereNotNull('lat')
-                ->whereNotNull('long')
+            'entries' => Signee::where('private', false)
+                ->whereNotNull('latitude')
+                ->whereNotNull('longitude')
                 ->latest()
                 ->get()
                 ->map(fn($user) => [
                     'name' => $user->name,
                     'message' => $user->message,
-                    'lat' => $user->lat,
-                    'lng' => $user->long,
+                    'lat' => $user->latitude,
+                    'lng' => $user->longitude,
                 ]),
         ];
     }

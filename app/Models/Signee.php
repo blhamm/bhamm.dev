@@ -2,15 +2,16 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class GuestBookUser extends Model
+class Signee extends Authenticatable
 {
     protected $fillable = [
         'name',
         'email',
-        'lat',
-        'long',
+        'latitude',
+        'longitude',
+        'ip_address',
         'place_id',
         'message',
         'social_auth_type',
@@ -19,7 +20,7 @@ class GuestBookUser extends Model
 
     protected $casts = [
         'private' => 'boolean',
-        'lat' => 'float',
-        'long' => 'float',
+        'latitude' => 'float',
+        'longitude' => 'float',
     ];
 }
