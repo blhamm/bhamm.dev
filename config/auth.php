@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Signee;
 use App\Models\User;
 
 return [
@@ -42,6 +43,11 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+
+        'signee' => [
+            'driver' => 'session',
+            'provider' => 'signees',
+        ],
     ],
 
     /*
@@ -65,6 +71,11 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => env('AUTH_MODEL', User::class),
+        ],
+
+        'signees' => [
+            'driver' => 'eloquent',
+            'model' => Signee::class,
         ],
 
         // 'users' => [

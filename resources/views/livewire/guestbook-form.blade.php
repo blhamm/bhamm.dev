@@ -1,22 +1,34 @@
 <?php
 
-use App\Models\GuestBookUser;
+use App\Models\Signee;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Volt\Component;
 
 new class extends Component {
-    public GuestBookUser $user;
+    public Signee $user;
     public string $message = '';
     public bool $private = false;
 
     public function mount(int $userId)
     {
-        $this->user = GuestBookUser::findOrFail($userId);
+        $this->user = Signee::findOrFail($userId);
+
+        // Security check
+        if (Auth::guard('signee')->id() !== $this->user->id) {
+            abort(403);
+        }
+
         $this->message = $this->user->message ?? '';
         $this->private = (bool) ($this->user->private ?? false);
     }
 
     public function save()
     {
+        // Double check auth
+        if (Auth::guard('signee')->id() !== $this->user->id) {
+            abort(403);
+        }
+
         $this->validate([
             'message' => 'required|string|max:1000',
             'private' => 'boolean',
