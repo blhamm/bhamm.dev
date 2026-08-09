@@ -23,4 +23,22 @@ class Signee extends Authenticatable
         'latitude' => 'float',
         'longitude' => 'float',
     ];
+
+    public function getDisplayNameAttribute(): string
+    {
+        if (empty($this->name)) {
+            return 'Anonymous';
+        }
+
+        $parts = explode(' ', $this->name);
+        if (count($parts) === 1) {
+            return $parts[0];
+        }
+
+        $firstName = $parts[0];
+        $lastName = end($parts);
+        $lastInitial = mb_substr($lastName, 0, 1);
+
+        return "{$firstName} {$lastInitial}.";
+    }
 }

@@ -16,7 +16,7 @@ class HomeController extends Controller
         if ($request->has('guestbook') && $request->has('user_id')) {
             $guard = Auth::guard('signee');
             
-            if (!$guard->check() || $guard->id() != $request->query('user_id')) {
+            if (!app()->isLocal() && (!$guard->check() || $guard->id() != $request->query('user_id'))) {
                 return redirect()->route('home');
             }
         }

@@ -739,6 +739,64 @@
 		</x-modal>
 	@endif
 
+	<flux:modal 
+		name="privacy-modal" 
+		variant="filled" 
+		class="max-w-xl"
+		x-on:modal-show.document="window.lenis?.stop()"
+		x-on:modal-close.document="window.lenis?.start(); setTimeout(() => { window.ScrollTrigger?.refresh(); window.dispatchEvent(new Event('resize')); }, 200)"
+		x-on:close="window.lenis?.start(); setTimeout(() => { window.ScrollTrigger?.refresh(); window.dispatchEvent(new Event('resize')); }, 200)"
+	>
+		<div class="space-y-6" data-lenis-prevent>
+			<div>
+				<flux:heading size="lg">Privacy Policy</flux:heading>
+				<flux:subheading>How I handle your location and profile data.</flux:subheading>
+			</div>
+	
+			<div class="space-y-4 text-zinc-600 dark:text-zinc-400 text-sm leading-relaxed">
+				<p>
+					Transparency is at the core of this project. When you interact with this site, I collect a minimal amount of location data based on your IP address to visualize global connections.
+				</p>
+	
+				<div class="space-y-2">
+					<h4 class="font-bold text-pale-night-black dark:text-pale-night-white">What I Collect</h4>
+					<ul class="list-disc list-inside space-y-1 ml-2">
+						<li>Approximate City, State, and Country.</li>
+						<li>General geographic coordinates (Latitude/Longitude).</li>
+						<li>Your name and profile information (if provided by your auth provider).</li>
+						<li>Your public message (if you choose to sign the guestbook).</li>
+					</ul>
+				</div>
+	
+				<div class="space-y-2">
+					<h4 class="font-bold text-pale-night-black dark:text-pale-night-white">My Commitment to Your Privacy</h4>
+					<p>
+						While I may receive your full name from an authentication provider, I <span class="text-pale-night-blue font-bold italic">never</span> display it publicly. Only your first name and last initial (e.g., John D.) will be shown on the map.
+					</p>
+					<p>
+						Your data will <span class="text-pale-night-blue font-bold italic">never</span> be shared, sold, or used for any purpose beyond this platform. It exists solely to visualize global traffic and to allow friends, acquaintances, and colleagues to connect.
+					</p>
+				</div>
+	
+				<p>
+					By signing the guestbook, you agree to have your public message and approximate location displayed on the global map. You can choose to keep your message private at any time, which will remove it from the public map display.
+				</p>
+	
+				<p class="text-xs italic">
+					This feature showcases technical expertise in geocoding, mapping, and system architecture, while fostering a sense of global community among visitors.
+				</p>
+			</div>
+	
+			<div class="flex justify-end mt-8">
+				<flux:modal.close>
+					<x-button class="bg-pale-night-blue hover:bg-pale-night-blue/80 text-pale-night-black ring-pale-night-black/10 dark:ring-white/20">
+						I Understand
+					</x-button>
+				</flux:modal.close>
+			</div>
+		</div>
+	</flux:modal>
+
 @fluxScripts
 @stack('scripts')
 </body>
