@@ -184,6 +184,10 @@
 				</div>
 			</section>
 
+			<section id="guestbook" class="relative mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+				<livewire:guestbook-map />
+			</section>
+
 			{{-- Scroll Scaled Image Section --}}
 			<x-scroll-scaled-image src="/images/gradial.webp" alt="Ship It!"/>
 
@@ -444,10 +448,6 @@
 						</div>
 					</section>
 				</x-gsap-wrapper>
-
-				<section id="guestbook" class="space-y-8">
-					<livewire:guestbook-map />
-				</section>
 			</div>
 
 			{{-- Example of Video Component --}}

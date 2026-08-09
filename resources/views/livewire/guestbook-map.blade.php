@@ -4,7 +4,7 @@ use App\Models\GuestBookUser;
 use Livewire\Volt\Component;
 
 new class extends Component {
-    public function with()
+    public function with(): array
     {
         return [
             'entries' => GuestBookUser::where('private', false)
@@ -44,10 +44,11 @@ new class extends Component {
         </div>
     </div>
 
-    <div class="glass-pane relative h-[500px] w-full overflow-hidden rounded-3xl" 
+    <div class="glass-pane relative overflow-hidden rounded-3xl border border-white/10" 
+         style="height: 500px;"
          x-data="guestbookMap(@js($entries))"
          x-init="initMap()">
-        <div id="map" class="h-full w-full z-0" wire:ignore></div>
+        <div x-ref="map" class="h-full w-full z-0" style="background: #2d3248;" wire:ignore></div>
         
         {{-- Map Overlay for Legend --}}
         <div class="absolute bottom-6 left-6 z-10 flex gap-4">
@@ -59,16 +60,10 @@ new class extends Component {
     </div>
 
     @push('styles')
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css" />
     <style>
         .leaflet-container {
             background: #292D3E !important;
-        }
-        .leaflet-tile-pane {
-            filter: brightness(0.6) invert(1) contrast(3) hue-rotate(200deg) saturate(0.3) brightness(0.7);
-        }
-        .dark .leaflet-tile-pane {
-            filter: brightness(0.4) invert(1) contrast(3) hue-rotate(200deg) saturate(0.3) brightness(0.5);
         }
         .leaflet-popup-content-wrapper {
             background: rgba(41, 45, 62, 0.9) !important;
@@ -79,43 +74,106 @@ new class extends Component {
         .leaflet-popup-tip {
             background: rgba(41, 45, 62, 0.9) !important;
         }
+        .leaflet-tile-pane {
+            opacity: 0.9;
+        }
     </style>
     @endpush
 
     @push('scripts')
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
     <script>
         function guestbookMap(entries) {
             return {
                 map: null,
+                observer: null,
+                visibilityObserver: null,
+                refresh() {
+                    if (this.map) {
+                        this.map.invalidateSize({ animate: false });
+                    }
+                },
                 initMap() {
-                    this.map = L.map('map', {
-                        zoomControl: false,
-                        attributionControl: false,
-                        scrollWheelZoom: false
-                    }).setView([20, 0], 2);
+                    const setup = () => {
+                        if (this.map) return;
+                        
+                        const el = this.$refs.map;
+                        if (!window.L || !el || el.clientHeight === 0) {
+                            setTimeout(setup, 100);
+                            return;
+                        }
 
-                    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-                        maxZoom: 19,
-                    }).addTo(this.map);
+                        this.map = L.map(el, {
+                            zoomControl: false,
+                            attributionControl: false,
+                            scrollWheelZoom: false,
+                            fadeAnimation: false
+                        }).setView([30, 0], 2);
 
-                    const icon = L.divIcon({
-                        className: 'custom-div-icon',
-                        html: `<div class="w-3 h-3 bg-pale-night-blue rounded-full ring-4 ring-pale-night-blue/20 animate-pulse shadow-[0_0_10px_rgba(130,170,255,0.5)]"></div>`,
-                        iconSize: [12, 12],
-                        iconAnchor: [6, 6]
-                    });
+                        // Using the most reliable CartoDB Dark Matter URL
+                        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+                            subdomains: 'abcd',
+                            maxZoom: 20,
+                            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+                        }).addTo(this.map);
 
-                    entries.forEach(entry => {
-                        L.marker([entry.lat, entry.lng], { icon })
-                            .addTo(this.map)
-                            .bindPopup(`
-                                <div class="p-2 min-w-[150px]">
-                                    <div class="font-bold text-pale-night-blue text-lg">${entry.name}</div>
-                                    <div class="text-white/80 text-sm mt-1 leading-relaxed italic">"${entry.message || 'Connected to the grid.'}"</div>
-                                </div>
-                            `);
-                    });
+                        const icon = L.divIcon({
+                            className: 'custom-div-icon',
+                            html: `<div class="w-3 h-3 bg-pale-night-blue rounded-full ring-4 ring-pale-night-blue/20 animate-pulse shadow-[0_0_10px_rgba(130,170,255,0.5)]"></div>`,
+                            iconSize: [12, 12],
+                            iconAnchor: [6, 6]
+                        });
+
+                        if (Array.isArray(entries)) {
+                            entries.forEach(entry => {
+                                if (entry.lat && entry.lng) {
+                                    L.marker([entry.lat, entry.lng], { icon })
+                                        .addTo(this.map)
+                                        .bindPopup(`
+                                            <div class="p-2 min-w-[150px]">
+                                                <div class="font-bold text-pale-night-blue text-lg">${entry.name}</div>
+                                                <div class="text-white/80 text-sm mt-1 leading-relaxed italic">"${entry.message || 'Connected to the grid.'}"</div>
+                                            </div>
+                                        `);
+                                }
+                            });
+                        }
+
+                        // Force refresh multiple times to handle layout settlement
+                        this.refresh();
+                        setTimeout(() => this.refresh(), 100);
+                        setTimeout(() => this.refresh(), 500);
+                        setTimeout(() => this.refresh(), 2000);
+
+                        this.observer = new ResizeObserver(() => this.refresh());
+                        this.observer.observe(el);
+
+                        this.visibilityObserver = new IntersectionObserver((items) => {
+                            if (items[0].isIntersecting) this.refresh();
+                        });
+                        this.visibilityObserver.observe(el);
+
+                        if (window.ScrollTrigger) {
+                            ScrollTrigger.addEventListener('refresh', () => this.refresh());
+                        }
+                        window.addEventListener('resize', () => this.refresh());
+                    };
+
+                    setup();
+
+                    // Cleanup
+                    return () => {
+                        if (this.observer) this.observer.disconnect();
+                        if (this.visibilityObserver) this.visibilityObserver.disconnect();
+                        if (window.ScrollTrigger) {
+                            ScrollTrigger.removeEventListener('refresh', () => this.refresh());
+                        }
+                        window.removeEventListener('resize', () => this.refresh());
+                        if (this.map) {
+                            this.map.remove();
+                            this.map = null;
+                        }
+                    };
                 }
             }
         }
