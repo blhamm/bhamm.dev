@@ -55,6 +55,7 @@ return [
         'client_id' => env('APPLE_CLIENT_ID'),
         'client_secret' => env('APPLE_CLIENT_SECRET'),
         'redirect' => env('APPLE_REDIRECT_URI'),
+        'mapkit_token' => env('APPLE_MAPKIT_TOKEN'),
     ],
 
 ];

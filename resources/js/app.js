@@ -17,6 +17,7 @@ window.Lenis = Lenis;
 import { emitParticles, particleUp, emitFromElement } from '@/particles.js';
 import { initExpertiseAnimations } from '@/expertise-animations.js';
 import { initDotMatrix } from '@/dot-matrix.js';
+import '@/guestbook-map.js';
 
 const targetFPS = 60;
 const frameInterval = 1000 / targetFPS;
