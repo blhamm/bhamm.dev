@@ -15,14 +15,14 @@ class GeoIpGeocodeCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'geoip:geocode';
+    protected $signature = 'geoip:geocode {--max-mind : Use MaxMind for coordinates instead of Geocodio}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Geocode IP addresses in batch using MaxMind and Geocodio';
+    protected $description = 'Geocode IP addresses in batch using MaxMind and Geocodio (or MaxMind only)';
 
     /**
      * Execute the console command.
@@ -74,6 +74,25 @@ class GeoIpGeocodeCommand extends Command
                     $city = $recordData->city->name;
                     $state = $recordData->mostSpecificSubdivision->isoCode;
                     $country = $recordData->country->name;
+                    $lat = $recordData->location->latitude;
+                    $lng = $recordData->location->longitude;
+
+                    if ($this->option('max-mind') && $lat && $lng) {
+                        $updateData = [
+                            'latitude' => $lat,
+                            'longitude' => $lng,
+                        ];
+
+                        if ($record instanceof Visitor) {
+                            $updateData['city'] = $city;
+                            $updateData['state'] = $state;
+                            $updateData['country'] = $country;
+                        }
+
+                        $record->update($updateData);
+                        $this->info("Geocoded $ip via MaxMind.");
+                        continue;
+                    }
 
                     if ($city && $state) {
                         $locationQuery = "$city, $state, $country";
