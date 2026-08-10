@@ -733,9 +733,9 @@
 	</p>
 </x-modal>
 
-	@if(request()->has('guestbook') && request()->has('user_id'))
-		<x-modal name="guestbook-modal" title="Sign the Guestbook" show>
-			<livewire:guestbook-form :user-id="request()->integer('user_id')" />
+	@if(Auth::guard('signee')->check() || (request()->has('guestbook') && request()->has('user_id')))
+		<x-modal name="guestbook-modal" title="Sign the Guestbook" :show="request()->has('guestbook') && request()->has('user_id')">
+			<livewire:guestbook-form :user-id="Auth::guard('signee')->id() ?? request()->integer('user_id')" />
 		</x-modal>
 	@endif
 

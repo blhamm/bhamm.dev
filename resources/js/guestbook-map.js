@@ -5,6 +5,9 @@ window.guestbookMap = function (points) {
         map: null,
         observer: null,
         visibilityObserver: null,
+        allAnnotations: [],
+        showSignees: true,
+        showVisitors: true,
 
         async init() {
             const el = this.$refs.map;
@@ -73,7 +76,7 @@ window.guestbookMap = function (points) {
                 });
 
                 // Custom marker appearance
-                const annotations = (points || []).map(point => {
+                this.allAnnotations = (points || []).map(point => {
                     const coordinate = new mapkit.Coordinate(point.lat, point.lng);
                     
                     const isSignee = point.type === 'signee';
@@ -91,11 +94,11 @@ window.guestbookMap = function (points) {
                     return annotation;
                 });
 
-                this.map.addAnnotations(annotations);
+                this.updateVisibleAnnotations();
 
                 // Tight zoom around continents/markers
-                if (annotations.length > 0) {
-                    this.map.showItems(annotations, {
+                if (this.allAnnotations.length > 0) {
+                    this.map.showItems(this.allAnnotations, {
                         animate: true,
                         padding: new mapkit.Padding(100, 40, 100, 40)
                     });
@@ -116,6 +119,30 @@ window.guestbookMap = function (points) {
             } catch (error) {
                 console.error('Failed to initialize Apple MapKit:', error);
             }
+        },
+
+        toggleLayer(type) {
+            if (type === 'signee') {
+                this.showSignees = !this.showSignees;
+            } else if (type === 'visitor') {
+                this.showVisitors = !this.showVisitors;
+            }
+            this.updateVisibleAnnotations();
+        },
+
+        updateVisibleAnnotations() {
+            if (!this.map) return;
+            
+            this.map.removeAnnotations(this.map.annotations);
+            
+            const visible = this.allAnnotations.filter(annotation => {
+                const type = annotation.data.type;
+                if (type === 'signee') return this.showSignees;
+                if (type === 'visitor') return this.showVisitors;
+                return true;
+            });
+            
+            this.map.addAnnotations(visible);
         },
 
         destroy() {

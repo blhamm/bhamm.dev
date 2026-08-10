@@ -41,7 +41,7 @@ new class extends Component {
 
         $this->dispatch('guestbook-signed');
         
-        return redirect()->to('/')->with('status', 'Thank you for signing the guestbook!');
+        return redirect()->to('/#guestbook')->with('status', 'Thank you for signing the guestbook!');
     }
 }; ?>
 
