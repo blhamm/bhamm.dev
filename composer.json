@@ -16,6 +16,7 @@
         "intervention/image": "^4.0",
         "laravel/framework": "^13.0",
         "laravel/nightwatch": "^1.28",
+        "laravel/pennant": "^1.24",
         "laravel/socialite": "^5.29",
         "laravel/tinker": "^3.0",
         "livewire/blaze": "^1.0",
