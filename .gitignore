@@ -22,3 +22,7 @@ yarn-error.log
 /.vscode
 /.zed
 .DS_Store
+**/*.p8
+.junie/plans
+docs/us_capitals.csv
+public/images/me2.jpeg
