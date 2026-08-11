@@ -4,9 +4,16 @@ use App\Models\Signee;
 use App\Models\Visitor;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Pennant\Feature;
+use Livewire\Attributes\On;
 use Livewire\Volt\Component;
 
 new class extends Component {
+    #[On('guestbook-signed')]
+    public function refreshMap()
+    {
+        // This will trigger a re-render
+    }
+
     public function with(): array
     {
         $signees = collect();
@@ -48,34 +55,36 @@ new class extends Component {
 <div class="space-y-8">
     <div class="flex flex-col md:flex-row md:items-center justify-between gap-8 relative p-4" id="guestbook-header">
         <div class="relative z-10">
-            <h2 class="typing-animation text-pale-night-black dark:text-pale-night-white text-2xl font-bold md:text-4xl bg-clip-text text-transparent bg-gradient-to-r from-pale-night-blue to-pale-night-green">
-                Say Hi Stranger
-            </h2>
+            <h2 class="typing-animation text-pale-night-black dark:text-pale-night-white text-2xl font-bold md:text-4xl bg-clip-text text-transparent bg-gradient-to-r from-pale-night-blue to-pale-night-green">@if(Auth::guard('signee')->check())Thanks, {{ Auth::guard('signee')->user()->first_name }}@else Say Hi Stranger @endif</h2>
             <p class="text-zinc-500 dark:text-zinc-400 mt-2 max-w-xl text-lg leading-relaxed">
-                I'd love for you to leave your mark and join the map. This is a technical showcase of human connections, brought to life through batch geocoding and interactive mapping.
+                @if(Auth::guard('signee')->check())
+                    I appreciate your support! If you’re enjoying this showcase, you can help me grow by starring the repository on GitHub. I’m always looking to connect with fellow developers in the PHP, Laravel, and Symfony communities—let’s build something great together.
+                @else
+                    I'd love for you to leave your mark on the map. This is a technical showcase of human connections, brought to life through batch geocoding and interactive mapping.
+                @endif
             </p>
         </div>
         
-        <div class="relative z-10 flex flex-col items-center justify-center gap-6">
+        <div class="relative z-10 flex flex-col items-center justify-center gap-6 w-full md:w-auto">
 
             @if(Auth::guard('signee')->check())
-                <div class="flex items-center gap-2 relative z-10">
+                <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 relative z-10 w-full sm:w-auto">
                     @if(Auth::guard('signee')->user()->social_auth_type === 'github')
-                        <x-button href="https://github.com/blhamm/bhamm.dev" target="_blank" class="bg-pale-night-black/5 dark:bg-white/5 text-pale-night-black dark:text-pale-night-white ring-pale-night-black/10 dark:ring-white/20 hover:bg-pale-night-black/10 dark:hover:bg-white/10">
+                        <x-button href="https://github.com/blhamm/bhamm.dev" target="_blank" class="bg-pale-night-black/5 dark:bg-white/5 text-pale-night-black dark:text-pale-night-white ring-pale-night-black/10 dark:ring-white/20 hover:bg-pale-night-black/10 dark:hover:bg-white/10 w-full sm:w-auto">
                             <flux:icon.star class="mr-2 size-4" />
                             Star on GitHub
                         </x-button>
                     @endif
                     <flux:modal.trigger name="guestbook-modal">
-                        <x-button class="bg-pale-night-blue hover:bg-pale-night-blue/80 text-pale-night-black ring-pale-night-black/10 dark:ring-white/20">
+                        <x-button class="bg-pale-night-blue hover:bg-pale-night-blue/80 text-pale-night-black ring-pale-night-black/10 dark:ring-white/20 w-full sm:w-auto">
                             Update Message
                         </x-button>
                     </flux:modal.trigger>
                 </div>
             @else
-                <div class="relative z-10">
-                    <flux:dropdown>
-                        <x-button icon-trailing="chevron-down" class="bg-pale-night-blue hover:bg-pale-night-blue/80 text-pale-night-black ring-pale-night-black/10 dark:ring-white/20">
+                <div class="relative z-10 w-full sm:w-auto">
+                    <flux:dropdown align="center" class="w-full sm:w-auto">
+                        <x-button icon-trailing="chevron-down" class="bg-pale-night-blue hover:bg-pale-night-blue/80 text-pale-night-black ring-pale-night-black/10 dark:ring-white/20 w-full sm:w-auto">
                             Sign the Guestbook
                         </x-button>
 
@@ -105,18 +114,32 @@ new class extends Component {
                 </div>
             @endif
 
-            <flux:modal.trigger name="privacy-modal">
-                <button class="flex items-center gap-1.5 text-xs text-zinc-500 dark:text-zinc-400 hover:text-pale-night-blue transition-colors relative z-10">
-                    <flux:icon.lock-closed class="size-3" />
-                    <span>Privacy Policy</span>
-                </button>
-            </flux:modal.trigger>
+            <div class="flex items-center gap-2">
+                <flux:modal.trigger name="privacy-modal">
+                    <button class="flex items-center gap-1.5 text-xs text-zinc-500 dark:text-zinc-400 hover:text-pale-night-blue transition-colors relative z-10">
+                        <flux:icon.lock-closed class="size-3" />
+                        <span>Privacy Policy</span>
+                    </button>
+                </flux:modal.trigger>
+
+                @if(Auth::guard('signee')->check())
+                    <span class="text-zinc-500 dark:text-zinc-400 text-xs relative z-10">|</span>
+                    <form method="POST" action="{{ route('signee.logout') }}" class="inline relative z-10">
+                        @csrf
+                        <button type="submit" class="text-xs text-zinc-500 dark:text-zinc-400 hover:text-pale-night-blue transition-colors">
+                            Sign Out
+                        </button>
+                    </form>
+                @endif
+            </div>
         </div>
     </div>
 
     <div class="glass-pane guestbook-map-container relative isolate rounded-3xl border border-white/10" 
          style="height: 500px;"
-         x-data="guestbookMap(@js($points))">
+         x-data="guestbookMap(@js($points))"
+         x-effect="points = @js($points)"
+         data-lenis-prevent>
         <div class="h-full w-full overflow-hidden rounded-3xl" 
              style="mask-image: linear-gradient(white, white); -webkit-mask-image: -webkit-radial-gradient(white, black); clip-path: inset(0 round 1.5rem); transform: translateZ(0);">
             <div x-ref="map" class="h-full w-full z-0 bg-pale-night-white dark:bg-pale-night-black" wire:ignore></div>

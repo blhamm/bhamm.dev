@@ -8,6 +8,7 @@ window.guestbookMap = function (points) {
         allAnnotations: [],
         showSignees: true,
         showVisitors: true,
+        points: points,
 
         async init() {
             const el = this.$refs.map;
@@ -65,8 +66,38 @@ window.guestbookMap = function (points) {
                     showsCompass: mapkit.FeatureVisibility.Hidden,
                     showsUserLocationControl: false,
                     showsUserLocation: false,
-                    padding: new mapkit.Padding(20, 20, 20, 20)
+                    padding: new mapkit.Padding(20, 20, 20, 20),
+                    // Allow interaction but prevent it from bubbling to Lenis
+                    allowsScrolling: true,
+                    allowsZooming: true
                 });
+
+                // Desktop: Stop Lenis on hover to allow scroll-zoom without scrolling the page
+                el.addEventListener('mouseenter', () => {
+                    if (window.matchMedia('(min-width: 1024px)').matches) {
+                        window.lenis?.stop();
+                    }
+                });
+
+                el.addEventListener('mouseleave', () => {
+                    if (window.matchMedia('(min-width: 1024px)').matches) {
+                        window.lenis?.start();
+                    }
+                });
+
+                // Mobile: Ensure touch interactions don't cause weird page scaling
+                // and stop Lenis when interacting with the map
+                el.addEventListener('touchstart', () => {
+                    window.lenis?.stop();
+                }, { passive: true });
+
+                el.addEventListener('touchend', () => {
+                    window.lenis?.start();
+                }, { passive: true });
+
+                el.addEventListener('touchcancel', () => {
+                    window.lenis?.start();
+                }, { passive: true });
 
                 this.applyThemeStyles(isDarkInitial);
 
@@ -75,35 +106,16 @@ window.guestbookMap = function (points) {
                     this.applyThemeStyles(val);
                 });
 
-                // Custom marker appearance
-                this.allAnnotations = (points || []).map(point => {
-                    const coordinate = new mapkit.Coordinate(point.lat, point.lng);
-                    
-                    const isSignee = point.type === 'signee';
-                    
-                    const annotation = new mapkit.MarkerAnnotation(coordinate, {
-                        title: isSignee ? point.name : (point.city ? `${point.city}, ${point.state || ''}` : 'Global Visitor'),
-                        subtitle: isSignee ? (point.message || 'Thanks for stopping by!') : 'Recently active on the site.',
-                        color: isSignee ? "#82aaff" : "#c3e88d",
-                        glyphText: "●",
-                        displayPriority: isSignee ? mapkit.Annotation.DisplayPriority.High : mapkit.Annotation.DisplayPriority.Low
-                    });
-                    
-                    annotation.data = point;
-                    
-                    return annotation;
+                // Watch for points changes
+                this.$watch('points', (newPoints) => {
+                    this.refreshAnnotations(newPoints);
                 });
 
-                this.updateVisibleAnnotations();
+                // Initial annotations
+                this.refreshAnnotations(this.points);
 
-                // Tight zoom around continents/markers
-                if (this.allAnnotations.length > 0) {
-                    this.map.showItems(this.allAnnotations, {
-                        animate: true,
-                        padding: new mapkit.Padding(100, 40, 100, 40)
-                    });
-                } else {
-                    // Default tight global view
+                // Default tight global view
+                if (this.allAnnotations.length === 0) {
                     this.map.region = new mapkit.CoordinateRegion(
                         new mapkit.Coordinate(20, 0),
                         new mapkit.CoordinateSpan(90, 180)
@@ -118,6 +130,41 @@ window.guestbookMap = function (points) {
 
             } catch (error) {
                 console.error('Failed to initialize Apple MapKit:', error);
+            }
+        },
+
+        refreshAnnotations(newPoints) {
+            if (!this.map || !window.mapkit) return;
+            const mapkit = window.mapkit;
+
+            // Remove existing
+            this.map.removeAnnotations(this.allAnnotations);
+
+            // Create new
+            this.allAnnotations = (newPoints || []).map(point => {
+                const coordinate = new mapkit.Coordinate(point.lat, point.lng);
+                const isSignee = point.type === 'signee';
+                
+                const annotation = new mapkit.MarkerAnnotation(coordinate, {
+                    title: isSignee ? point.name : (point.city ? `${point.city}, ${point.state || ''}` : 'Global Visitor'),
+                    subtitle: isSignee ? (point.message || 'Thanks for stopping by!') : 'Recently active on the site.',
+                    color: isSignee ? "#82aaff" : "#c3e88d",
+                    glyphText: "●",
+                    displayPriority: isSignee ? mapkit.Annotation.DisplayPriority.High : mapkit.Annotation.DisplayPriority.Low
+                });
+                
+                annotation.data = point;
+                return annotation;
+            });
+
+            this.updateVisibleAnnotations();
+
+            // Zoom to show all if points changed significantly
+            if (this.allAnnotations.length > 0) {
+                this.map.showItems(this.allAnnotations, {
+                    animate: true,
+                    padding: new mapkit.Padding(100, 40, 100, 40)
+                });
             }
         },
 
