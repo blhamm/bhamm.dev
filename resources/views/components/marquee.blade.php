@@ -12,10 +12,8 @@
             const clone = content.cloneNode(true);
             this.$el.appendChild(clone);
             
-            const totalWidth = content.getBoundingClientRect().width;
-            
             gsap.to([content, clone], {
-                x: -totalWidth,
+                xPercent: -100,
                 duration: {{ $speed }},
                 ease: 'none',
                 repeat: -1
@@ -46,7 +44,7 @@
         }
     }
 }"
-    {{ $attributes->merge(['class' => 'relative overflow-hidden w-full py-12 flex flex-row flex-nowrap']) }}
+    {{ $attributes->merge(['class' => 'relative overflow-hidden w-full  flex flex-row flex-nowrap']) }}
 >
     <div x-ref="content" class="flex shrink-0 flex-row flex-nowrap items-center gap-24 px-12">{{ $slot }}</div>
 </div>

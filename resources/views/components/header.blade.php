@@ -15,7 +15,7 @@
                 <flux:navlist.item href="#expertise">Expertise</flux:navlist.item>
                 <flux:navlist.item href="#kit">My Tools</flux:navlist.item>
                 <flux:navlist.item href="#about">About</flux:navlist.item>
-                <flux:navlist.item href="#experience">Experience</flux:navlist.item>
+                <flux:navlist.item href="#guestbook">Guestbook</flux:navlist.item>
             </flux:navlist>
         </nav>
 
@@ -60,8 +60,8 @@
                 Expertise</flux:navlist.item>
             <flux:navlist.item href="#about" x-on:click="mobileMenuOpen = false" class="py-4 text-3xl font-bold">
                 About</flux:navlist.item>
-            <flux:navlist.item href="#experience" x-on:click="mobileMenuOpen = false" class="py-4 text-3xl font-bold">
-                Experience</flux:navlist.item>
+            <flux:navlist.item href="#guestbook" x-on:click="mobileMenuOpen = false" class="py-4 text-3xl font-bold">
+                Guestbook</flux:navlist.item>
         </flux:navlist>
     </div>
 </header>
