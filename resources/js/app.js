@@ -23,7 +23,7 @@ const targetFPS = 60;
 const frameInterval = 1000 / targetFPS;
 const lenis = new Lenis({
     lerp: 0.1,
-    syncTouch: true,
+    syncTouch: false,
     autoRaf: false,
     normalizeWheel: true
 });

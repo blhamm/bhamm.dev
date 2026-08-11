@@ -11,7 +11,7 @@
         <div class="z-10 w-full shrink-0">{{ $image }}</div>
     @endisset
 
-    <div class="p-6 flex-1 flex flex-col z-10">
+    <div class="px-4 py-6 sm:p-6 flex-1 flex flex-col z-10">
         @isset($tags)
             <div class="mb-3 flex flex-wrap gap-2">{{ $tags }}</div>
         @endisset
@@ -21,7 +21,7 @@
         @endisset
 
         @isset($description)
-            <div class="text-sm text-pale-night-black/70 dark:text-pale-night-white/70 mb-4">
+            <div class="text-base sm:text-lg text-pale-night-black/70 dark:text-pale-night-white/70 mb-6 leading-relaxed">
                 {{ $description }}
             </div>
         @endisset

@@ -32,11 +32,11 @@
         @endif
 
         <x-slot name="title">
-            <h3 class="mt-4 text-xl leading-tight font-bold {{ $titleClass ?? 'text-pale-night-black dark:text-pale-night-white' }}">{{ $title }}</h3>
+            <h3 class="mt-4 text-2xl leading-tight font-bold {{ $titleClass ?? 'text-pale-night-black dark:text-pale-night-white' }}">{{ $title }}</h3>
         </x-slot>
 
         <x-slot name="description">
-            <div class="text-pale-night-black dark:text-pale-night-white font-medium md:text-lg">{{ $description }}</div>
+            <div class="text-pale-night-black dark:text-pale-night-white font-medium text-lg md:text-xl leading-relaxed">{{ $description }}</div>
         </x-slot>
 
         @if ($buttonText)

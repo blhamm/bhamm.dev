@@ -141,10 +141,9 @@
     <div 
         x-ref="container" 
         class="no-scrollbar relative w-full snap-x snap-mandatory overflow-x-auto pb-8 overscroll-x-contain"
-        data-lenis-prevent
         style="scroll-padding-left: max(var(--padding), calc((100vw - 80rem) / 2 + var(--padding))); scroll-padding-right: max(var(--padding), calc((100vw - 80rem) / 2 + var(--padding))); scroll-behavior: auto;"
     >
-        <div class="flex w-max min-w-full flex-row flex-nowrap items-stretch gap-8 md:gap-12" style="padding-left: max(var(--padding), calc((100vw - 80rem) / 2 + var(--padding))); padding-right: max(var(--padding), calc((100vw - 80rem) / 2 + var(--padding)));">
+        <div class="flex w-max min-w-full flex-row flex-nowrap items-stretch gap-6 md:gap-12" style="padding-left: max(var(--padding), calc((100vw - 80rem) / 2 + var(--padding))); padding-right: max(var(--padding), calc((100vw - 80rem) / 2 + var(--padding)));">
             {{ $slot }}
         </div>
     </div>
