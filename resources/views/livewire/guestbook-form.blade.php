@@ -41,13 +41,15 @@ new class extends Component {
 
         $this->dispatch('guestbook-signed');
         
+        $this->js('$flux.modal("guestbook-modal").close()');
+
         return redirect()->to('/#guestbook')->with('status', 'Thank you for signing the guestbook!');
     }
 }; ?>
 
 <form wire:submit="save" class="space-y-6">
     <div class="space-y-2">
-        <flux:heading size="lg">Hello, {{ $user->display_name }}!</flux:heading>
+        <flux:heading size="lg">Hello, {{ $user->first_name }}!</flux:heading>
         <p class="text-zinc-500 dark:text-zinc-400 text-sm">
             We've detected your location as <span class="text-pale-night-blue font-bold">{{ $user->place_id ?? 'our global community' }}</span>.
         </p>
@@ -67,12 +69,19 @@ new class extends Component {
         description="Only public messages are displayed on the global map."
     />
     
-    <div class="flex justify-end gap-3 mt-8">
+    <div class="flex flex-col sm:flex-row sm:justify-end gap-3 mt-8">
         <flux:modal.close>
-            <x-button class="text-pale-night-black dark:text-pale-night-white ring-pale-night-black/10 dark:ring-white/20">Cancel</x-button>
+            <x-button class="text-pale-night-black dark:text-pale-night-white ring-pale-night-black/10 dark:ring-white/20 w-full sm:w-auto">Cancel</x-button>
         </flux:modal.close>
-        <x-button type="submit" class="bg-pale-night-blue hover:bg-pale-night-blue/80 text-pale-night-black ring-pale-night-black/10 dark:ring-white/20">
-            Post to Guestbook
+        @if(Auth::guard('signee')->user()->social_auth_type === 'github')
+            <x-button href="https://github.com/blhamm/bhamm.dev" target="_blank" class="bg-pale-night-black/5 dark:bg-white/5 text-pale-night-black dark:text-pale-night-white ring-pale-night-black/10 dark:ring-white/20 hover:bg-pale-night-black/10 dark:hover:bg-white/10 w-full sm:w-auto">
+                <flux:icon.star class="mr-2 size-4" />
+                Star on GitHub
+            </x-button>
+        @endif
+        <x-button type="submit" wire:loading.attr="disabled" class="bg-pale-night-blue hover:bg-pale-night-blue/80 text-pale-night-black ring-pale-night-black/10 dark:ring-white/20 w-full sm:w-auto">
+            <span wire:loading.remove>Post to Guestbook</span>
+            <span wire:loading>Posting...</span>
         </x-button>
     </div>
 </form>

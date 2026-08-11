@@ -4,6 +4,7 @@
     'titleClass' => null,
     'tags' => [],
     'show' => false,
+    'showClose' => true,
 ])
 
 <flux:modal 
@@ -11,8 +12,8 @@
     :x-init="$show ? '$nextTick(() => $flux.modal(\'' . $name . '\').show())' : null"
     class="w-full h-dvh p-0 m-0 overflow-hidden bg-transparent border-none outline-none max-h-none max-w-none" 
     variant="bare"
-    x-on:modal-show.document="window.lenis?.stop()"
-    x-on:modal-close.document="window.lenis?.start(); setTimeout(() => { window.ScrollTrigger?.refresh(); window.dispatchEvent(new Event('resize')); }, 200)"
+    x-on:modal-show="window.lenis?.stop()"
+    x-on:modal-close="window.lenis?.start(); setTimeout(() => { window.ScrollTrigger?.refresh(); window.dispatchEvent(new Event('resize')); }, 200)"
     x-on:close="window.lenis?.start(); setTimeout(() => { window.ScrollTrigger?.refresh(); window.dispatchEvent(new Event('resize')); }, 200)"
 >
     <div class="h-full w-full overflow-y-auto overscroll-contain flex flex-col" data-lenis-prevent>
@@ -47,15 +48,17 @@
                     @endif
                 </div>
     
-                <div class="relative z-10 text-pale-night-black/80 dark:text-pale-night-white/80 max-w-none space-y-4 text-base leading-relaxed md:text-lg flex-1">
+                <div class="relative z-10 text-pale-night-black/80 dark:text-pale-night-white/80 max-w-none space-y-4 text-lg sm:text-xl leading-relaxed flex-1">
                     {{ $slot }}
                 </div>
-    
-                <div class="relative z-10 flex pb-8 md:pb-0">
-                    <flux:modal.close>
-                        <x-button class="bg-pale-night-black/5 dark:bg-white/5 text-pale-night-black dark:text-pale-night-white ring-pale-night-black/10 dark:ring-white/20 hover:bg-pale-night-black/10 dark:hover:bg-white/10">Close</x-button>
-                    </flux:modal.close>
-                </div>
+
+                @if ($showClose)
+                    <div class="relative z-10 flex flex-col sm:flex-row sm:justify-end pb-8 md:pb-0">
+                        <flux:modal.close>
+                            <x-button class="bg-pale-night-black/5 dark:bg-white/5 text-pale-night-black dark:text-pale-night-white ring-pale-night-black/10 dark:ring-white/20 hover:bg-pale-night-black/10 dark:hover:bg-white/10 w-full sm:w-auto">Close</x-button>
+                        </flux:modal.close>
+                    </div>
+                @endif
             </div>
         </div>
     </div>

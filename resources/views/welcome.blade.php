@@ -67,7 +67,7 @@
 	<x-content>
 		<div class="relative z-20 space-y-24 pb-24">
 			<section id="expertise" class="relative">
-				<div class="relative overflow-hidden py-24">
+				<div class="relative overflow-hidden pt-24 md:pt-36">
 					<x-dot-matrix/>
 					<x-carousel>
 						<x-slot name="header">
@@ -81,7 +81,7 @@
 							description="Architecting resilient, discoverable APIs. Expert-level implementation of OAuth2, event-driven architectures, and distributed systems designed for high-throughput and failure tolerance."
 							{{-- image="/images/cloud.webp" --}}
 {{--							:tags="['REST', 'OAuth', 'Redis', 'Event-Driven']"--}}
-							size="w-72 md:w-sm"
+							size="w-80 md:w-sm"
 							modal="api-modal"
 							titleClass="text-gradient-api"
 							buttonClass="hover-theme-api"
@@ -96,7 +96,7 @@
 							description="Polyglot data strategy focusing on relational integrity and high-performance caching. From complex PostgreSQL schemas to low-latency Redis implementations, ensuring data safety and query efficiency."
 							{{-- image="/images/db.webp" --}}
 {{--							:tags="['PostgreSQL', 'MySQL', 'Redis', 'SQLite']"--}}
-							size="w-72 md:w-sm"
+							size="w-80 md:w-sm"
 							modal="database-modal"
 							titleClass="text-gradient-db"
 							buttonClass="hover-theme-db"
@@ -111,7 +111,7 @@
 							description="Engineering for reliability through total visibility. Implementing OpenTelemetry (OTLP) for distributed tracing and metrics. Moving beyond simple monitoring to proactive system health."
 							{{-- image="/images/observability.webp" --}}
 {{--							:tags="['Grafana', 'OTLP', 'Observability', 'SRE']"--}}
-							size="w-72 md:w-sm"
+							size="w-80 md:w-sm"
 							modal="observability-modal"
 							titleClass="text-gradient-obs"
 							buttonClass="hover-theme-obs"
@@ -126,7 +126,7 @@
 							description="Infrastructure as code and container-native workflows. Streamlining delivery with GitHub Actions and Ansible. Building reproducible, self-healing environments across AWS and DigitalOcean."
 							{{-- image="/images/devops.webp" --}}
 {{--							:tags="['Docker', 'AWS', 'GitHub Actions']"--}}
-							size="w-72 md:w-sm"
+							size="w-80 md:w-sm"
 							modal="devops-modal"
 							titleClass="text-gradient-devops"
 							buttonClass="hover-theme-devops"
@@ -141,7 +141,7 @@
 							description="Deep-domain expertise in the Laravel ecosystem since v3.2. Architecting high-performance PHP applications by leveraging the framework's core strengths and knowing when to extend them."
 							{{-- image="/images/php.webp" --}}
 {{--							:tags="['Laravel', 'PHP', 'Eloquent', 'Livewire']"--}}
-							size="w-72 md:w-sm"
+							size="w-80 md:w-sm"
 							modal="laravel-modal"
 							titleClass="text-gradient-laravel"
 							buttonClass="hover-theme-laravel"
@@ -156,7 +156,7 @@
 							description="Strict adherence to SOLID principles and type-safe development. Using testing (Pest/PHPUnit) as a primary design tool. Driving team velocity through clean code and strict static analysis."
 							{{-- image="/images/gradial.webp" --}}
 {{--							:tags="['Testing', 'SOLID', 'PHPStan', 'TypeScript']"--}}
-							size="w-72 md:w-sm"
+							size="w-80 md:w-sm"
 							modal="engineering-modal"
 							titleClass="text-gradient-eng"
 							buttonClass="hover-theme-eng"
@@ -171,7 +171,7 @@
 							description="Bridging high-end design with reactive engineering. Meticulous implementation of design systems using Vue, React, and Tailwind CSS. Crafting pixel-perfect, accessible interfaces from Figma to production."
 							{{-- image="/images/front-end.webp" --}}
 {{--							:tags="['Vue', 'React', 'TypeScript', 'Tailwind']"--}}
-							size="w-72 md:w-sm"
+							size="w-80 md:w-sm"
 							modal="frontend-modal"
 							titleClass="text-gradient-fe"
 							buttonClass="hover-theme-fe"
@@ -181,8 +181,69 @@
 							</x-slot>
 						</x-project-card>
 					</x-carousel>
+
+					<section id="experience" class="py-12" aria-label="Brand Partnerships">
+						<x-marquee>
+							<img
+								src="/images/brands/American_Express_logo.svg.webp"
+								alt="American Express"
+								class="h-8 w-auto opacity-50 grayscale transition-opacity hover:opacity-100 md:h-12 dark:invert"
+							/>
+							<img
+								src="/images/brands/Starbucks_Coffee_Logo.svg.webp"
+								alt="Starbucks"
+								class="h-8 w-auto opacity-50 grayscale transition-opacity hover:opacity-100 md:h-12 dark:invert"
+							/>
+							<img
+								src="/images/brands/Uber_logo_2018.svg.webp"
+								alt="Uber"
+								class="h-4 w-auto opacity-50 grayscale transition-opacity hover:opacity-100 md:h-6 dark:invert"
+							/>
+							<img
+								src="/images/brands/Chase_logo_2007.svg.webp"
+								alt="Chase"
+								class="h-4 w-auto opacity-50 grayscale transition-opacity hover:opacity-100 md:h-6 dark:invert"
+							/>
+							<img
+								src="/images/brands/United Logo_Rebrand_Large.svg"
+								alt="United Airlines"
+								class="h-4 w-auto opacity-50 grayscale transition-opacity hover:opacity-100 md:h-6 dark:invert"
+							/>
+							<img
+								src="/images/brands/Emirates_Logo.svg.webp"
+								alt="Emirates"
+								class="h-8 w-auto opacity-50 grayscale transition-opacity hover:opacity-100 md:h-12 dark:invert"
+							/>
+							<img
+								src="/images/brands/Marriott_hotels_logo14.svg.webp"
+								alt="Marriott"
+								class="h-8 w-auto opacity-50 grayscale transition-opacity hover:opacity-100 md:h-12 dark:invert"
+							/>
+							<img
+								src="/images/brands/Lufthansa_Logo_2018.svg.webp"
+								alt="Lufthansa"
+								class="h-4 w-auto opacity-50 grayscale transition-opacity hover:opacity-100 md:h-6 dark:invert"
+							/>
+							<img
+								src="/images/brands/Air_Canada_2017.svg.webp"
+								alt="Air Canada"
+								class="h-4 w-auto opacity-50 grayscale transition-opacity hover:opacity-100 md:h-6 dark:invert"
+							/>
+							<img
+								src="/images/brands/Singapore_Airlines_Logo.svg.webp"
+								alt="Singapore Airlines"
+								class="h-4 w-auto opacity-50 grayscale transition-opacity hover:opacity-100 md:h-6 dark:invert"
+							/>
+							<img
+								src="/images/brands/Cathay_Pacific_logo.svg.webp"
+								alt="Cathay Pacific"
+								class="h-4 w-auto opacity-50 grayscale transition-opacity hover:opacity-100 md:h-6 dark:invert"
+							/>
+						</x-marquee>
+					</section>
 				</div>
 			</section>
+
 
 			<section id="guestbook" class="relative mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
 				<livewire:guestbook-map />
@@ -199,7 +260,7 @@
 					<x-bento-grid>
 						{{-- Row 1: The Core --}}
 						<a href="https://www.apple.com/macbook-pro/" target="_blank"
-						   class="glass-pane group relative flex min-h-[350px] flex-col justify-end overflow-hidden rounded-3xl p-8 md:col-span-8 md:row-span-2 transition-all hover:ring-2 hover:ring-pale-night-blue/50">
+						   class="glass-pane group relative flex min-h-[350px] flex-col justify-end overflow-hidden rounded-3xl px-6 py-8 sm:p-8 md:col-span-8 md:row-span-2 transition-all hover:ring-2 hover:ring-pale-night-blue/50">
 							<div class="absolute inset-0 z-0 overflow-hidden">
 								<div
 									class="absolute inset-0 z-10 bg-gradient-to-t from-pale-night-black/80 to-transparent"></div>
@@ -219,7 +280,7 @@
 						</a>
 
 						<a href="https://www.jetbrains.com/phpstorm/" target="_blank"
-						   class="glass-pane flex flex-col items-center justify-center space-y-6 rounded-3xl p-8 text-center transition-all hover:ring-2 hover:ring-pale-night-blue/50 md:col-span-4">
+						   class="glass-pane flex flex-col items-center justify-center space-y-6 rounded-3xl px-6 py-8 sm:p-8 text-center transition-all hover:ring-2 hover:ring-pale-night-blue/50 md:col-span-4">
 							<img src="/images/kit/PhpStorm.svg" alt="PhpStorm" class="h-20 w-auto"/>
 							<div>
 								{{--                                <flux:heading level="3" size="lg">PhpStorm</flux:heading>--}}
@@ -235,7 +296,7 @@
 
 						{{-- Row 2 --}}
 						<a href="https://ghostty.org/" target="_blank"
-						   class="glass-pane flex flex-col justify-between rounded-3xl p-8 transition-all hover:ring-2 hover:ring-pale-night-green/50 md:col-span-2">
+						   class="glass-pane flex flex-col justify-between rounded-3xl px-6 py-8 sm:p-8 transition-all hover:ring-2 hover:ring-pale-night-green/50 md:col-span-2">
 							<svg width="132" height="32" viewBox="0 0 132 32" fill="none"
 							     xmlns="http://www.w3.org/2000/svg" class="h-8 w-auto self-start">
 								<g clip-path="url(#clip0_8215_221)">
@@ -273,7 +334,7 @@
 						</a>
 
 						<a href="https://httpie.io/" target="_blank"
-						   class="glass-pane flex flex-col justify-between rounded-3xl p-8 transition-all hover:ring-2 hover:ring-pale-night-yellow/50 md:col-span-2">
+						   class="glass-pane flex flex-col justify-between rounded-3xl px-6 py-8 sm:p-8 transition-all hover:ring-2 hover:ring-pale-night-yellow/50 md:col-span-2">
 							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1635.31 470" fill="currentColor"
 							     class="h-8 w-auto self-start text-pale-night-black dark:text-pale-night-white">
 								<g data-name="Layer 2">
@@ -293,7 +354,7 @@
 
 						{{-- Row 3 --}}
 						<a href="https://www.lg.com/us/monitors/lg-27md5kl-b-5k-uhd-led-monitor" target="_blank"
-						   class="glass-pane flex items-center gap-6 rounded-3xl p-8 transition-all hover:ring-2 hover:ring-pale-night-purple/50 md:col-span-6">
+						   class="glass-pane flex items-center gap-6 rounded-3xl px-6 py-8 sm:p-8 transition-all hover:ring-2 hover:ring-pale-night-purple/50 md:col-span-6">
 							<flux:icon.computer-desktop class="size-12 text-pale-night-purple"/>
 							<div>
 								<flux:heading level="3" size="lg">LG 5K UltraFine</flux:heading>
@@ -305,7 +366,7 @@
 						</a>
 
 						<a href="https://www.apple.com/airpods-max/" target="_blank"
-						   class="glass-pane group relative flex flex-col justify-end overflow-hidden rounded-3xl p-6 transition-all hover:ring-2 hover:ring-white/50 md:col-span-3">
+						   class="glass-pane group relative flex flex-col justify-end overflow-hidden rounded-3xl px-4 py-6 sm:p-6 transition-all hover:ring-2 hover:ring-white/50 md:col-span-3">
 							<div class="absolute inset-0 z-0 overflow-hidden">
 								<div
 									class="absolute inset-0 z-10 bg-gradient-to-t from-pale-night-black/60 to-transparent"></div>
@@ -320,7 +381,7 @@
 
 						<a href="https://www.apple.com/shop/product/mxk83ll/a/magic-keyboard-with-touch-id-and-numeric-keypad-for-mac-models-with-apple-silicon-usb-c-us-english-black-keys?fnode=fe58c85239c2b55071c25a9c5474fc35e7341577fbd6514d381d67dbe710ef38f04ec873ba1c335cb614d0c27c28697816142834d421e64e6376934eb9e64c7756028c552485599caa61bd7e476513a9531faa7c5ea790c99c97ee178646ea95"
 						   target="_blank"
-						   class="glass-pane flex flex-col justify-between rounded-3xl p-6 transition-all hover:ring-2 hover:ring-pale-night-blue/50 md:col-span-3">
+						   class="glass-pane flex flex-col justify-between rounded-3xl px-4 py-6 sm:p-6 transition-all hover:ring-2 hover:ring-pale-night-blue/50 md:col-span-3">
 							<flux:icon.square-3-stack-3d class="size-8 text-pale-night-blue"/>
 							<div>
 								<flux:heading level="4" size="sm">Magic Peripherals</flux:heading>
@@ -331,7 +392,7 @@
 
 						{{-- Row 4 --}}
 						<a href="https://junie.jetbrains.com" target="_blank"
-						   class="glass-pane group relative overflow-hidden rounded-3xl p-8 transition-all hover:ring-2 hover:ring-pale-night-green/50 md:col-span-4 md:row-span-2">
+						   class="glass-pane group relative overflow-hidden rounded-3xl px-6 py-8 sm:p-8 transition-all hover:ring-2 hover:ring-pale-night-green/50 md:col-span-4 md:row-span-2">
 							<div class="relative z-10 flex h-full flex-col justify-between">
 								<svg xmlns="http://www.w3.org/2000/svg" width="197" height="73" fill="none"
 								     viewBox="0 0 197 73"
@@ -355,7 +416,7 @@
 						</a>
 
 						<div
-							class="glass-pane flex flex-col items-center justify-center space-y-4 rounded-3xl p-8 text-center md:col-span-3">
+							class="glass-pane flex flex-col items-center justify-center space-y-4 rounded-3xl px-6 py-8 sm:p-8 text-center md:col-span-3">
 							<div class="flex gap-4">
 								<a href="https://bear.app/" target="_blank"
 								   class="flex size-12 items-center justify-center transition-all hover:scale-110">
@@ -375,7 +436,7 @@
 						</div>
 
 						<a href="https://www.adobe.com/creativecloud.html" target="_blank"
-						   class="glass-pane flex flex-col justify-between rounded-3xl p-6 transition-all hover:ring-2 hover:ring-pale-night-purple/50 md:col-span-5">
+						   class="glass-pane flex flex-col justify-between rounded-3xl px-4 py-6 sm:p-6 transition-all hover:ring-2 hover:ring-pale-night-purple/50 md:col-span-5">
 							<div class="flex items-center gap-4">
 								<div class="flex items-center gap-3">
 									<img src="/images/kit/creative-cloud-64.svg" alt="Adobe CC" class="size-10"/>
@@ -393,7 +454,7 @@
 
 						{{-- Row 5 --}}
 						<a href="https://paktbags.com/products/everyday-22l-backpack" target="_blank"
-						   class="glass-pane flex items-center gap-6 rounded-3xl p-8 transition-all hover:ring-2 hover:ring-zinc-500/50 md:col-span-8">
+						   class="glass-pane flex items-center gap-6 rounded-3xl px-6 py-8 sm:p-8 transition-all hover:ring-2 hover:ring-zinc-500/50 md:col-span-8">
 							<div class="flex items-center">
 								<img src="/images/kit/pakt-white.png" alt="Pakt" class="h-auto w-10 hidden dark:block"/>
 								<img src="/images/kit/packt-black.webp" alt="Pakt"
@@ -409,7 +470,7 @@
 
 						{{-- Row 6: Humorous Jab --}}
 						<a href="https://www.apple.com/" target="_blank"
-						   class="group flex flex-col items-center justify-center gap-6 rounded-3xl border border-red-500/20 bg-red-500/5 p-8 backdrop-blur-md transition-all hover:bg-red-500/20 md:col-span-12 md:flex-row dark:bg-red-500/10">
+						   class="group flex flex-col items-center justify-center gap-6 rounded-3xl border border-red-500/20 bg-red-500/5 px-6 py-8 sm:p-8 backdrop-blur-md transition-all hover:bg-red-500/20 md:col-span-12 md:flex-row dark:bg-red-500/10">
 							<div class="relative">
 								<flux:icon.no-symbol
 									class="size-16 text-red-500 transition-transform duration-500 group-hover:rotate-90"/>
@@ -431,7 +492,7 @@
 				<x-gsap-wrapper animation="scale-up" :scrub="true">
 					<section
 						id="about"
-						class="bg-pale-night-black/5 ring-pale-night-black/10 rounded-3xl border border-zinc-200 p-12 ring-1 ring-inset dark:border-zinc-800"
+						class="bg-pale-night-black/5 ring-pale-night-black/10 rounded-3xl border border-zinc-200 px-6 py-12 sm:p-12 ring-1 ring-inset dark:border-zinc-800"
 					>
 						<div class="grid items-center gap-12 md:grid-cols-2">
 							<div>
@@ -455,65 +516,7 @@
 				<flux:heading level="2" size="xl" class="typing-animation text-pale-night-white">Scroll to Control Time</flux:heading>
 			</x-video-component> --}}
 
-			<section id="experience" class="pt-12" aria-label="Brand Partnerships">
-				<x-marquee>
-					<img
-						src="/images/brands/American_Express_logo.svg.webp"
-						alt="American Express"
-						class="h-8 w-auto opacity-50 grayscale transition-opacity hover:opacity-100 md:h-12 dark:invert"
-					/>
-					<img
-						src="/images/brands/Starbucks_Coffee_Logo.svg.webp"
-						alt="Starbucks"
-						class="h-8 w-auto opacity-50 grayscale transition-opacity hover:opacity-100 md:h-12 dark:invert"
-					/>
-					<img
-						src="/images/brands/Uber_logo_2018.svg.webp"
-						alt="Uber"
-						class="h-4 w-auto opacity-50 grayscale transition-opacity hover:opacity-100 md:h-6 dark:invert"
-					/>
-					<img
-						src="/images/brands/Chase_logo_2007.svg.webp"
-						alt="Chase"
-						class="h-4 w-auto opacity-50 grayscale transition-opacity hover:opacity-100 md:h-6 dark:invert"
-					/>
-					<img
-						src="/images/brands/United Logo_Rebrand_Large.svg"
-						alt="United Airlines"
-						class="h-4 w-auto opacity-50 grayscale transition-opacity hover:opacity-100 md:h-6 dark:invert"
-					/>
-					<img
-						src="/images/brands/Emirates_Logo.svg.webp"
-						alt="Emirates"
-						class="h-8 w-auto opacity-50 grayscale transition-opacity hover:opacity-100 md:h-12 dark:invert"
-					/>
-					<img
-						src="/images/brands/Marriott_hotels_logo14.svg.webp"
-						alt="Marriott"
-						class="h-8 w-auto opacity-50 grayscale transition-opacity hover:opacity-100 md:h-12 dark:invert"
-					/>
-					<img
-						src="/images/brands/Lufthansa_Logo_2018.svg.webp"
-						alt="Lufthansa"
-						class="h-4 w-auto opacity-50 grayscale transition-opacity hover:opacity-100 md:h-6 dark:invert"
-					/>
-					<img
-						src="/images/brands/Air_Canada_2017.svg.webp"
-						alt="Air Canada"
-						class="h-4 w-auto opacity-50 grayscale transition-opacity hover:opacity-100 md:h-6 dark:invert"
-					/>
-					<img
-						src="/images/brands/Singapore_Airlines_Logo.svg.webp"
-						alt="Singapore Airlines"
-						class="h-4 w-auto opacity-50 grayscale transition-opacity hover:opacity-100 md:h-6 dark:invert"
-					/>
-					<img
-						src="/images/brands/Cathay_Pacific_logo.svg.webp"
-						alt="Cathay Pacific"
-						class="h-4 w-auto opacity-50 grayscale transition-opacity hover:opacity-100 md:h-6 dark:invert"
-					/>
-				</x-marquee>
-			</section>
+
 		</div>
 	</x-content>
 
@@ -734,7 +737,7 @@
 </x-modal>
 
 	@if(Auth::guard('signee')->check() || (request()->has('guestbook') && request()->has('user_id')))
-		<x-modal name="guestbook-modal" title="Sign the Guestbook" :show="request()->has('guestbook') && request()->has('user_id')">
+		<x-modal name="guestbook-modal" title="Sign the Guestbook" :show="request()->has('guestbook') && request()->has('user_id')" :show-close="false">
 			<livewire:guestbook-form :user-id="Auth::guard('signee')->id() ?? request()->integer('user_id')" />
 		</x-modal>
 	@endif
@@ -743,8 +746,8 @@
 		name="privacy-modal" 
 		variant="filled" 
 		class="max-w-xl"
-		x-on:modal-show.document="window.lenis?.stop()"
-		x-on:modal-close.document="window.lenis?.start(); setTimeout(() => { window.ScrollTrigger?.refresh(); window.dispatchEvent(new Event('resize')); }, 200)"
+		x-on:modal-show="window.lenis?.stop()"
+		x-on:modal-close="window.lenis?.start(); setTimeout(() => { window.ScrollTrigger?.refresh(); window.dispatchEvent(new Event('resize')); }, 200)"
 		x-on:close="window.lenis?.start(); setTimeout(() => { window.ScrollTrigger?.refresh(); window.dispatchEvent(new Event('resize')); }, 200)"
 	>
 		<div class="space-y-6" data-lenis-prevent>
@@ -787,9 +790,9 @@
 				</p>
 			</div>
 	
-			<div class="flex justify-end mt-8">
+			<div class="flex flex-col sm:flex-row sm:justify-end mt-8">
 				<flux:modal.close>
-					<x-button class="bg-pale-night-blue hover:bg-pale-night-blue/80 text-pale-night-black ring-pale-night-black/10 dark:ring-white/20">
+					<x-button class="bg-pale-night-blue hover:bg-pale-night-blue/80 text-pale-night-black ring-pale-night-black/10 dark:ring-white/20 w-full sm:w-auto">
 						I Understand
 					</x-button>
 				</flux:modal.close>
