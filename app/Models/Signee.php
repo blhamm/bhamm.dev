@@ -41,4 +41,13 @@ class Signee extends Authenticatable
 
         return "{$firstName} {$lastInitial}.";
     }
+
+    public function getFirstNameAttribute(): string
+    {
+        if (empty($this->name)) {
+            return 'Stranger';
+        }
+
+        return explode(' ', $this->name)[0];
+    }
 }

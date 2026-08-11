@@ -9,6 +9,7 @@ Route::get('/', HomeController::class)->name('home');
 
 Route::get('/auth/{provider}/redirect', [SocialiteController::class, 'redirect'])->name('social.redirect');
 Route::get('/auth/{provider}/callback', [SocialiteController::class, 'callback'])->name('social.callback');
+Route::post('/auth/logout', [SocialiteController::class, 'logout'])->name('signee.logout');
 
 //Route::view('dashboard', 'dashboard')
 //    ->middleware(['auth', 'verified'])
