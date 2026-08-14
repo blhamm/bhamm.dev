@@ -9,6 +9,7 @@ window.guestbookMap = function (points) {
         showSignees: true,
         showVisitors: true,
         points: points,
+        isActivated: false,
 
         async init() {
             const el = this.$refs.map;
@@ -67,36 +68,56 @@ window.guestbookMap = function (points) {
                     showsUserLocationControl: false,
                     showsUserLocation: false,
                     padding: new mapkit.Padding(20, 20, 20, 20),
-                    // Allow interaction but prevent it from bubbling to Lenis
-                    allowsScrolling: true,
-                    allowsZooming: true
+                    // Initially disabled, activated on click
+                    allowsScrolling: false,
+                    allowsZooming: false
                 });
 
-                // Desktop: Stop Lenis on hover to allow scroll-zoom without scrolling the page
+                // Activation logic
+                this.$watch('isActivated', (val) => {
+                    if (!this.map) return;
+                    
+                    this.map.allowsScrolling = val;
+                    this.map.allowsZooming = val;
+
+                    if (val) {
+                        // When activated, stop Lenis if mouse is over (or immediately on mobile)
+                        // to allow map interaction without page scrolling
+                        if (window.matchMedia('(min-width: 1024px)').matches) {
+                            // On desktop, only stop if mouse is actually over the map
+                            // This allows activation then moving mouse out to scroll page
+                            const isHovered = el.matches(':hover');
+                            if (isHovered) {
+                                window.lenis?.stop();
+                            }
+                        } else {
+                            // On mobile, stop Lenis when activated to allow panning
+                            window.lenis?.stop();
+                        }
+                    } else {
+                        // When deactivated, restart Lenis
+                        window.lenis?.start();
+                    }
+                });
+
+                // Desktop: Stop/Start Lenis on hover ONLY if activated
                 el.addEventListener('mouseenter', () => {
-                    if (window.matchMedia('(min-width: 1024px)').matches) {
+                    if (this.isActivated && window.matchMedia('(min-width: 1024px)').matches) {
                         window.lenis?.stop();
                     }
                 });
 
                 el.addEventListener('mouseleave', () => {
-                    if (window.matchMedia('(min-width: 1024px)').matches) {
+                    if (this.isActivated) {
                         window.lenis?.start();
                     }
                 });
 
-                // Mobile: Ensure touch interactions don't cause weird page scaling
-                // and stop Lenis when interacting with the map
+                // Mobile: Ensure Lenis is stopped when interacting with activated map
                 el.addEventListener('touchstart', () => {
-                    window.lenis?.stop();
-                }, { passive: true });
-
-                el.addEventListener('touchend', () => {
-                    window.lenis?.start();
-                }, { passive: true });
-
-                el.addEventListener('touchcancel', () => {
-                    window.lenis?.start();
+                    if (this.isActivated) {
+                        window.lenis?.stop();
+                    }
                 }, { passive: true });
 
                 this.applyThemeStyles(isDarkInitial);

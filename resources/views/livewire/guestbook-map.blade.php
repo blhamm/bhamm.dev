@@ -58,7 +58,7 @@ new class extends Component {
             <h2 class="typing-animation text-pale-night-black dark:text-pale-night-white text-2xl font-bold md:text-4xl bg-clip-text text-transparent bg-gradient-to-r from-pale-night-blue to-pale-night-green">@if(Auth::guard('signee')->check())Thanks, {{ Auth::guard('signee')->user()->first_name }}@else Say Hi Stranger @endif</h2>
             <p class="text-zinc-500 dark:text-zinc-400 mt-2 max-w-xl text-lg leading-relaxed">
                 @if(Auth::guard('signee')->check())
-                    I appreciate your support! If you’re enjoying this showcase, you can help me grow by starring the repository on GitHub. I’m always looking to connect with fellow developers in the PHP, Laravel, and Symfony communities—let’s build something great together.
+                    I appreciate your support! If you’re enjoying this showcase, you can help me grow by starring the repository on GitHub. I’m always looking to connect with fellow developers in the PHP, Laravel, and Symfony communities!
                 @else
                     I'd love for you to leave your mark on the map. This is a technical showcase of human connections, brought to life through batch geocoding and interactive mapping.
                 @endif
@@ -139,14 +139,44 @@ new class extends Component {
          style="height: 500px;"
          x-data="guestbookMap(@js($points))"
          x-effect="points = @js($points)"
-         data-lenis-prevent>
+         x-on:click="isActivated = true"
+         x-on:click.away="isActivated = false">
+        
         <div class="h-full w-full overflow-hidden rounded-3xl" 
              style="mask-image: linear-gradient(white, white); -webkit-mask-image: -webkit-radial-gradient(white, black); clip-path: inset(0 round 1.5rem); transform: translateZ(0);">
             <div x-ref="map" class="h-full w-full z-0 bg-pale-night-white dark:bg-pale-night-black" wire:ignore></div>
         </div>
+
+        {{-- Click to Interact Overlay --}}
+        <div x-show="!isActivated" 
+             class="absolute inset-0 z-20 flex items-center justify-center bg-black/5 dark:bg-black/20 cursor-pointer group transition-all duration-300"
+             x-transition:enter="transition ease-out duration-300"
+             x-transition:enter-start="opacity-0"
+             x-transition:enter-end="opacity-100"
+             x-transition:leave="transition ease-in duration-200"
+             x-transition:leave-start="opacity-100"
+             x-transition:leave-end="opacity-0">
+            <div class="bg-pale-night-white/90 dark:bg-pale-night-black/90 px-6 py-3 rounded-full border border-pale-night-black/10 dark:border-white/10 shadow-2xl flex items-center gap-3 transform group-hover:scale-105 transition-all duration-300">
+                <flux:icon.hand-raised class="size-5 text-pale-night-blue animate-pulse" />
+                <span class="text-sm font-medium text-pale-night-black dark:text-pale-night-white">Click to interact with map</span>
+            </div>
+        </div>
+
+        {{-- Deactivate Button --}}
+        <button x-show="isActivated" 
+                x-on:click.stop="isActivated = false"
+                class="absolute top-6 right-6 z-30 bg-pale-night-white/80 dark:bg-pale-night-black/80 backdrop-blur-md rounded-lg p-2 text-pale-night-black dark:text-white border border-pale-night-black/10 dark:border-white/10 shadow-xl transition-all duration-300 hover:scale-110 active:scale-95 cursor-pointer"
+                x-transition:enter="transition ease-out duration-300"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="transition ease-in duration-200"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0">
+            <flux:icon.x-mark class="size-5" />
+        </button>
         
         {{-- Map Overlay for Legend --}}
-        <div class="absolute bottom-6 right-6 z-10 flex flex-col sm:flex-row gap-2">
+        <div class="absolute bottom-6 right-6 z-30 flex flex-col sm:flex-row gap-2">
              @feature('guestbook-signees')
              <button x-on:click="toggleLayer('signee')" 
                      :class="showSignees ? 'opacity-100' : 'opacity-50 grayscale'"
