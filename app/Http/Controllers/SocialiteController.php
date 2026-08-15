@@ -28,6 +28,9 @@ class SocialiteController extends Controller
         try {
             $socialUser = Socialite::driver($provider)->user();
         } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error("Socialite callback failed for {$provider}: " . $e->getMessage(), [
+                'exception' => $e,
+            ]);
             return redirect('/')->with('error', 'Authentication failed.');
         }
 

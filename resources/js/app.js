@@ -35,7 +35,7 @@ let lastTime = performance.now();
 let particlesOn = false;
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin, Draggable, MotionPathPlugin);
-gsap.ticker.lagSmoothing(0);
+gsap.ticker.lagSmoothing(500, 33);
 
 // Sync Lenis with ScrollTrigger
 lenis.on('scroll', ScrollTrigger.update);
@@ -51,8 +51,10 @@ gsap.ticker.add((time, deltaTime, frame) => {
 });
 
 window.addEventListener('load', () => {
-    ScrollTrigger.refresh();
-    initDotMatrix();
+    requestAnimationFrame(() => {
+        ScrollTrigger.refresh();
+        initDotMatrix();
+    });
 });
 
 const avatar = document.getElementById('avatar');

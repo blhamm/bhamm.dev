@@ -13,7 +13,7 @@
                         this.$refs.container.style.scrollSnapType = 'none';
                     },
                     onDragEnd: () => {
-                        this.$refs.container.style.scrollSnapType = 'x mandatory';
+                        this.$refs.container.style.scrollSnapType = 'x proximity';
                     },
                 });
             }
@@ -59,7 +59,7 @@
                         container.style.scrollSnapType = 'none';
                     },
                     onComplete: () => {
-                        container.style.scrollSnapType = 'x mandatory';
+                        container.style.scrollSnapType = 'x proximity';
                         container.style.scrollBehavior = '';
                     },
                 });
@@ -76,7 +76,7 @@
                     container.style.scrollSnapType = 'none';
                 },
                 onComplete: () => {
-                    container.style.scrollSnapType = 'x mandatory';
+                    container.style.scrollSnapType = 'x proximity';
                     container.style.scrollBehavior = '';
                 },
             });
@@ -122,7 +122,7 @@
                     container.style.scrollSnapType = 'none';
                 },
                 onComplete: () => {
-                    container.style.scrollSnapType = 'x mandatory';
+                    container.style.scrollSnapType = 'x proximity';
                     container.style.scrollBehavior = '';
                 },
             });
@@ -140,7 +140,7 @@
 
     <div 
         x-ref="container" 
-        class="no-scrollbar relative w-full snap-x snap-mandatory overflow-x-auto pb-8 overscroll-x-contain"
+        class="no-scrollbar relative w-full snap-x snap-proximity overflow-x-auto pb-8 overscroll-x-contain"
         style="scroll-padding-left: max(var(--padding), calc((100vw - 80rem) / 2 + var(--padding))); scroll-padding-right: max(var(--padding), calc((100vw - 80rem) / 2 + var(--padding))); scroll-behavior: auto;"
     >
         <div class="flex w-max min-w-full flex-row flex-nowrap items-stretch gap-6 md:gap-12" style="padding-left: max(var(--padding), calc((100vw - 80rem) / 2 + var(--padding))); padding-right: max(var(--padding), calc((100vw - 80rem) / 2 + var(--padding)));">

@@ -69,16 +69,16 @@ window.guestbookMap = function (points) {
                     showsUserLocation: false,
                     padding: new mapkit.Padding(20, 20, 20, 20),
                     // Initially disabled, activated on click
-                    allowsScrolling: false,
-                    allowsZooming: false
+                    isScrollEnabled: false,
+                    isZoomEnabled: false
                 });
 
                 // Activation logic
                 this.$watch('isActivated', (val) => {
                     if (!this.map) return;
                     
-                    this.map.allowsScrolling = val;
-                    this.map.allowsZooming = val;
+                    this.map.isScrollEnabled = val;
+                    this.map.isZoomEnabled = val;
 
                     if (val) {
                         // When activated, stop Lenis if mouse is over (or immediately on mobile)
@@ -171,7 +171,7 @@ window.guestbookMap = function (points) {
                     subtitle: isSignee ? (point.message || 'Thanks for stopping by!') : 'Recently active on the site.',
                     color: isSignee ? "#82aaff" : "#c3e88d",
                     glyphText: "●",
-                    displayPriority: isSignee ? mapkit.Annotation.DisplayPriority.High : mapkit.Annotation.DisplayPriority.Low
+                    displayPriority: isSignee ? mapkit.AnnotationDisplayPriority.High : mapkit.AnnotationDisplayPriority.Low
                 });
                 
                 annotation.data = point;
