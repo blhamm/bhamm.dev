@@ -113,6 +113,7 @@ function showAvatar() {
 function typeText(el, onComplete = null, initialDelay = 0.75, textOverride = null) {
   if (el._typingTimeline) {
     el._typingTimeline.kill();
+    el._typingTimeline = null;
   }
 
   el.classList.add('visible');
@@ -156,13 +157,19 @@ const heroStrings = [
 ];
 let heroIndex = 0;
 let isHeroVisible = true;
+let heroTypingTimer = null;
 
 function cycleHeroText(firstDelay = null) {
   if (!heroText) return;
   
+  if (heroTypingTimer) {
+    heroTypingTimer.kill();
+    heroTypingTimer = null;
+  }
+  
   if (!isHeroVisible && heroIndex !== 0) {
     // If not visible and not the first text, just wait
-    gsap.delayedCall(1, () => cycleHeroText());
+    heroTypingTimer = gsap.delayedCall(1, () => cycleHeroText());
     return;
   }
 
@@ -174,7 +181,7 @@ function cycleHeroText(firstDelay = null) {
     }
     
     // Wait for a bit before clearing and typing next
-    gsap.delayedCall(2.5, () => {
+    heroTypingTimer = gsap.delayedCall(2.5, () => {
         heroIndex = (heroIndex + 1) % heroStrings.length;
         cycleHeroText();
     });
