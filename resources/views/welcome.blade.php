@@ -662,9 +662,9 @@
 	</p>
 </x-modal>
 
-	@if(Auth::guard('signee')->check() || (request()->has('guestbook') && request()->has('user_id')))
-		<x-modal name="guestbook-modal" title="Sign the Guestbook" :show="request()->has('guestbook') && request()->has('user_id')" :show-close="false">
-			<livewire:guestbook-form :user-id="Auth::guard('signee')->id() ?? request()->integer('user_id')" />
+	@if(Auth::guard('signee')->check() || (request()->has('guestbook') && (request()->has('user_id') || request()->has('alt_id'))))
+		<x-modal name="guestbook-modal" title="Sign the Guestbook" :show="request()->has('guestbook') && (request()->has('user_id') || request()->has('alt_id'))" :show-close="false">
+			<livewire:guestbook-form :user-id="Auth::guard('signee')->alt_id ?? (request()->query('alt_id') ?? request()->query('user_id'))" />
 		</x-modal>
 	@endif
 

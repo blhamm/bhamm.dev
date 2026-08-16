@@ -6,17 +6,16 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Signee extends Authenticatable
 {
-    protected $fillable = [
-        'name',
-        'email',
-        'latitude',
-        'longitude',
-        'ip_address',
-        'place_id',
-        'message',
-        'social_auth_type',
-        'private',
-    ];
+    protected $guarded = ['id'];
+
+    protected static function booted(): void
+    {
+        static::creating(function ($signee) {
+            if (empty($signee->alt_id)) {
+                $signee->alt_id = (string) \Illuminate\Support\Str::uuid();
+            }
+        });
+    }
 
     protected $casts = [
         'private' => 'boolean',

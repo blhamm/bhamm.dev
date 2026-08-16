@@ -3,12 +3,17 @@
 namespace App\Http\Middleware;
 
 use App\Models\Visitor;
+use App\Services\GeocodeService;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class CaptureVisitorIp
 {
+    public function __construct(
+        protected GeocodeService $geocode
+    ) {}
+
     /**
      * Handle an incoming request.
      *
@@ -20,10 +25,22 @@ class CaptureVisitorIp
             $ip = $request->ip();
             
             if ($ip) {
-                Visitor::updateOrCreate(
+				$visitor = Visitor::updateOrCreate(
                     ['ip_address' => $ip],
                     ['last_seen_at' => now()]
                 );
+
+				if ($visitor->wasRecentlyCreated) {
+					$location = $this->geocode->lookup($ip);
+
+					$visitor->update([
+						'city' => $location['city'],
+	                    'state' => $location['state'],
+						'latitude' => $location['latitude'],
+						'longitude' => $location['longitude'],
+                        'country' => $location['country'],
+					]);
+				}
             }
         }
 

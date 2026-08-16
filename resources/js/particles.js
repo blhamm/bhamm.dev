@@ -277,14 +277,14 @@ export function particleUp(deltaTime = 0, trace = true) {
 	// Aggressive smoothing (95/5) to ignore Safari's erratic RAF timing
 	const clampedDelta = Math.min(deltaTime, 33.33); 
 	lastTime = (lastTime * 0.95) + (clampedDelta * 0.05);
-	
 	physicsAccumulator += lastTime;
 
 	ctx.clearRect(0, 0, cw, ch);
 	
-	if (physicsAccumulator >= PHYSICS_STEP) {
-		const physicsDelta = physicsAccumulator;
-		physicsAccumulator = 0;
+	// Use fixed-step physics accumulator with while loop to prevent time loss / stutter on Safari rAF jitter
+	while (physicsAccumulator >= PHYSICS_STEP) {
+		const physicsDelta = PHYSICS_STEP;
+		physicsAccumulator -= PHYSICS_STEP;
 		
 		let write = 0;
 		for (let i = 0; i < particleCount; i++) {

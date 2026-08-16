@@ -19,7 +19,7 @@ class SocialiteController extends Controller
         return Socialite::driver($provider)->redirect();
     }
 
-    public function callback(string $provider, Request $request)
+    public function callback(string $provider, Request $request, \App\Services\GeocodeService $geocodeService)
     {
         if ($provider === 'apple') {
             config(['services.apple.client_secret' => app(\App\Services\AppleToken::class)->generate()]);
@@ -34,20 +34,32 @@ class SocialiteController extends Controller
             return redirect('/')->with('error', 'Authentication failed.');
         }
 
-        $user = Signee::updateOrCreate(
+        $ip = $request->ip();
+        $location = $geocodeService->lookup($ip);
+
+        $signee = Signee::updateOrCreate(
             ['email' => $socialUser->getEmail()],
-            [
+            array_filter([
                 'name' => $socialUser->getName() ?? $socialUser->getNickname(),
                 'social_auth_type' => $provider,
-                'ip_address' => $request->ip(),
-            ]
+                'ip_address' => $ip,
+                'city' => $location['city'],
+                'state' => $location['state'],
+                'latitude' => $location['latitude'],
+                'longitude' => $location['longitude'],
+                'place_id' => $location['place_id'],
+            ], fn($value) => $value !== null)
         );
 
+        if (empty($signee->alt_id)) {
+            $signee->update(['alt_id' => (string) \Illuminate\Support\Str::uuid()]);
+        }
+
         // Authenticate the signee
-        Auth::guard('signee')->login($user);
+        Auth::guard('signee')->login($signee);
 
         // We redirect back to home with a parameter to trigger the Guestbook modal
-        return redirect('/?guestbook=1&user_id=' . $user->id);
+        return redirect('/?guestbook=1&user_id=' . $signee->alt_id);
     }
 
     public function logout(Request $request)

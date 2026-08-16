@@ -9,9 +9,9 @@ new class extends Component {
     public string $message = '';
     public bool $private = false;
 
-    public function mount(int $userId)
+    public function mount(string $userId)
     {
-        $this->user = Signee::findOrFail($userId);
+        $this->user = Signee::where('alt_id', $userId)->orWhere('id', $userId)->firstOrFail();
 
         // Security check
         if (!app()->isLocal() && Auth::guard('signee')->id() !== $this->user->id) {
@@ -51,7 +51,15 @@ new class extends Component {
     <div class="space-y-2">
         <flux:heading size="lg">Hello, {{ $user->first_name }}!</flux:heading>
         <p class="text-zinc-500 dark:text-zinc-400 text-sm">
-            We've detected your location as <span class="text-pale-night-blue font-bold">{{ $user->place_id ?? 'our global community' }}</span>.
+            We've detected your location as <span class="text-pale-night-blue font-bold">
+                @if($user->city && $user->state)
+                    {{ $user->city }}, {{ $user->state }}
+                @elseif($user->city)
+                    {{ $user->city }}
+                @else
+                    {{ $user->place_id ?? 'our global community' }}
+                @endif
+            </span>.
         </p>
     </div>
 

@@ -7,13 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 class Visitor extends Model
 {
     protected $fillable = [
-        'ip_address',
-        'latitude',
-        'longitude',
-        'city',
-        'state',
-        'country',
-        'last_seen_at',
+	    'ip_address',
+	    'latitude',
+	    'longitude',
+	    'city',
+	    'state',
+	    'country',
+	    'last_seen_at',
+	    'lat',
+	    'lng',
     ];
 
     protected $casts = [

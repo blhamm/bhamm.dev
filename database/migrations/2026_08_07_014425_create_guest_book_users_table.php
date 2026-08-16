@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('guest_book_users', function (Blueprint $table) {
             $table->id();
+            $table->uuid('alt_id')->unique()->nullable();
             $table->string('name');
             $table->string('email')->unique();
             $table->decimal('lat', 10, 8)->nullable();

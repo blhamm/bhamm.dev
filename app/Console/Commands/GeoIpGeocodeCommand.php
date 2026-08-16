@@ -4,8 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\Signee;
 use App\Models\Visitor;
-use GeoIp2\Database\Reader;
-use Geocodio\Geocodio;
+use App\Services\GeocodeService;
 use Illuminate\Console\Command;
 
 class GeoIpGeocodeCommand extends Command
@@ -27,7 +26,7 @@ class GeoIpGeocodeCommand extends Command
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(GeocodeService $geocodeService): int
     {
         if (!config('geoip.geocoding_enabled')) {
             $this->warn('Geocoding is disabled in config.');
@@ -54,9 +53,7 @@ class GeoIpGeocodeCommand extends Command
         $this->info('Processing ' . $recordsToGeocode->count() . ' records...');
 
         try {
-            $reader = new Reader($dbPath);
-            $geocodio = new Geocodio();
-            $geocodio->setApiKey(config('services.geocodio.key'));
+            $geocodioService = $geocodeService->geocodio();
 
             $locationsToGeocode = []; // location query => array of records
             $ipToLocation = []; // ip => info from maxmind
@@ -67,43 +64,37 @@ class GeoIpGeocodeCommand extends Command
 
                 $locationQuery = $ip; // Default to IP if MaxMind fails
 
-                try {
-                    $lookupIp = ($ip === '127.0.0.1') ? '8.8.8.8' : $ip;
-                    $recordData = $reader->city($lookupIp);
-                    
-                    $city = $recordData->city->name;
-                    $state = $recordData->mostSpecificSubdivision->isoCode;
-                    $country = $recordData->country->name;
-                    $lat = $recordData->location->latitude;
-                    $lng = $recordData->location->longitude;
+                $location = $geocodeService->lookup($ip);
+                $city = $location['city'];
+                $state = $location['state'];
+                $country = $location['country'];
+                $lat = $location['latitude'];
+                $lng = $location['longitude'];
 
-                    if ($this->option('max-mind') && $lat && $lng) {
-                        $updateData = [
-                            'latitude' => $lat,
-                            'longitude' => $lng,
-                        ];
+                if ($this->option('max-mind') && $lat && $lng) {
+                    $updateData = [
+                        'latitude' => $lat,
+                        'longitude' => $lng,
+                    ];
 
-                        if ($record instanceof Visitor) {
-                            $updateData['city'] = $city;
-                            $updateData['state'] = $state;
-                            $updateData['country'] = $country;
-                        }
-
-                        $record->update($updateData);
-                        $this->info("Geocoded $ip via MaxMind.");
-                        continue;
+                    if ($record instanceof Visitor) {
+                        $updateData['city'] = $city;
+                        $updateData['state'] = $state;
+                        $updateData['country'] = $country;
                     }
 
-                    if ($city && $state) {
-                        $locationQuery = "$city, $state, $country";
-                        $ipToLocation[$ip] = [
-                            'city' => $city,
-                            'state' => $state,
-                            'country' => $country,
-                        ];
-                    }
-                } catch (\Exception $e) {
-                    $this->warn("MaxMind lookup failed for IP: $ip - " . $e->getMessage());
+                    $record->update($updateData);
+                    $this->info("Geocoded $ip via MaxMind.");
+                    continue;
+                }
+
+                if ($city && $state) {
+                    $locationQuery = "$city, $state, $country";
+                    $ipToLocation[$ip] = [
+                        'city' => $city,
+                        'state' => $state,
+                        'country' => $country,
+                    ];
                 }
 
                 $locationsToGeocode[$locationQuery][] = $record;
@@ -121,7 +112,7 @@ class GeoIpGeocodeCommand extends Command
 
             foreach ($chunks as $chunk) {
                 try {
-                    $results = $geocodio->geocode($chunk);
+                    $results = $geocodioService->batchGeocode($chunk);
                     
                     if (isset($results['results'])) {
                         foreach ($results['results'] as $index => $locationResult) {

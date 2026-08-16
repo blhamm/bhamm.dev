@@ -1,0 +1,734 @@
+Command finished with exit code 1.
+Command output:
+
+  [30;42;1m PASS [39;49;22m[39m Tests\Unit\ExampleTest[39m
+  [32;1m✓[39;22m[90m [39m[90mthat true is true[39m[90m                                                   [39m [90m0.01s[39m  
+
+  [30;42;1m PASS [39;49;22m[39m Tests\Unit\GeocodingServiceTest[39m
+  [32;1m✓[39;22m[90m [39m[90mgeocoding services implement GeocodingInterface[39m[90m                     [39m [90m0.07s[39m  
+  [32;1m✓[39;22m[90m [39m[90mgeocode service delegates lookup to maxmind service[39m
+  [32;1m✓[39;22m[90m [39m[90mgeocodio service returns default result when geocoding is disabled or api key is missing[39m
+
+  [39;41;1m FAIL [39;49;22m[39m Tests\Feature\AiReadableTest[39m
+  [31;1m⨯[39;22m[90m [39m[90mit serves llms.txt correctly[39m[90m                                        [39m [90m0.14s[39m  
+  [31;1m⨯[39;22m[90m [39m[90mit serves llms-full.txt correctly[39m[90m                                   [39m [90m0.05s[39m  
+  [31;1m⨯[39;22m[90m [39m[90mit includes the llms.txt discovery link in head[39m[90m                     [39m [90m0.05s[39m  
+  [31;1m⨯[39;22m[90m [39m[90mit negotiates markdown content for AI crawlers[39m[90m                      [39m [90m0.05s[39m  
+
+  [39;41;1m FAIL [39;49;22m[39m Tests\Feature\ExampleTest[39m
+  [31;1m⨯[39;22m[90m [39m[90mit returns a welcome page[39m[90m                                           [39m [90m0.06s[39m  
+
+  [30;42;1m PASS [39;49;22m[39m Tests\Feature\GeocodingServiceTest[39m
+  [32;1m✓[39;22m[90m [39m[90mgeocoding services implement GeocodingInterface[39m[90m                     [39m [90m0.01s[39m  
+  [32;1m✓[39;22m[90m [39m[90mgeocode service delegates lookup to maxmind service[39m
+  [32;1m✓[39;22m[90m [39m[90mgeocodio service returns default result when geocoding is disabled[39m[90m… [39m [90m0.01s[39m  
+
+  [39;41;1m FAIL [39;49;22m[39m Tests\Feature\GuestbookAuthAndFlowsTest[39m
+  [31;1m⨯[39;22m[90m [39m[90msocialite redirect redirects to provider when feature is active[39m[90m     [39m [90m0.05s[39m  
+  [31;1m⨯[39;22m[90m [39m[90msocialite redirect redirects to home with error when feature is ina[39m[90m…[39m [90m0.05s[39m  
+  [31;1m⨯[39;22m[90m [39m[90msocialite callback handles exception gracefully and redirects with[39m[90m… [39m [90m0.06s[39m  
+  [31;1m⨯[39;22m[90m [39m[90msignout logs out signee and invalidates session[39m[90m                     [39m [90m0.08s[39m  
+  [32;1m✓[39;22m[90m [39m[90mguestbook form mounts successfully and validates message requiremen[39m[90m…[39m [90m0.03s[39m  
+  [32;1m✓[39;22m[90m [39m[90mguestbook form updates message and toggles privacy successfully[39m[90m     [39m [90m0.01s[39m  
+  [32;1m✓[39;22m[90m [39m[90mguestbook form displays city and state location when present[39m[90m        [39m [90m0.01s[39m  
+
+  [39;41;1m FAIL [39;49;22m[39m Tests\Feature\SocialiteRedirectTest[39m
+  [31;1m⨯[39;22m[90m [39m[90mit redirects to home with alt_id uuid on socialite callback success[39m[90m [39m [90m0.06s[39m  
+  [31m────────────────────────────────────────────────────────────────────────────[39m  
+  [41;1m FAILED [49;22m [1mTests\Feature\AiReadableTest[22m [90m>[39m it serves llms.txt correctly          
+[39;1m  Expected response status code [200] but received 500.
+Failed asserting that 500 is identical to 200.
+
+The following exception occurred during the last request:
+
+ValueError: shell_exec(): Argument #1 ($command) must not be empty in /Users/brandonhamm/code/bhamm.dev/app/Http/Middleware/CaptureVisitorIp.php:41
+Stack trace:
+#0 /Users/brandonhamm/code/bhamm.dev/app/Http/Middleware/CaptureVisitorIp.php(41): shell_exec('')
+#1 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): App\Http\Middleware\CaptureVisitorIp->handle(Object(Illuminate\Http\Request), Object(Closure))
+#2 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php(21): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#3 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/ConvertEmptyStringsToNull.php(31): Illuminate\Foundation\Http\Middleware\TransformsRequest->handle(Object(Illuminate\Http\Request), Object(Closure))
+#4 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull->handle(Object(Illuminate\Http\Request), Object(Closure))
+#5 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php(21): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#6 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TrimStrings.php(51): Illuminate\Foundation\Http\Middleware\TransformsRequest->handle(Object(Illuminate\Http\Request), Object(Closure))
+#7 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Foundation\Http\Middleware\TrimStrings->handle(Object(Illuminate\Http\Request), Object(Closure))
+#8 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Http/Middleware/ValidatePostSize.php(27): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#9 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Http\Middleware\ValidatePostSize->handle(Object(Illuminate\Http\Request), Object(Closure))
+#10 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/PreventRequestsDuringMaintenance.php(110): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#11 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Foundation\Http\Middleware\PreventRequestsDuringMaintenance->handle(Object(Illuminate\Http\Request), Object(Closure))
+#12 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Http/Middleware/HandleCors.php(61): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#13 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Http\Middleware\HandleCors->handle(Object(Illuminate\Http\Request), Object(Closure))
+#14 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Http/Middleware/TrustProxies.php(58): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#15 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Http\Middleware\TrustProxies->handle(Object(Illuminate\Http\Request), Object(Closure))
+#16 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/InvokeDeferredCallbacks.php(22): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#17 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Foundation\Http\Middleware\InvokeDeferredCallbacks->handle(Object(Illuminate\Http\Request), Object(Closure))
+#18 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Http/Middleware/ValidatePathEncoding.php(28): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#19 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Http\Middleware\ValidatePathEncoding->handle(Object(Illuminate\Http\Request), Object(Closure))
+#20 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(137): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#21 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(175): Illuminate\Pipeline\Pipeline->then(Object(Closure))
+#22 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(144): Illuminate\Foundation\Http\Kernel->sendRequestThroughRouter(Object(Illuminate\Http\Request))
+#23 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Testing/Concerns/MakesHttpRequests.php(638): Illuminate\Foundation\Http\Kernel->handle(Object(Illuminate\Http\Request))
+#24 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Testing/Concerns/MakesHttpRequests.php(368): Illuminate\Foundation\Testing\TestCase->call('GET', '/llms.txt', Array, Array, Array, Array)
+#25 /Users/brandonhamm/code/bhamm.dev/tests/Feature/AiReadableTest.php(4): Illuminate\Foundation\Testing\TestCase->get('/llms.txt')
+#26 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/src/Factories/TestCaseMethodFactory.php(135): P\Tests\Feature\AiReadableTest->{closure:/Users/brandonhamm/code/bhamm.dev/tests/Feature/AiReadableTest.php:3}()
+#27 [internal function]: P\Tests\Feature\AiReadableTest->{closure:Pest\Factories\TestCaseMethodFactory::getClosure():125}()
+#28 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/src/Concerns/Testable.php(497): call_user_func_array(Object(Closure), Array)
+#29 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/src/Support/ExceptionTrace.php(24): P\Tests\Feature\AiReadableTest->{closure:Pest\Concerns\Testable::__callClosure():497}()
+#30 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/src/Concerns/Testable.php(497): Pest\Support\ExceptionTrace::ensure(Object(Closure))
+#31 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/src/Concerns/Testable.php(322): P\Tests\Feature\AiReadableTest->__callClosure(Object(Closure), Array)
+#32 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/src/Factories/TestCaseFactory.php(170) : eval()'d code(22): P\Tests\Feature\AiReadableTest->__runTest(Object(Closure))
+#33 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestCase.php(1461): P\Tests\Feature\AiReadableTest->__pest_evaluable_it_serves_llms_txt_correctly()
+#34 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestCase.php(1475): PHPUnit\Framework\TestCase->invokeTestMethod('__pest_evaluabl...', Array)
+#35 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestCase.php(496): PHPUnit\Framework\TestCase->runTest()
+#36 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestRunner/TestRunner.php(126): PHPUnit\Framework\TestCase->runBare()
+#37 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestCase.php(328): PHPUnit\Framework\TestRunner\TestRunner->run(Object(P\Tests\Feature\AiReadableTest))
+#38 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestSuite.php(627): PHPUnit\Framework\TestCase->run()
+#39 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestSuite.php(420): PHPUnit\Framework\TestSuite->runTests(Array, Object(PHPUnit\Event\DispatchingEmitter))
+#40 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestSuite.php(627): PHPUnit\Framework\TestSuite->run()
+#41 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestSuite.php(420): PHPUnit\Framework\TestSuite->runTests(Array, Object(PHPUnit\Event\DispatchingEmitter))
+#42 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestSuite.php(627): PHPUnit\Framework\TestSuite->run()
+#43 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestSuite.php(420): PHPUnit\Framework\TestSuite->runTests(Array, Object(PHPUnit\Event\DispatchingEmitter))
+#44 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/TextUI/TestRunner.php(64): PHPUnit\Framework\TestSuite->run()
+#45 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/TextUI/Application.php(255): PHPUnit\TextUI\TestRunner->run(Object(PHPUnit\TextUI\Configuration\Configuration), Object(PHPUnit\Runner\TestRunHistory\DefaultTestRunHistory), Object(PHPUnit\Framework\TestSuite))
+#46 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/src/Kernel.php(100): PHPUnit\TextUI\Application->run(Array)
+#47 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/bin/pest(207): Pest\Kernel->handle(Array, Array)
+#48 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/bin/pest(215): {closure:/Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/bin/pest:21}()
+#49 {main}
+
+----------------------------------------------------------------------------------
+
+shell_exec(): Argument #1 ($command) must not be empty[39;22m
+
+  at [32mtests/Feature/AiReadableTest.php[39m:[32m6[39m
+      2▕ 
+      3▕ it('serves llms.txt correctly', function () {
+      4▕     $response = $this->get('/llms.txt');
+      5▕ 
+  ➜   6▕     $response->assertStatus(200);
+      7▕     $response->assertHeader('Content-Type', 'text/markdown; charset=UTF-8');
+      8▕     $response->assertSee('Brandon Hamm', false);
+      9▕ });
+     10▕
+
+  [31m────────────────────────────────────────────────────────────────────────────[39m  
+  [41;1m FAILED [49;22m [1mTests\Feature\AiReadableTest[22m [90m>[39m it serves llms-full.txt correctly     
+[39;1m  Expected response status code [200] but received 500.
+Failed asserting that 500 is identical to 200.
+
+The following exception occurred during the last request:
+
+ValueError: shell_exec(): Argument #1 ($command) must not be empty in /Users/brandonhamm/code/bhamm.dev/app/Http/Middleware/CaptureVisitorIp.php:41
+Stack trace:
+#0 /Users/brandonhamm/code/bhamm.dev/app/Http/Middleware/CaptureVisitorIp.php(41): shell_exec('')
+#1 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): App\Http\Middleware\CaptureVisitorIp->handle(Object(Illuminate\Http\Request), Object(Closure))
+#2 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php(21): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#3 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/ConvertEmptyStringsToNull.php(31): Illuminate\Foundation\Http\Middleware\TransformsRequest->handle(Object(Illuminate\Http\Request), Object(Closure))
+#4 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull->handle(Object(Illuminate\Http\Request), Object(Closure))
+#5 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php(21): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#6 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TrimStrings.php(51): Illuminate\Foundation\Http\Middleware\TransformsRequest->handle(Object(Illuminate\Http\Request), Object(Closure))
+#7 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Foundation\Http\Middleware\TrimStrings->handle(Object(Illuminate\Http\Request), Object(Closure))
+#8 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Http/Middleware/ValidatePostSize.php(27): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#9 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Http\Middleware\ValidatePostSize->handle(Object(Illuminate\Http\Request), Object(Closure))
+#10 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/PreventRequestsDuringMaintenance.php(110): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#11 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Foundation\Http\Middleware\PreventRequestsDuringMaintenance->handle(Object(Illuminate\Http\Request), Object(Closure))
+#12 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Http/Middleware/HandleCors.php(61): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#13 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Http\Middleware\HandleCors->handle(Object(Illuminate\Http\Request), Object(Closure))
+#14 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Http/Middleware/TrustProxies.php(58): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#15 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Http\Middleware\TrustProxies->handle(Object(Illuminate\Http\Request), Object(Closure))
+#16 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/InvokeDeferredCallbacks.php(22): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#17 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Foundation\Http\Middleware\InvokeDeferredCallbacks->handle(Object(Illuminate\Http\Request), Object(Closure))
+#18 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Http/Middleware/ValidatePathEncoding.php(28): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#19 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Http\Middleware\ValidatePathEncoding->handle(Object(Illuminate\Http\Request), Object(Closure))
+#20 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(137): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#21 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(175): Illuminate\Pipeline\Pipeline->then(Object(Closure))
+#22 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(144): Illuminate\Foundation\Http\Kernel->sendRequestThroughRouter(Object(Illuminate\Http\Request))
+#23 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Testing/Concerns/MakesHttpRequests.php(638): Illuminate\Foundation\Http\Kernel->handle(Object(Illuminate\Http\Request))
+#24 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Testing/Concerns/MakesHttpRequests.php(368): Illuminate\Foundation\Testing\TestCase->call('GET', '/llms-full.txt', Array, Array, Array, Array)
+#25 /Users/brandonhamm/code/bhamm.dev/tests/Feature/AiReadableTest.php(12): Illuminate\Foundation\Testing\TestCase->get('/llms-full.txt')
+#26 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/src/Factories/TestCaseMethodFactory.php(135): P\Tests\Feature\AiReadableTest->{closure:/Users/brandonhamm/code/bhamm.dev/tests/Feature/AiReadableTest.php:11}()
+#27 [internal function]: P\Tests\Feature\AiReadableTest->{closure:Pest\Factories\TestCaseMethodFactory::getClosure():125}()
+#28 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/src/Concerns/Testable.php(497): call_user_func_array(Object(Closure), Array)
+#29 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/src/Support/ExceptionTrace.php(24): P\Tests\Feature\AiReadableTest->{closure:Pest\Concerns\Testable::__callClosure():497}()
+#30 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/src/Concerns/Testable.php(497): Pest\Support\ExceptionTrace::ensure(Object(Closure))
+#31 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/src/Concerns/Testable.php(322): P\Tests\Feature\AiReadableTest->__callClosure(Object(Closure), Array)
+#32 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/src/Factories/TestCaseFactory.php(170) : eval()'d code(35): P\Tests\Feature\AiReadableTest->__runTest(Object(Closure))
+#33 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestCase.php(1461): P\Tests\Feature\AiReadableTest->__pest_evaluable_it_serves_llms_full_txt_correctly()
+#34 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestCase.php(1475): PHPUnit\Framework\TestCase->invokeTestMethod('__pest_evaluabl...', Array)
+#35 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestCase.php(496): PHPUnit\Framework\TestCase->runTest()
+#36 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestRunner/TestRunner.php(126): PHPUnit\Framework\TestCase->runBare()
+#37 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestCase.php(328): PHPUnit\Framework\TestRunner\TestRunner->run(Object(P\Tests\Feature\AiReadableTest))
+#38 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestSuite.php(627): PHPUnit\Framework\TestCase->run()
+#39 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestSuite.php(420): PHPUnit\Framework\TestSuite->runTests(Array, Object(PHPUnit\Event\DispatchingEmitter))
+#40 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestSuite.php(627): PHPUnit\Framework\TestSuite->run()
+#41 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestSuite.php(420): PHPUnit\Framework\TestSuite->runTests(Array, Object(PHPUnit\Event\DispatchingEmitter))
+#42 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestSuite.php(627): PHPUnit\Framework\TestSuite->run()
+#43 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestSuite.php(420): PHPUnit\Framework\TestSuite->runTests(Array, Object(PHPUnit\Event\DispatchingEmitter))
+#44 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/TextUI/TestRunner.php(64): PHPUnit\Framework\TestSuite->run()
+#45 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/TextUI/Application.php(255): PHPUnit\TextUI\TestRunner->run(Object(PHPUnit\TextUI\Configuration\Configuration), Object(PHPUnit\Runner\TestRunHistory\DefaultTestRunHistory), Object(PHPUnit\Framework\TestSuite))
+#46 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/src/Kernel.php(100): PHPUnit\TextUI\Application->run(Array)
+#47 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/bin/pest(207): Pest\Kernel->handle(Array, Array)
+#48 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/bin/pest(215): {closure:/Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/bin/pest:21}()
+#49 {main}
+
+----------------------------------------------------------------------------------
+
+shell_exec(): Argument #1 ($command) must not be empty[39;22m
+
+  at [32mtests/Feature/AiReadableTest.php[39m:[32m14[39m
+     10▕ 
+     11▕ it('serves llms-full.txt correctly', function () {
+     12▕     $response = $this->get('/llms-full.txt');
+     13▕ 
+  ➜  14▕     $response->assertStatus(200);
+     15▕     $response->assertHeader('Content-Type', 'text/markdown; charset=UTF-8');
+     16▕     $response->assertSee('Full Technical Context', false);
+     17▕ });
+     18▕
+
+  [31m────────────────────────────────────────────────────────────────────────────[39m  
+  [41;1m FAILED [49;22m [1mTests\Feature\AiReadableTest[22m [90m>[39m it includes the llms.txt discovery…   
+[39;1m  Expected response status code [200] but received 500.
+Failed asserting that 500 is identical to 200.
+
+The following exception occurred during the last request:
+
+ValueError: shell_exec(): Argument #1 ($command) must not be empty in /Users/brandonhamm/code/bhamm.dev/app/Http/Middleware/CaptureVisitorIp.php:41
+Stack trace:
+#0 /Users/brandonhamm/code/bhamm.dev/app/Http/Middleware/CaptureVisitorIp.php(41): shell_exec('')
+#1 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): App\Http\Middleware\CaptureVisitorIp->handle(Object(Illuminate\Http\Request), Object(Closure))
+#2 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php(21): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#3 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/ConvertEmptyStringsToNull.php(31): Illuminate\Foundation\Http\Middleware\TransformsRequest->handle(Object(Illuminate\Http\Request), Object(Closure))
+#4 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull->handle(Object(Illuminate\Http\Request), Object(Closure))
+#5 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php(21): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#6 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TrimStrings.php(51): Illuminate\Foundation\Http\Middleware\TransformsRequest->handle(Object(Illuminate\Http\Request), Object(Closure))
+#7 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Foundation\Http\Middleware\TrimStrings->handle(Object(Illuminate\Http\Request), Object(Closure))
+#8 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Http/Middleware/ValidatePostSize.php(27): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#9 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Http\Middleware\ValidatePostSize->handle(Object(Illuminate\Http\Request), Object(Closure))
+#10 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/PreventRequestsDuringMaintenance.php(110): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#11 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Foundation\Http\Middleware\PreventRequestsDuringMaintenance->handle(Object(Illuminate\Http\Request), Object(Closure))
+#12 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Http/Middleware/HandleCors.php(61): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#13 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Http\Middleware\HandleCors->handle(Object(Illuminate\Http\Request), Object(Closure))
+#14 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Http/Middleware/TrustProxies.php(58): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#15 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Http\Middleware\TrustProxies->handle(Object(Illuminate\Http\Request), Object(Closure))
+#16 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/InvokeDeferredCallbacks.php(22): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#17 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Foundation\Http\Middleware\InvokeDeferredCallbacks->handle(Object(Illuminate\Http\Request), Object(Closure))
+#18 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Http/Middleware/ValidatePathEncoding.php(28): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#19 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Http\Middleware\ValidatePathEncoding->handle(Object(Illuminate\Http\Request), Object(Closure))
+#20 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(137): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#21 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(175): Illuminate\Pipeline\Pipeline->then(Object(Closure))
+#22 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(144): Illuminate\Foundation\Http\Kernel->sendRequestThroughRouter(Object(Illuminate\Http\Request))
+#23 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Testing/Concerns/MakesHttpRequests.php(638): Illuminate\Foundation\Http\Kernel->handle(Object(Illuminate\Http\Request))
+#24 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Testing/Concerns/MakesHttpRequests.php(368): Illuminate\Foundation\Testing\TestCase->call('GET', '/', Array, Array, Array, Array)
+#25 /Users/brandonhamm/code/bhamm.dev/tests/Feature/AiReadableTest.php(20): Illuminate\Foundation\Testing\TestCase->get('/')
+#26 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/src/Factories/TestCaseMethodFactory.php(135): P\Tests\Feature\AiReadableTest->{closure:/Users/brandonhamm/code/bhamm.dev/tests/Feature/AiReadableTest.php:19}()
+#27 [internal function]: P\Tests\Feature\AiReadableTest->{closure:Pest\Factories\TestCaseMethodFactory::getClosure():125}()
+#28 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/src/Concerns/Testable.php(497): call_user_func_array(Object(Closure), Array)
+#29 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/src/Support/ExceptionTrace.php(24): P\Tests\Feature\AiReadableTest->{closure:Pest\Concerns\Testable::__callClosure():497}()
+#30 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/src/Concerns/Testable.php(497): Pest\Support\ExceptionTrace::ensure(Object(Closure))
+#31 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/src/Concerns/Testable.php(322): P\Tests\Feature\AiReadableTest->__callClosure(Object(Closure), Array)
+#32 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/src/Factories/TestCaseFactory.php(170) : eval()'d code(48): P\Tests\Feature\AiReadableTest->__runTest(Object(Closure))
+#33 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestCase.php(1461): P\Tests\Feature\AiReadableTest->__pest_evaluable_it_includes_the_llms_txt_discovery_link_in_head()
+#34 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestCase.php(1475): PHPUnit\Framework\TestCase->invokeTestMethod('__pest_evaluabl...', Array)
+#35 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestCase.php(496): PHPUnit\Framework\TestCase->runTest()
+#36 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestRunner/TestRunner.php(126): PHPUnit\Framework\TestCase->runBare()
+#37 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestCase.php(328): PHPUnit\Framework\TestRunner\TestRunner->run(Object(P\Tests\Feature\AiReadableTest))
+#38 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestSuite.php(627): PHPUnit\Framework\TestCase->run()
+#39 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestSuite.php(420): PHPUnit\Framework\TestSuite->runTests(Array, Object(PHPUnit\Event\DispatchingEmitter))
+#40 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestSuite.php(627): PHPUnit\Framework\TestSuite->run()
+#41 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestSuite.php(420): PHPUnit\Framework\TestSuite->runTests(Array, Object(PHPUnit\Event\DispatchingEmitter))
+#42 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestSuite.php(627): PHPUnit\Framework\TestSuite->run()
+#43 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestSuite.php(420): PHPUnit\Framework\TestSuite->runTests(Array, Object(PHPUnit\Event\DispatchingEmitter))
+#44 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/TextUI/TestRunner.php(64): PHPUnit\Framework\TestSuite->run()
+#45 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/TextUI/Application.php(255): PHPUnit\TextUI\TestRunner->run(Object(PHPUnit\TextUI\Configuration\Configuration), Object(PHPUnit\Runner\TestRunHistory\DefaultTestRunHistory), Object(PHPUnit\Framework\TestSuite))
+#46 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/src/Kernel.php(100): PHPUnit\TextUI\Application->run(Array)
+#47 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/bin/pest(207): Pest\Kernel->handle(Array, Array)
+#48 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/bin/pest(215): {closure:/Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/bin/pest:21}()
+#49 {main}
+
+----------------------------------------------------------------------------------
+
+shell_exec(): Argument #1 ($command) must not be empty[39;22m
+
+  at [32mtests/Feature/AiReadableTest.php[39m:[32m22[39m
+     18▕ 
+     19▕ it('includes the llms.txt discovery link in head', function () {
+     20▕     $response = $this->get('/');
+     21▕ 
+  ➜  22▕     $response->assertStatus(200);
+     23▕     $response->assertSee('href="/llms.txt"', false);
+     24▕     $response->assertSee('rel="help"', false);
+     25▕     $response->assertSee('type="text/markdown"', false);
+     26▕ });
+
+  [31m────────────────────────────────────────────────────────────────────────────[39m  
+  [41;1m FAILED [49;22m [1mTests\Feature\AiReadableTest[22m [90m>[39m it negotiates markdown content for…   
+[39;1m  Expected response status code [200] but received 500.
+Failed asserting that 500 is identical to 200.
+
+The following exception occurred during the last request:
+
+ValueError: shell_exec(): Argument #1 ($command) must not be empty in /Users/brandonhamm/code/bhamm.dev/app/Http/Middleware/CaptureVisitorIp.php:41
+Stack trace:
+#0 /Users/brandonhamm/code/bhamm.dev/app/Http/Middleware/CaptureVisitorIp.php(41): shell_exec('')
+#1 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): App\Http\Middleware\CaptureVisitorIp->handle(Object(Illuminate\Http\Request), Object(Closure))
+#2 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php(21): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#3 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/ConvertEmptyStringsToNull.php(31): Illuminate\Foundation\Http\Middleware\TransformsRequest->handle(Object(Illuminate\Http\Request), Object(Closure))
+#4 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull->handle(Object(Illuminate\Http\Request), Object(Closure))
+#5 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php(21): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#6 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TrimStrings.php(51): Illuminate\Foundation\Http\Middleware\TransformsRequest->handle(Object(Illuminate\Http\Request), Object(Closure))
+#7 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Foundation\Http\Middleware\TrimStrings->handle(Object(Illuminate\Http\Request), Object(Closure))
+#8 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Http/Middleware/ValidatePostSize.php(27): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#9 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Http\Middleware\ValidatePostSize->handle(Object(Illuminate\Http\Request), Object(Closure))
+#10 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/PreventRequestsDuringMaintenance.php(110): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#11 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Foundation\Http\Middleware\PreventRequestsDuringMaintenance->handle(Object(Illuminate\Http\Request), Object(Closure))
+#12 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Http/Middleware/HandleCors.php(61): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#13 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Http\Middleware\HandleCors->handle(Object(Illuminate\Http\Request), Object(Closure))
+#14 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Http/Middleware/TrustProxies.php(58): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#15 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Http\Middleware\TrustProxies->handle(Object(Illuminate\Http\Request), Object(Closure))
+#16 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/InvokeDeferredCallbacks.php(22): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#17 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Foundation\Http\Middleware\InvokeDeferredCallbacks->handle(Object(Illuminate\Http\Request), Object(Closure))
+#18 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Http/Middleware/ValidatePathEncoding.php(28): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#19 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Http\Middleware\ValidatePathEncoding->handle(Object(Illuminate\Http\Request), Object(Closure))
+#20 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(137): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#21 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(175): Illuminate\Pipeline\Pipeline->then(Object(Closure))
+#22 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(144): Illuminate\Foundation\Http\Kernel->sendRequestThroughRouter(Object(Illuminate\Http\Request))
+#23 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Testing/Concerns/MakesHttpRequests.php(638): Illuminate\Foundation\Http\Kernel->handle(Object(Illuminate\Http\Request))
+#24 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Testing/Concerns/MakesHttpRequests.php(368): Illuminate\Foundation\Testing\TestCase->call('GET', '/', Array, Array, Array, Array)
+#25 /Users/brandonhamm/code/bhamm.dev/tests/Feature/AiReadableTest.php(31): Illuminate\Foundation\Testing\TestCase->get('/')
+#26 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/src/Factories/TestCaseMethodFactory.php(135): P\Tests\Feature\AiReadableTest->{closure:/Users/brandonhamm/code/bhamm.dev/tests/Feature/AiReadableTest.php:28}()
+#27 [internal function]: P\Tests\Feature\AiReadableTest->{closure:Pest\Factories\TestCaseMethodFactory::getClosure():125}()
+#28 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/src/Concerns/Testable.php(497): call_user_func_array(Object(Closure), Array)
+#29 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/src/Support/ExceptionTrace.php(24): P\Tests\Feature\AiReadableTest->{closure:Pest\Concerns\Testable::__callClosure():497}()
+#30 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/src/Concerns/Testable.php(497): Pest\Support\ExceptionTrace::ensure(Object(Closure))
+#31 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/src/Concerns/Testable.php(322): P\Tests\Feature\AiReadableTest->__callClosure(Object(Closure), Array)
+#32 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/src/Factories/TestCaseFactory.php(170) : eval()'d code(61): P\Tests\Feature\AiReadableTest->__runTest(Object(Closure))
+#33 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestCase.php(1461): P\Tests\Feature\AiReadableTest->__pest_evaluable_it_negotiates_markdown_content_for_AI_crawlers()
+#34 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestCase.php(1475): PHPUnit\Framework\TestCase->invokeTestMethod('__pest_evaluabl...', Array)
+#35 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestCase.php(496): PHPUnit\Framework\TestCase->runTest()
+#36 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestRunner/TestRunner.php(126): PHPUnit\Framework\TestCase->runBare()
+#37 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestCase.php(328): PHPUnit\Framework\TestRunner\TestRunner->run(Object(P\Tests\Feature\AiReadableTest))
+#38 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestSuite.php(627): PHPUnit\Framework\TestCase->run()
+#39 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestSuite.php(420): PHPUnit\Framework\TestSuite->runTests(Array, Object(PHPUnit\Event\DispatchingEmitter))
+#40 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestSuite.php(627): PHPUnit\Framework\TestSuite->run()
+#41 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestSuite.php(420): PHPUnit\Framework\TestSuite->runTests(Array, Object(PHPUnit\Event\DispatchingEmitter))
+#42 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestSuite.php(627): PHPUnit\Framework\TestSuite->run()
+#43 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestSuite.php(420): PHPUnit\Framework\TestSuite->runTests(Array, Object(PHPUnit\Event\DispatchingEmitter))
+#44 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/TextUI/TestRunner.php(64): PHPUnit\Framework\TestSuite->run()
+#45 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/TextUI/Application.php(255): PHPUnit\TextUI\TestRunner->run(Object(PHPUnit\TextUI\Configuration\Configuration), Object(PHPUnit\Runner\TestRunHistory\DefaultTestRunHistory), Object(PHPUnit\Framework\TestSuite))
+#46 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/src/Kernel.php(100): PHPUnit\TextUI\Application->run(Array)
+#47 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/bin/pest(207): Pest\Kernel->handle(Array, Array)
+#48 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/bin/pest(215): {closure:/Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/bin/pest:21}()
+#49 {main}
+
+----------------------------------------------------------------------------------
+
+shell_exec(): Argument #1 ($command) must not be empty[39;22m
+
+  at [32mtests/Feature/AiReadableTest.php[39m:[32m33[39m
+     29▕     $response = $this->withHeaders([
+     30▕         'Accept' => 'text/markdown',
+     31▕     ])->get('/');
+     32▕ 
+  ➜  33▕     $response->assertStatus(200);
+     34▕     $response->assertHeader('Content-Type', 'text/markdown; charset=UTF-8');
+     35▕     $response->assertSee('Full Technical Context', false);
+     36▕ 
+     37▕     $responseBot = $this->withHeaders([
+
+  [31m────────────────────────────────────────────────────────────────────────────[39m  
+  [41;1m FAILED [49;22m [1mTests\Feature\ExampleTest[22m [90m>[39m it returns a welcome page                
+[39;1m  Expected: [39;22m[31m<!DOCTYPE html>\n[39m[39;1m
+  [39;22m[31m<html lang="en">[39m[31m\n[39m[39;1m
+  [39;22m[31m<head>[39m[31m\n[39m[39;1m
+  [39;22m[90m... (2791 more lines)[39m[39;1m
+
+  To contain: [39;22m[32mHey, I'm Brandon.[39m
+
+  at [32mtests/Feature/ExampleTest.php[39m:[32m6[39m
+      2▕ 
+      3▕ it('returns a welcome page', function () {
+      4▕     $response = $this->get('/');
+      5▕ 
+  ➜   6▕ 	$response->assertSee("Hey, I'm Brandon.", false);
+      7▕ 	$response->assertSee("Ship It!", false);
+      8▕ 
+      9▕     $response->assertStatus(200);
+     10▕ });
+
+  [31m────────────────────────────────────────────────────────────────────────────[39m  
+  [41;1m FAILED [49;22m [1mTests\Feature\GuestbookAuthAndFlowsTest[22m [90m>[39m socialite redirect redi…   
+[39;1m  Expected response status code [201, 301, 302, 303, 307, 308] but received 500.
+Failed asserting that false is true.
+
+The following exception occurred during the last request:
+
+ValueError: shell_exec(): Argument #1 ($command) must not be empty in /Users/brandonhamm/code/bhamm.dev/app/Http/Middleware/CaptureVisitorIp.php:41
+Stack trace:
+#0 /Users/brandonhamm/code/bhamm.dev/app/Http/Middleware/CaptureVisitorIp.php(41): shell_exec('')
+#1 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): App\Http\Middleware\CaptureVisitorIp->handle(Object(Illuminate\Http\Request), Object(Closure))
+#2 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php(21): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#3 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/ConvertEmptyStringsToNull.php(31): Illuminate\Foundation\Http\Middleware\TransformsRequest->handle(Object(Illuminate\Http\Request), Object(Closure))
+#4 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull->handle(Object(Illuminate\Http\Request), Object(Closure))
+#5 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php(21): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#6 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TrimStrings.php(51): Illuminate\Foundation\Http\Middleware\TransformsRequest->handle(Object(Illuminate\Http\Request), Object(Closure))
+#7 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Foundation\Http\Middleware\TrimStrings->handle(Object(Illuminate\Http\Request), Object(Closure))
+#8 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Http/Middleware/ValidatePostSize.php(27): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#9 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Http\Middleware\ValidatePostSize->handle(Object(Illuminate\Http\Request), Object(Closure))
+#10 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/PreventRequestsDuringMaintenance.php(110): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#11 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Foundation\Http\Middleware\PreventRequestsDuringMaintenance->handle(Object(Illuminate\Http\Request), Object(Closure))
+#12 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Http/Middleware/HandleCors.php(61): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#13 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Http\Middleware\HandleCors->handle(Object(Illuminate\Http\Request), Object(Closure))
+#14 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Http/Middleware/TrustProxies.php(58): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#15 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Http\Middleware\TrustProxies->handle(Object(Illuminate\Http\Request), Object(Closure))
+#16 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/InvokeDeferredCallbacks.php(22): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#17 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Foundation\Http\Middleware\InvokeDeferredCallbacks->handle(Object(Illuminate\Http\Request), Object(Closure))
+#18 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Http/Middleware/ValidatePathEncoding.php(28): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#19 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Http\Middleware\ValidatePathEncoding->handle(Object(Illuminate\Http\Request), Object(Closure))
+#20 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(137): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#21 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(175): Illuminate\Pipeline\Pipeline->then(Object(Closure))
+#22 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(144): Illuminate\Foundation\Http\Kernel->sendRequestThroughRouter(Object(Illuminate\Http\Request))
+#23 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Testing/Concerns/MakesHttpRequests.php(638): Illuminate\Foundation\Http\Kernel->handle(Object(Illuminate\Http\Request))
+#24 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Testing/Concerns/MakesHttpRequests.php(368): Illuminate\Foundation\Testing\TestCase->call('GET', '/auth/github/re...', Array, Array, Array, Array)
+#25 /Users/brandonhamm/code/bhamm.dev/tests/Feature/GuestbookAuthAndFlowsTest.php(12): Illuminate\Foundation\Testing\TestCase->get('/auth/github/re...')
+#26 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/src/Factories/TestCaseMethodFactory.php(135): P\Tests\Feature\GuestbookAuthAndFlowsTest->{closure:/Users/brandonhamm/code/bhamm.dev/tests/Feature/GuestbookAuthAndFlowsTest.php:9}()
+#27 [internal function]: P\Tests\Feature\GuestbookAuthAndFlowsTest->{closure:Pest\Factories\TestCaseMethodFactory::getClosure():125}()
+#28 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/src/Concerns/Testable.php(497): call_user_func_array(Object(Closure), Array)
+#29 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/src/Support/ExceptionTrace.php(24): P\Tests\Feature\GuestbookAuthAndFlowsTest->{closure:Pest\Concerns\Testable::__callClosure():497}()
+#30 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/src/Concerns/Testable.php(497): Pest\Support\ExceptionTrace::ensure(Object(Closure))
+#31 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/src/Concerns/Testable.php(322): P\Tests\Feature\GuestbookAuthAndFlowsTest->__callClosure(Object(Closure), Array)
+#32 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/src/Factories/TestCaseFactory.php(170) : eval()'d code(22): P\Tests\Feature\GuestbookAuthAndFlowsTest->__runTest(Object(Closure))
+#33 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestCase.php(1461): P\Tests\Feature\GuestbookAuthAndFlowsTest->__pest_evaluable_socialite_redirect_redirects_to_provider_when_feature_is_active()
+#34 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestCase.php(1475): PHPUnit\Framework\TestCase->invokeTestMethod('__pest_evaluabl...', Array)
+#35 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestCase.php(496): PHPUnit\Framework\TestCase->runTest()
+#36 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestRunner/TestRunner.php(126): PHPUnit\Framework\TestCase->runBare()
+#37 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestCase.php(328): PHPUnit\Framework\TestRunner\TestRunner->run(Object(P\Tests\Feature\GuestbookAuthAndFlowsTest))
+#38 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestSuite.php(627): PHPUnit\Framework\TestCase->run()
+#39 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestSuite.php(420): PHPUnit\Framework\TestSuite->runTests(Array, Object(PHPUnit\Event\DispatchingEmitter))
+#40 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestSuite.php(627): PHPUnit\Framework\TestSuite->run()
+#41 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestSuite.php(420): PHPUnit\Framework\TestSuite->runTests(Array, Object(PHPUnit\Event\DispatchingEmitter))
+#42 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestSuite.php(627): PHPUnit\Framework\TestSuite->run()
+#43 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestSuite.php(420): PHPUnit\Framework\TestSuite->runTests(Array, Object(PHPUnit\Event\DispatchingEmitter))
+#44 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/TextUI/TestRunner.php(64): PHPUnit\Framework\TestSuite->run()
+#45 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/TextUI/Application.php(255): PHPUnit\TextUI\TestRunner->run(Object(PHPUnit\TextUI\Configuration\Configuration), Object(PHPUnit\Runner\TestRunHistory\DefaultTestRunHistory), Object(PHPUnit\Framework\TestSuite))
+#46 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/src/Kernel.php(100): PHPUnit\TextUI\Application->run(Array)
+#47 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/bin/pest(207): Pest\Kernel->handle(Array, Array)
+#48 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/bin/pest(215): {closure:/Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/bin/pest:21}()
+#49 {main}
+
+----------------------------------------------------------------------------------
+
+shell_exec(): Argument #1 ($command) must not be empty[39;22m
+
+  at [32mtests/Feature/GuestbookAuthAndFlowsTest.php[39m:[32m14[39m
+     10▕     Feature::activate('auth-github');
+     11▕ 
+     12▕     $response = $this->get('/auth/github/redirect');
+     13▕ 
+  ➜  14▕     $response->assertRedirect();
+     15▕     expect($response->getTargetUrl())->toContain('github.com/login/oauth/authorize');
+     16▕ });
+     17▕ 
+     18▕ test('socialite redirect redirects to home with error when feature is inactive', function () {
+
+  [31m────────────────────────────────────────────────────────────────────────────[39m  
+  [41;1m FAILED [49;22m [1mTests\Feature\GuestbookAuthAndFlowsTest[22m [90m>[39m socialite redirect redi…   
+[39;1m  Expected response status code [201, 301, 302, 303, 307, 308] but received 500.
+Failed asserting that false is true.
+
+The following exception occurred during the last request:
+
+ValueError: shell_exec(): Argument #1 ($command) must not be empty in /Users/brandonhamm/code/bhamm.dev/app/Http/Middleware/CaptureVisitorIp.php:41
+Stack trace:
+#0 /Users/brandonhamm/code/bhamm.dev/app/Http/Middleware/CaptureVisitorIp.php(41): shell_exec('')
+#1 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): App\Http\Middleware\CaptureVisitorIp->handle(Object(Illuminate\Http\Request), Object(Closure))
+#2 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php(21): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#3 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/ConvertEmptyStringsToNull.php(31): Illuminate\Foundation\Http\Middleware\TransformsRequest->handle(Object(Illuminate\Http\Request), Object(Closure))
+#4 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull->handle(Object(Illuminate\Http\Request), Object(Closure))
+#5 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php(21): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#6 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TrimStrings.php(51): Illuminate\Foundation\Http\Middleware\TransformsRequest->handle(Object(Illuminate\Http\Request), Object(Closure))
+#7 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Foundation\Http\Middleware\TrimStrings->handle(Object(Illuminate\Http\Request), Object(Closure))
+#8 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Http/Middleware/ValidatePostSize.php(27): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#9 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Http\Middleware\ValidatePostSize->handle(Object(Illuminate\Http\Request), Object(Closure))
+#10 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/PreventRequestsDuringMaintenance.php(110): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#11 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Foundation\Http\Middleware\PreventRequestsDuringMaintenance->handle(Object(Illuminate\Http\Request), Object(Closure))
+#12 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Http/Middleware/HandleCors.php(61): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#13 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Http\Middleware\HandleCors->handle(Object(Illuminate\Http\Request), Object(Closure))
+#14 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Http/Middleware/TrustProxies.php(58): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#15 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Http\Middleware\TrustProxies->handle(Object(Illuminate\Http\Request), Object(Closure))
+#16 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/InvokeDeferredCallbacks.php(22): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#17 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Foundation\Http\Middleware\InvokeDeferredCallbacks->handle(Object(Illuminate\Http\Request), Object(Closure))
+#18 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Http/Middleware/ValidatePathEncoding.php(28): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#19 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Http\Middleware\ValidatePathEncoding->handle(Object(Illuminate\Http\Request), Object(Closure))
+#20 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(137): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#21 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(175): Illuminate\Pipeline\Pipeline->then(Object(Closure))
+#22 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(144): Illuminate\Foundation\Http\Kernel->sendRequestThroughRouter(Object(Illuminate\Http\Request))
+#23 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Testing/Concerns/MakesHttpRequests.php(638): Illuminate\Foundation\Http\Kernel->handle(Object(Illuminate\Http\Request))
+#24 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Testing/Concerns/MakesHttpRequests.php(368): Illuminate\Foundation\Testing\TestCase->call('GET', '/auth/github/re...', Array, Array, Array, Array)
+#25 /Users/brandonhamm/code/bhamm.dev/tests/Feature/GuestbookAuthAndFlowsTest.php(21): Illuminate\Foundation\Testing\TestCase->get('/auth/github/re...')
+#26 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/src/Factories/TestCaseMethodFactory.php(135): P\Tests\Feature\GuestbookAuthAndFlowsTest->{closure:/Users/brandonhamm/code/bhamm.dev/tests/Feature/GuestbookAuthAndFlowsTest.php:18}()
+#27 [internal function]: P\Tests\Feature\GuestbookAuthAndFlowsTest->{closure:Pest\Factories\TestCaseMethodFactory::getClosure():125}()
+#28 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/src/Concerns/Testable.php(497): call_user_func_array(Object(Closure), Array)
+#29 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/src/Support/ExceptionTrace.php(24): P\Tests\Feature\GuestbookAuthAndFlowsTest->{closure:Pest\Concerns\Testable::__callClosure():497}()
+#30 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/src/Concerns/Testable.php(497): Pest\Support\ExceptionTrace::ensure(Object(Closure))
+#31 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/src/Concerns/Testable.php(322): P\Tests\Feature\GuestbookAuthAndFlowsTest->__callClosure(Object(Closure), Array)
+#32 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/src/Factories/TestCaseFactory.php(170) : eval()'d code(35): P\Tests\Feature\GuestbookAuthAndFlowsTest->__runTest(Object(Closure))
+#33 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestCase.php(1461): P\Tests\Feature\GuestbookAuthAndFlowsTest->__pest_evaluable_socialite_redirect_redirects_to_home_with_error_when_feature_is_inactive()
+#34 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestCase.php(1475): PHPUnit\Framework\TestCase->invokeTestMethod('__pest_evaluabl...', Array)
+#35 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestCase.php(496): PHPUnit\Framework\TestCase->runTest()
+#36 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestRunner/TestRunner.php(126): PHPUnit\Framework\TestCase->runBare()
+#37 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestCase.php(328): PHPUnit\Framework\TestRunner\TestRunner->run(Object(P\Tests\Feature\GuestbookAuthAndFlowsTest))
+#38 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestSuite.php(627): PHPUnit\Framework\TestCase->run()
+#39 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestSuite.php(420): PHPUnit\Framework\TestSuite->runTests(Array, Object(PHPUnit\Event\DispatchingEmitter))
+#40 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestSuite.php(627): PHPUnit\Framework\TestSuite->run()
+#41 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestSuite.php(420): PHPUnit\Framework\TestSuite->runTests(Array, Object(PHPUnit\Event\DispatchingEmitter))
+#42 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestSuite.php(627): PHPUnit\Framework\TestSuite->run()
+#43 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestSuite.php(420): PHPUnit\Framework\TestSuite->runTests(Array, Object(PHPUnit\Event\DispatchingEmitter))
+#44 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/TextUI/TestRunner.php(64): PHPUnit\Framework\TestSuite->run()
+#45 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/TextUI/Application.php(255): PHPUnit\TextUI\TestRunner->run(Object(PHPUnit\TextUI\Configuration\Configuration), Object(PHPUnit\Runner\TestRunHistory\DefaultTestRunHistory), Object(PHPUnit\Framework\TestSuite))
+#46 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/src/Kernel.php(100): PHPUnit\TextUI\Application->run(Array)
+#47 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/bin/pest(207): Pest\Kernel->handle(Array, Array)
+#48 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/bin/pest(215): {closure:/Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/bin/pest:21}()
+#49 {main}
+
+----------------------------------------------------------------------------------
+
+shell_exec(): Argument #1 ($command) must not be empty[39;22m
+
+  at [32mtests/Feature/GuestbookAuthAndFlowsTest.php[39m:[32m23[39m
+     19▕     Feature::forget('auth-github');
+     20▕ 
+     21▕     $response = $this->get('/auth/github/redirect');
+     22▕ 
+  ➜  23▕     $response->assertRedirect('/');
+     24▕     $response->assertSessionHas('error', 'Authentication via github is currently unavailable.');
+     25▕ });
+     26▕ 
+     27▕ test('socialite callback handles exception gracefully and redirects with error', function () {
+
+  [31m────────────────────────────────────────────────────────────────────────────[39m  
+  [41;1m FAILED [49;22m [1mTests\Feature\GuestbookAuthAndFlowsTest[22m [90m>[39m socialite callback hand…   
+[39;1m  Expected response status code [201, 301, 302, 303, 307, 308] but received 500.
+Failed asserting that false is true.
+
+The following exception occurred during the last request:
+
+ValueError: shell_exec(): Argument #1 ($command) must not be empty in /Users/brandonhamm/code/bhamm.dev/app/Http/Middleware/CaptureVisitorIp.php:41
+Stack trace:
+#0 /Users/brandonhamm/code/bhamm.dev/app/Http/Middleware/CaptureVisitorIp.php(41): shell_exec('')
+#1 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): App\Http\Middleware\CaptureVisitorIp->handle(Object(Illuminate\Http\Request), Object(Closure))
+#2 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php(21): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#3 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/ConvertEmptyStringsToNull.php(31): Illuminate\Foundation\Http\Middleware\TransformsRequest->handle(Object(Illuminate\Http\Request), Object(Closure))
+#4 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull->handle(Object(Illuminate\Http\Request), Object(Closure))
+#5 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php(21): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#6 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TrimStrings.php(51): Illuminate\Foundation\Http\Middleware\TransformsRequest->handle(Object(Illuminate\Http\Request), Object(Closure))
+#7 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Foundation\Http\Middleware\TrimStrings->handle(Object(Illuminate\Http\Request), Object(Closure))
+#8 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Http/Middleware/ValidatePostSize.php(27): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#9 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Http\Middleware\ValidatePostSize->handle(Object(Illuminate\Http\Request), Object(Closure))
+#10 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/PreventRequestsDuringMaintenance.php(110): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#11 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Foundation\Http\Middleware\PreventRequestsDuringMaintenance->handle(Object(Illuminate\Http\Request), Object(Closure))
+#12 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Http/Middleware/HandleCors.php(61): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#13 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Http\Middleware\HandleCors->handle(Object(Illuminate\Http\Request), Object(Closure))
+#14 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Http/Middleware/TrustProxies.php(58): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#15 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Http\Middleware\TrustProxies->handle(Object(Illuminate\Http\Request), Object(Closure))
+#16 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/InvokeDeferredCallbacks.php(22): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#17 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Foundation\Http\Middleware\InvokeDeferredCallbacks->handle(Object(Illuminate\Http\Request), Object(Closure))
+#18 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Http/Middleware/ValidatePathEncoding.php(28): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#19 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Http\Middleware\ValidatePathEncoding->handle(Object(Illuminate\Http\Request), Object(Closure))
+#20 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(137): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#21 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(175): Illuminate\Pipeline\Pipeline->then(Object(Closure))
+#22 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(144): Illuminate\Foundation\Http\Kernel->sendRequestThroughRouter(Object(Illuminate\Http\Request))
+#23 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Testing/Concerns/MakesHttpRequests.php(638): Illuminate\Foundation\Http\Kernel->handle(Object(Illuminate\Http\Request))
+#24 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Testing/Concerns/MakesHttpRequests.php(368): Illuminate\Foundation\Testing\TestCase->call('GET', '/auth/github/ca...', Array, Array, Array, Array)
+#25 /Users/brandonhamm/code/bhamm.dev/tests/Feature/GuestbookAuthAndFlowsTest.php(30): Illuminate\Foundation\Testing\TestCase->get('/auth/github/ca...')
+#26 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/src/Factories/TestCaseMethodFactory.php(135): P\Tests\Feature\GuestbookAuthAndFlowsTest->{closure:/Users/brandonhamm/code/bhamm.dev/tests/Feature/GuestbookAuthAndFlowsTest.php:27}()
+#27 [internal function]: P\Tests\Feature\GuestbookAuthAndFlowsTest->{closure:Pest\Factories\TestCaseMethodFactory::getClosure():125}()
+#28 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/src/Concerns/Testable.php(497): call_user_func_array(Object(Closure), Array)
+#29 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/src/Support/ExceptionTrace.php(24): P\Tests\Feature\GuestbookAuthAndFlowsTest->{closure:Pest\Concerns\Testable::__callClosure():497}()
+#30 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/src/Concerns/Testable.php(497): Pest\Support\ExceptionTrace::ensure(Object(Closure))
+#31 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/src/Concerns/Testable.php(322): P\Tests\Feature\GuestbookAuthAndFlowsTest->__callClosure(Object(Closure), Array)
+#32 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/src/Factories/TestCaseFactory.php(170) : eval()'d code(48): P\Tests\Feature\GuestbookAuthAndFlowsTest->__runTest(Object(Closure))
+#33 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestCase.php(1461): P\Tests\Feature\GuestbookAuthAndFlowsTest->__pest_evaluable_socialite_callback_handles_exception_gracefully_and_redirects_with_error()
+#34 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestCase.php(1475): PHPUnit\Framework\TestCase->invokeTestMethod('__pest_evaluabl...', Array)
+#35 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestCase.php(496): PHPUnit\Framework\TestCase->runTest()
+#36 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestRunner/TestRunner.php(126): PHPUnit\Framework\TestCase->runBare()
+#37 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestCase.php(328): PHPUnit\Framework\TestRunner\TestRunner->run(Object(P\Tests\Feature\GuestbookAuthAndFlowsTest))
+#38 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestSuite.php(627): PHPUnit\Framework\TestCase->run()
+#39 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestSuite.php(420): PHPUnit\Framework\TestSuite->runTests(Array, Object(PHPUnit\Event\DispatchingEmitter))
+#40 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestSuite.php(627): PHPUnit\Framework\TestSuite->run()
+#41 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestSuite.php(420): PHPUnit\Framework\TestSuite->runTests(Array, Object(PHPUnit\Event\DispatchingEmitter))
+#42 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestSuite.php(627): PHPUnit\Framework\TestSuite->run()
+#43 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestSuite.php(420): PHPUnit\Framework\TestSuite->runTests(Array, Object(PHPUnit\Event\DispatchingEmitter))
+#44 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/TextUI/TestRunner.php(64): PHPUnit\Framework\TestSuite->run()
+#45 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/TextUI/Application.php(255): PHPUnit\TextUI\TestRunner->run(Object(PHPUnit\TextUI\Configuration\Configuration), Object(PHPUnit\Runner\TestRunHistory\DefaultTestRunHistory), Object(PHPUnit\Framework\TestSuite))
+#46 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/src/Kernel.php(100): PHPUnit\TextUI\Application->run(Array)
+#47 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/bin/pest(207): Pest\Kernel->handle(Array, Array)
+#48 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/bin/pest(215): {closure:/Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/bin/pest:21}()
+#49 {main}
+
+----------------------------------------------------------------------------------
+
+shell_exec(): Argument #1 ($command) must not be empty[39;22m
+
+  at [32mtests/Feature/GuestbookAuthAndFlowsTest.php[39m:[32m32[39m
+     28▕     Socialite::shouldReceive('driver->user')->andThrow(new \Exception('OAuth error'));
+     29▕ 
+     30▕     $response = $this->get('/auth/github/callback');
+     31▕ 
+  ➜  32▕     $response->assertRedirect('/');
+     33▕     $response->assertSessionHas('error', 'Authentication failed.');
+     34▕ });
+     35▕ 
+     36▕ test('signout logs out signee and invalidates session', function () {
+
+  [31m────────────────────────────────────────────────────────────────────────────[39m  
+  [41;1m FAILED [49;22m [1mTests\Feature\GuestbookAuthAndFlowsTest[22m [90m>[39m signout logs out signee…   
+[39;1m  Expected response status code [201, 301, 302, 303, 307, 308] but received 500.
+Failed asserting that false is true.
+
+The following exception occurred during the last request:
+
+ValueError: shell_exec(): Argument #1 ($command) must not be empty in /Users/brandonhamm/code/bhamm.dev/app/Http/Middleware/CaptureVisitorIp.php:41
+Stack trace:
+#0 /Users/brandonhamm/code/bhamm.dev/app/Http/Middleware/CaptureVisitorIp.php(41): shell_exec('')
+#1 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): App\Http\Middleware\CaptureVisitorIp->handle(Object(Illuminate\Http\Request), Object(Closure))
+#2 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php(21): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#3 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/ConvertEmptyStringsToNull.php(31): Illuminate\Foundation\Http\Middleware\TransformsRequest->handle(Object(Illuminate\Http\Request), Object(Closure))
+#4 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull->handle(Object(Illuminate\Http\Request), Object(Closure))
+#5 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php(21): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#6 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TrimStrings.php(51): Illuminate\Foundation\Http\Middleware\TransformsRequest->handle(Object(Illuminate\Http\Request), Object(Closure))
+#7 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Foundation\Http\Middleware\TrimStrings->handle(Object(Illuminate\Http\Request), Object(Closure))
+#8 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Http/Middleware/ValidatePostSize.php(27): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#9 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Http\Middleware\ValidatePostSize->handle(Object(Illuminate\Http\Request), Object(Closure))
+#10 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/PreventRequestsDuringMaintenance.php(110): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#11 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Foundation\Http\Middleware\PreventRequestsDuringMaintenance->handle(Object(Illuminate\Http\Request), Object(Closure))
+#12 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Http/Middleware/HandleCors.php(61): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#13 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Http\Middleware\HandleCors->handle(Object(Illuminate\Http\Request), Object(Closure))
+#14 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Http/Middleware/TrustProxies.php(58): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#15 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Http\Middleware\TrustProxies->handle(Object(Illuminate\Http\Request), Object(Closure))
+#16 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/InvokeDeferredCallbacks.php(22): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#17 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Foundation\Http\Middleware\InvokeDeferredCallbacks->handle(Object(Illuminate\Http\Request), Object(Closure))
+#18 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Http/Middleware/ValidatePathEncoding.php(28): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#19 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Http\Middleware\ValidatePathEncoding->handle(Object(Illuminate\Http\Request), Object(Closure))
+#20 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(137): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#21 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(175): Illuminate\Pipeline\Pipeline->then(Object(Closure))
+#22 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(144): Illuminate\Foundation\Http\Kernel->sendRequestThroughRouter(Object(Illuminate\Http\Request))
+#23 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Testing/Concerns/MakesHttpRequests.php(638): Illuminate\Foundation\Http\Kernel->handle(Object(Illuminate\Http\Request))
+#24 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Testing/Concerns/MakesHttpRequests.php(397): Illuminate\Foundation\Testing\TestCase->call('POST', '/auth/logout', Array, Array, Array, Array)
+#25 /Users/brandonhamm/code/bhamm.dev/tests/Feature/GuestbookAuthAndFlowsTest.php(46): Illuminate\Foundation\Testing\TestCase->post('/auth/logout')
+#26 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/src/Factories/TestCaseMethodFactory.php(135): P\Tests\Feature\GuestbookAuthAndFlowsTest->{closure:/Users/brandonhamm/code/bhamm.dev/tests/Feature/GuestbookAuthAndFlowsTest.php:36}()
+#27 [internal function]: P\Tests\Feature\GuestbookAuthAndFlowsTest->{closure:Pest\Factories\TestCaseMethodFactory::getClosure():125}()
+#28 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/src/Concerns/Testable.php(497): call_user_func_array(Object(Closure), Array)
+#29 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/src/Support/ExceptionTrace.php(24): P\Tests\Feature\GuestbookAuthAndFlowsTest->{closure:Pest\Concerns\Testable::__callClosure():497}()
+#30 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/src/Concerns/Testable.php(497): Pest\Support\ExceptionTrace::ensure(Object(Closure))
+#31 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/src/Concerns/Testable.php(322): P\Tests\Feature\GuestbookAuthAndFlowsTest->__callClosure(Object(Closure), Array)
+#32 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/src/Factories/TestCaseFactory.php(170) : eval()'d code(61): P\Tests\Feature\GuestbookAuthAndFlowsTest->__runTest(Object(Closure))
+#33 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestCase.php(1461): P\Tests\Feature\GuestbookAuthAndFlowsTest->__pest_evaluable_signout_logs_out_signee_and_invalidates_session()
+#34 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestCase.php(1475): PHPUnit\Framework\TestCase->invokeTestMethod('__pest_evaluabl...', Array)
+#35 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestCase.php(496): PHPUnit\Framework\TestCase->runTest()
+#36 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestRunner/TestRunner.php(126): PHPUnit\Framework\TestCase->runBare()
+#37 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestCase.php(328): PHPUnit\Framework\TestRunner\TestRunner->run(Object(P\Tests\Feature\GuestbookAuthAndFlowsTest))
+#38 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestSuite.php(627): PHPUnit\Framework\TestCase->run()
+#39 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestSuite.php(420): PHPUnit\Framework\TestSuite->runTests(Array, Object(PHPUnit\Event\DispatchingEmitter))
+#40 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestSuite.php(627): PHPUnit\Framework\TestSuite->run()
+#41 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestSuite.php(420): PHPUnit\Framework\TestSuite->runTests(Array, Object(PHPUnit\Event\DispatchingEmitter))
+#42 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestSuite.php(627): PHPUnit\Framework\TestSuite->run()
+#43 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestSuite.php(420): PHPUnit\Framework\TestSuite->runTests(Array, Object(PHPUnit\Event\DispatchingEmitter))
+#44 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/TextUI/TestRunner.php(64): PHPUnit\Framework\TestSuite->run()
+#45 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/TextUI/Application.php(255): PHPUnit\TextUI\TestRunner->run(Object(PHPUnit\TextUI\Configuration\Configuration), Object(PHPUnit\Runner\TestRunHistory\DefaultTestRunHistory), Object(PHPUnit\Framework\TestSuite))
+#46 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/src/Kernel.php(100): PHPUnit\TextUI\Application->run(Array)
+#47 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/bin/pest(207): Pest\Kernel->handle(Array, Array)
+#48 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/bin/pest(215): {closure:/Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/bin/pest:21}()
+#49 {main}
+
+----------------------------------------------------------------------------------
+
+shell_exec(): Argument #1 ($command) must not be empty[39;22m
+
+  at [32mtests/Feature/GuestbookAuthAndFlowsTest.php[39m:[32m48[39m
+     44▕     expect(Auth::guard('signee')->check())->toBeTrue();
+     45▕ 
+     46▕     $response = $this->post('/auth/logout');
+     47▕ 
+  ➜  48▕     $response->assertRedirect('/');
+     49▕     expect(Auth::guard('signee')->check())->toBeFalse();
+     50▕ });
+     51▕ 
+     52▕ test('guestbook form mounts successfully and validates message requirement', function () {
+
+  [31m────────────────────────────────────────────────────────────────────────────[39m  
+  [41;1m FAILED [49;22m [1mTests\Feature\SocialiteRedirectTest[22m [90m>[39m it redirects to home with a…   
+[39;1m  Expected response status code [201, 301, 302, 303, 307, 308] but received 500.
+Failed asserting that false is true.
+
+The following exception occurred during the last request:
+
+ValueError: shell_exec(): Argument #1 ($command) must not be empty in /Users/brandonhamm/code/bhamm.dev/app/Http/Middleware/CaptureVisitorIp.php:41
+Stack trace:
+#0 /Users/brandonhamm/code/bhamm.dev/app/Http/Middleware/CaptureVisitorIp.php(41): shell_exec('')
+#1 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): App\Http\Middleware\CaptureVisitorIp->handle(Object(Illuminate\Http\Request), Object(Closure))
+#2 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php(21): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#3 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/ConvertEmptyStringsToNull.php(31): Illuminate\Foundation\Http\Middleware\TransformsRequest->handle(Object(Illuminate\Http\Request), Object(Closure))
+#4 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull->handle(Object(Illuminate\Http\Request), Object(Closure))
+#5 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php(21): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#6 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TrimStrings.php(51): Illuminate\Foundation\Http\Middleware\TransformsRequest->handle(Object(Illuminate\Http\Request), Object(Closure))
+#7 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Foundation\Http\Middleware\TrimStrings->handle(Object(Illuminate\Http\Request), Object(Closure))
+#8 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Http/Middleware/ValidatePostSize.php(27): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#9 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Http\Middleware\ValidatePostSize->handle(Object(Illuminate\Http\Request), Object(Closure))
+#10 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/PreventRequestsDuringMaintenance.php(110): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#11 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Foundation\Http\Middleware\PreventRequestsDuringMaintenance->handle(Object(Illuminate\Http\Request), Object(Closure))
+#12 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Http/Middleware/HandleCors.php(61): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#13 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Http\Middleware\HandleCors->handle(Object(Illuminate\Http\Request), Object(Closure))
+#14 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Http/Middleware/TrustProxies.php(58): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#15 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Http\Middleware\TrustProxies->handle(Object(Illuminate\Http\Request), Object(Closure))
+#16 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/InvokeDeferredCallbacks.php(22): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#17 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Foundation\Http\Middleware\InvokeDeferredCallbacks->handle(Object(Illuminate\Http\Request), Object(Closure))
+#18 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Http/Middleware/ValidatePathEncoding.php(28): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#19 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Http\Middleware\ValidatePathEncoding->handle(Object(Illuminate\Http\Request), Object(Closure))
+#20 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(137): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#21 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(175): Illuminate\Pipeline\Pipeline->then(Object(Closure))
+#22 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(144): Illuminate\Foundation\Http\Kernel->sendRequestThroughRouter(Object(Illuminate\Http\Request))
+#23 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Testing/Concerns/MakesHttpRequests.php(638): Illuminate\Foundation\Http\Kernel->handle(Object(Illuminate\Http\Request))
+#24 /Users/brandonhamm/code/bhamm.dev/vendor/laravel/framework/src/Illuminate/Foundation/Testing/Concerns/MakesHttpRequests.php(368): Illuminate\Foundation\Testing\TestCase->call('GET', '/auth/github/ca...', Array, Array, Array, Array)
+#25 /Users/brandonhamm/code/bhamm.dev/tests/Feature/SocialiteRedirectTest.php(13): Illuminate\Foundation\Testing\TestCase->get('/auth/github/ca...')
+#26 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/src/Factories/TestCaseMethodFactory.php(135): P\Tests\Feature\SocialiteRedirectTest->{closure:/Users/brandonhamm/code/bhamm.dev/tests/Feature/SocialiteRedirectTest.php:6}()
+#27 [internal function]: P\Tests\Feature\SocialiteRedirectTest->{closure:Pest\Factories\TestCaseMethodFactory::getClosure():125}()
+#28 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/src/Concerns/Testable.php(497): call_user_func_array(Object(Closure), Array)
+#29 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/src/Support/ExceptionTrace.php(24): P\Tests\Feature\SocialiteRedirectTest->{closure:Pest\Concerns\Testable::__callClosure():497}()
+#30 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/src/Concerns/Testable.php(497): Pest\Support\ExceptionTrace::ensure(Object(Closure))
+#31 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/src/Concerns/Testable.php(322): P\Tests\Feature\SocialiteRedirectTest->__callClosure(Object(Closure), Array)
+#32 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/src/Factories/TestCaseFactory.php(170) : eval()'d code(22): P\Tests\Feature\SocialiteRedirectTest->__runTest(Object(Closure))
+#33 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestCase.php(1461): P\Tests\Feature\SocialiteRedirectTest->__pest_evaluable_it_redirects_to_home_with_alt__id_uuid_on_socialite_callback_success()
+#34 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestCase.php(1475): PHPUnit\Framework\TestCase->invokeTestMethod('__pest_evaluabl...', Array)
+#35 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestCase.php(496): PHPUnit\Framework\TestCase->runTest()
+#36 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestRunner/TestRunner.php(126): PHPUnit\Framework\TestCase->runBare()
+#37 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestCase.php(328): PHPUnit\Framework\TestRunner\TestRunner->run(Object(P\Tests\Feature\SocialiteRedirectTest))
+#38 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestSuite.php(627): PHPUnit\Framework\TestCase->run()
+#39 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestSuite.php(420): PHPUnit\Framework\TestSuite->runTests(Array, Object(PHPUnit\Event\DispatchingEmitter))
+#40 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestSuite.php(627): PHPUnit\Framework\TestSuite->run()
+#41 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestSuite.php(420): PHPUnit\Framework\TestSuite->runTests(Array, Object(PHPUnit\Event\DispatchingEmitter))
+#42 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestSuite.php(627): PHPUnit\Framework\TestSuite->run()
+#43 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/Framework/TestSuite.php(420): PHPUnit\Framework\TestSuite->runTests(Array, Object(PHPUnit\Event\DispatchingEmitter))
+#44 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/TextUI/TestRunner.php(64): PHPUnit\Framework\TestSuite->run()
+#45 /Users/brandonhamm/code/bhamm.dev/vendor/phpunit/phpunit/src/TextUI/Application.php(255): PHPUnit\TextUI\TestRunner->run(Object(PHPUnit\TextUI\Configuration\Configuration), Object(PHPUnit\Runner\TestRunHistory\DefaultTestRunHistory), Object(PHPUnit\Framework\TestSuite))
+#46 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/src/Kernel.php(100): PHPUnit\TextUI\Application->run(Array)
+#47 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/bin/pest(207): Pest\Kernel->handle(Array, Array)
+#48 /Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/bin/pest(215): {closure:/Users/brandonhamm/code/bhamm.dev/vendor/pestphp/pest/bin/pest:21}()
+#49 {main}
+
+----------------------------------------------------------------------------------
+
+shell_exec(): Argument #1 ($command) must not be empty[39;22m
+
+  at [32mtests/Feature/SocialiteRedirectTest.php[39m:[32m15[39m
+     11▕     Socialite::shouldReceive('driver->user')->andReturn($socialUser);
+     12▕ 
+     13▕     $response = $this->get('/auth/github/callback');
+     14▕ 
+  ➜  15▕     $response->assertRedirect();
+     16▕     $redirectUrl = $response->headers->get('Location');
+     17▕ 
+     18▕     expect($redirectUrl)->toContain('guestbook=1');
+     19▕
+
+
+  [90mTests:[39m    [31;1m10 failed[39;22m[90m,[39m[39m [39m[32;1m10 passed[39;22m[90m (55 assertions)[39m
+  [90mDuration:[39m [39m0.86s[39m
