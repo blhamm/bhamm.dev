@@ -2,7 +2,7 @@
 <html
 	lang="{{ str_replace('_', '-', app()->getLocale()) }}"
 	x-data="{
-        darkMode: window.matchMedia('(prefers-color-scheme: dark)').matches,
+        darkMode: document.documentElement.classList.contains('dark'),
         init() {
             window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
                 this.darkMode = e.matches;

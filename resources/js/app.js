@@ -32,7 +32,7 @@ window.initExpertiseAnimations = initExpertiseAnimations;
 
 const trace = false;
 let lastTime = performance.now();
-let particlesOn = false;
+let particlesOn = true;
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin, Draggable, MotionPathPlugin);
 gsap.ticker.lagSmoothing(500, 33);

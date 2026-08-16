@@ -4,7 +4,7 @@ const DPR = Math.min(window.devicePixelRatio || 1, 2);
 const BASE_SPEED = 1 * DPR;
 const SPEED_MULTIPLIER = 60;
 const SPEED_VARIATION = 1.25 * DPR;
-const PARTICLE_MAX = 1 << 8;
+const PARTICLE_MAX = 184; // Optimized for reduced CPU/battery usage
 const PARTICLE_SPAWN_RATE = (1000 / 60);
 const burstMax = (PARTICLE_MAX * 2);
 const CELL_SIZE = 80 * DPR;
@@ -12,7 +12,7 @@ const particleBitmapCache = new Map();
 let traces = [];
 let logTimer = 0;
 let physicsAccumulator = 0;
-const PHYSICS_STEP = 1000 / 120; // 120Hz cap for physics/collisions
+const PHYSICS_STEP = 1000 / 60; // 60Hz physics step matching render frame rate
 let gridCols = 0;
 let gridRows = 0;
 let grid = [];
@@ -24,6 +24,18 @@ let mouse = { x: null, y: null };
 let lastTime = 16.66;
 let cw = 0;
 let ch = 0;
+let isHeroVisible = true;
+
+// Intersection Observer for viewport visibility culling (zero CPU when hero is out of view)
+const heroEl = document.getElementById('hero');
+if (heroEl && typeof IntersectionObserver !== 'undefined') {
+	const heroObserver = new IntersectionObserver((entries) => {
+		entries.forEach(entry => {
+			isHeroVisible = entry.isIntersecting;
+		});
+	}, { threshold: 0.05 });
+	heroObserver.observe(heroEl);
+}
 
 //Listeners
 window.addEventListener('resize', resizeCanvas);
@@ -71,6 +83,34 @@ if (canvas) {
 		const rect = canvas.getBoundingClientRect();
 		mouse.x = (e.clientX - rect.left) * DPR;
 		mouse.y = (e.clientY - rect.top) * DPR;
+	});
+
+	document.addEventListener('touchstart', (e) => {
+		const touch = e.touches[0];
+		if (touch && canvas) {
+			const rect = canvas.getBoundingClientRect();
+			mouse.x = (touch.clientX - rect.left) * DPR;
+			mouse.y = (touch.clientY - rect.top) * DPR;
+		}
+	}, { passive: true });
+
+	document.addEventListener('touchmove', (e) => {
+		const touch = e.touches[0];
+		if (touch && canvas) {
+			const rect = canvas.getBoundingClientRect();
+			mouse.x = (touch.clientX - rect.left) * DPR;
+			mouse.y = (touch.clientY - rect.top) * DPR;
+		}
+	}, { passive: true });
+
+	document.addEventListener('touchend', () => {
+		mouse.x = null;
+		mouse.y = null;
+	});
+
+	document.addEventListener('touchcancel', () => {
+		mouse.x = null;
+		mouse.y = null;
 	});
 }
 
@@ -260,7 +300,7 @@ function tracePerformance(end, start) {
 }
 
 export function particleUp(deltaTime = 0, trace = true) {
-	if (!ctx) return;
+	if (!ctx || !isHeroVisible) return;
 	
 	if (particleCount === 0) {
 		if (needsClear) {
