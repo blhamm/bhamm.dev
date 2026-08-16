@@ -28,34 +28,6 @@ class AppServiceProvider extends ServiceProvider
                 }
             }
 
-            // Normalize private key to PKCS#8 format to prevent OpenSSL 3 decoder errors (e.g. error:1E08010C:DECODER routines::unsupported)
-            if ($key && str_contains($key, 'BEGIN EC PRIVATE KEY')) {
-                $descriptors = [
-                    0 => ['pipe', 'r'],
-                    1 => ['pipe', 'w'],
-                    2 => ['pipe', 'w'],
-                ];
-                $process = @proc_open('openssl pkey -outform PEM', $descriptors, $pipes);
-                if (is_resource($process)) {
-                    fwrite($pipes[0], $key);
-                    fclose($pipes[0]);
-                    $converted = stream_get_contents($pipes[1]);
-                    fclose($pipes[1]);
-                    fclose($pipes[2]);
-                    if (proc_close($process) === 0 && !empty($converted)) {
-                        $key = $converted;
-                    }
-                }
-            }
-
-            $privateKeyResource = @openssl_pkey_get_private($key);
-            if ($privateKeyResource !== false) {
-                @openssl_pkey_export($privateKeyResource, $exported);
-                if (!empty($exported)) {
-                    $key = $exported;
-                }
-            }
-
             return Configuration::forSymmetricSigner(
                 new Sha256(),
                 InMemory::plainText($key),

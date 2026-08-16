@@ -48,37 +48,25 @@ it('redirects to home with alt_id uuid on apple post socialite callback success'
 	    ->and($redirectUrl)->toContain('user_id=' . $signee->alt_id);
 });
 
-it('normalizes pkcs1 private key and generates apple jwt token successfully', function () {
+test('apple token is permitted for apple', function () {
     $res = openssl_pkey_new([
         "private_key_type" => OPENSSL_KEYTYPE_EC,
         "curve_name" => "prime256v1",
     ]);
     openssl_pkey_export($res, $pkcs8);
 
-    $descriptors = [
-        0 => ["pipe", "r"],
-        1 => ["pipe", "w"],
-        2 => ["pipe", "w"],
-    ];
-    $process = proc_open("openssl ec -outform PEM", $descriptors, $pipes);
-    fwrite($pipes[0], $pkcs8);
-    fclose($pipes[0]);
-    $pkcs1 = stream_get_contents($pipes[1]);
-    fclose($pipes[1]);
-    fclose($pipes[2]);
-    proc_close($process);
-
     config([
         'services.apple.team_id' => 'TESTTEAMID',
         'services.apple.client_id' => 'com.example.client',
         'services.apple.key_id' => 'TESTKEYID',
-        'services.apple.private_key' => base64_encode($pkcs1),
+        'services.apple.private_key' => $pkcs8,
     ]);
 
     app()->forgetInstance(\Lcobucci\JWT\Configuration::class);
 
-    $appleToken = app(\App\Services\AppleToken::class);
-    $tokenString = $appleToken->generate();
+    $token = app(\Lcobucci\JWT\Configuration::class)
+        ->parser()
+        ->parse(app(\App\Services\AppleToken::class)->generate());
 
-    expect($tokenString)->toBeString()->not->toBeEmpty();
+    expect($token->isPermittedFor('https://appleid.apple.com'))->toBeTrue();
 });
