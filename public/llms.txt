@@ -1,0 +1,15 @@
+# Brandon Hamm
+
+> Senior Software Engineer & Full-Stack Architect specializing in Laravel ecosystem mastery, enterprise system architecture, advanced full-stack JavaScript, and cloud infrastructure.
+
+## About
+- Portfolio & Personal Site: https://bhamm.dev
+- Core Expertise: PHP/Laravel (building with Laravel since its early versions), Advanced JavaScript & Frontend Ecosystems, System Architecture, Database Optimization, DevOps & Observability.
+- Engineering Philosophy: Pragmatic, project-driven tool selection. Architecture and stack decisions are driven by product scale, performance needs, and domain requirements—not rigid preferences.
+
+## Key Sections & Expertise
+- [Expertise & Skills](https://bhamm.dev/#expertise): Observability, API Design, Database Architecture, Advanced Laravel Ecosystem, DevOps, Frontend Engineering.
+- [Projects & Work](https://bhamm.dev/#work): High-performance web applications, interactive UI components, and resilient backend services.
+
+## Full Content
+- [Full Site Context (Markdown)](https://bhamm.dev/llms-full.txt): Detailed breakdown of professional history, engineering philosophy, and technical breadth for LLM ingestion.

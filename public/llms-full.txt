@@ -1,0 +1,32 @@
+# Brandon Hamm - Full Technical Context & Portfolio
+
+> Senior Software Engineer & Full-Stack Architect specializing in enterprise Laravel systems, extensive full-stack JavaScript engineering, and robust cloud infrastructure.
+
+## Overview
+Brandon Hamm is a Senior Software Engineer with decades of hands-on experience building scalable web applications, distributed APIs, and immersive interactive frontends. Having worked with Laravel since its earliest days (v3.2+) alongside deep mastery of modern JavaScript ecosystems, Brandon brings a seasoned, architectural perspective to software development.
+
+## Engineering Philosophy & Pragmatism
+- **Project-Driven Tech Selection:** Tools and frameworks are chosen based on what best serves the product's requirements, scale, team dynamics, and lifecycle—not personal dogmatism or rigid defaults. While technologies like Livewire, Tailwind CSS, or Alpine.js power this specific interactive home page demo, they are selected per project needs rather than used universally.
+- **Deep Laravel Ecosystem Mastery:** Extensive experience across the entire breadth of Laravel and PHP packages, queue systems, event-driven architectures, testing suites, and performance tuning.
+- **Extensive JavaScript Expertise:** Decades of front-end and full-stack JavaScript/TypeScript engineering, ranging from vanilla performance optimization to complex reactive frameworks, state management, and declarative animation engines (such as GSAP).
+
+## Core Technical Strengths & Architecture
+- **Backend & Laravel Ecosystem:** Enterprise API design, complex relational database architecture & tuning, authentication/authorization, queuing and background workers, and automated testing pipelines.
+- **Frontend Engineering:** Modern JavaScript/TypeScript, reactive UI architectures, component-driven design, micro-animations (GSAP, Lenis), and performance optimization.
+- **DevOps & Infrastructure:** Cloud architecture, deployment automation, containerization, observability, and monitoring.
+
+## Key Sections on bhamm.dev
+1. **Hero & Intro:** Immersive particle canvas, greeting, and high-end animations.
+2. **Expertise:** Modular cards highlighting:
+   - Observability & Monitoring
+   - API Design & Architecture
+   - Database Architecture & Optimization
+   - Laravel Ecosystem & Advanced Patterns
+   - DevOps & Cloud Infrastructure
+   - Frontend Engineering & Animations
+3. **Projects / Carousel:** Showcasing production-grade applications, reusable component libraries, and robust architectures.
+4. **Interactive Map / Guestbook:** GeoIP integration allowing visitors to view global visitor distribution and sign an authenticated guestbook.
+
+## Contact & Links
+- Website: https://bhamm.dev
+- GitHub / Professional profiles linked directly from the site header and footer.
