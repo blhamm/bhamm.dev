@@ -18,12 +18,12 @@ if [[ -z "$FILE" ]] || [[ ! -f "$FILE" ]]; then
 fi
 
 if [[ "$MODE" == "base64" ]]; then
-    # Base64 encode and strip any newlines from the base64 output
-    ENCODED=$(base64 < "$FILE" | tr -d '\n')
+    # Convert PKCS#1 to PKCS#8 if needed, base64 encode, and strip newlines
+    CONVERTED=$(openssl pkey -outform PEM 2>/dev/null < "$FILE" || cat "$FILE")
+    ENCODED=$(echo "$CONVERTED" | base64 | tr -d '\n')
     echo "APPLE_PRIVATE_KEY=\"$ENCODED\""
 else
-    # Replace actual newlines with literal \n
-    # Note: This uses awk to join lines with \n string
-    ESCAPED=$(awk '{printf "%s\\n", $0}' "$FILE" | sed 's/\\n$//')
-    echo "APPLE_PRIVATE_KEY=\"$ESCAPED\""
+    # Convert PKCS#1 to PKCS#8 if needed, replace actual newlines with literal \n
+    CONVERTED=$(openssl pkey -outform PEM 2>/dev/null < "$FILE" || awk '{printf "%s\\n", $0}' "$FILE" | sed 's/\\n$//')
+    echo "APPLE_PRIVATE_KEY=\"$CONVERTED\""
 fi
