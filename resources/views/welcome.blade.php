@@ -78,7 +78,7 @@
 
 						<x-project-card
 							title="API & Backend System Design"
-							description="Architecting resilient, discoverable APIs. Expert-level implementation of OAuth2, event-driven architectures, and distributed systems designed for high-throughput and failure tolerance."
+							description="Building clean, reliable APIs that just work. Deep experience with OAuth2, event-driven architecture, and backends designed to handle scale smoothly."
 							{{-- image="/images/cloud.webp" --}}
 {{--							:tags="['REST', 'OAuth', 'Redis', 'Event-Driven']"--}}
 							size="w-80 md:w-sm"
@@ -93,7 +93,7 @@
 
 						<x-project-card
 							title="Database Mastery & Data Layer"
-							description="Polyglot data strategy focusing on relational integrity and high-performance caching. From complex PostgreSQL schemas to low-latency Redis implementations, ensuring data safety and query efficiency."
+							description="Getting databases to behave under load. From complex relational modeling in PostgreSQL to low-latency Redis caching, I focus on query efficiency and data integrity."
 							{{-- image="/images/db.webp" --}}
 {{--							:tags="['PostgreSQL', 'MySQL', 'Redis', 'SQLite']"--}}
 							size="w-80 md:w-sm"
@@ -108,7 +108,7 @@
 
 						<x-project-card
 							title="Observability & System Reliability"
-							description="Engineering for reliability through total visibility. Implementing OpenTelemetry (OTLP) for distributed tracing and metrics. Moving beyond simple monitoring to proactive system health."
+							description="Catching issues before users do. Setting up solid telemetry, structured logging, and distributed tracing so bottlenecks and production fires are diagnosed in seconds."
 							{{-- image="/images/observability.webp" --}}
 {{--							:tags="['Grafana', 'OTLP', 'Observability', 'SRE']"--}}
 							size="w-80 md:w-sm"
@@ -123,7 +123,7 @@
 
 						<x-project-card
 							title="Deployment & Infrastructure"
-							description="Infrastructure as code and container-native workflows. Streamlining delivery with GitHub Actions and Ansible. Building reproducible, self-healing environments across AWS and DigitalOcean."
+							description="Shipping code with zero downtime. Automating deployments, containerized environments, and cloud infrastructure so releases are boring, predictable, and reliable."
 							{{-- image="/images/devops.webp" --}}
 {{--							:tags="['Docker', 'AWS', 'GitHub Actions']"--}}
 							size="w-80 md:w-sm"
@@ -138,7 +138,7 @@
 
 						<x-project-card
 							title="Laravel & PHP Expertise"
-							description="Deep-domain expertise in the Laravel ecosystem since v3.2. Architecting high-performance PHP applications by leveraging the framework's core strengths and knowing when to extend them."
+							description="Building with Laravel for over a decade. From robust Eloquent models to reactive Livewire Volt components, I know the framework inside and out."
 							{{-- image="/images/php.webp" --}}
 {{--							:tags="['Laravel', 'PHP', 'Eloquent', 'Livewire']"--}}
 							size="w-80 md:w-sm"
@@ -153,7 +153,7 @@
 
 						<x-project-card
 							title="Engineering Standards & Craft"
-							description="Strict adherence to SOLID principles and type-safe development. Using testing (Pest/PHPUnit) as a primary design tool. Driving team velocity through clean code and strict static analysis."
+							description="Writing maintainable code you actually enjoy coming back to. Heavy focus on SOLID principles, static analysis, and treating Pest/PHPUnit tests as core design tools."
 							{{-- image="/images/gradial.webp" --}}
 {{--							:tags="['Testing', 'SOLID', 'PHPStan', 'TypeScript']"--}}
 							size="w-80 md:w-sm"
@@ -168,7 +168,7 @@
 
 						<x-project-card
 							title="Frontend Architecture & Design Systems"
-							description="Bridging high-end design with reactive engineering. Meticulous implementation of design systems using Vue, React, and Tailwind CSS. Crafting pixel-perfect, accessible interfaces from Figma to production."
+							description="Bridging design and code. Translating Figma wireframes into pixel-perfect, accessible interfaces using Tailwind CSS and modern reactive components."
 							{{-- image="/images/front-end.webp" --}}
 {{--							:tags="['Vue', 'React', 'TypeScript', 'Tailwind']"--}}
 							size="w-80 md:w-sm"
@@ -296,7 +296,7 @@
 
 						{{-- Row 2 --}}
 						<a href="https://ghostty.org/" target="_blank"
-						   class="glass-pane flex flex-col justify-between rounded-3xl px-6 py-8 sm:p-8 transition-all hover:ring-2 hover:ring-pale-night-green/50 md:col-span-2">
+						   class="glass-pane flex flex-col justify-between rounded-3xl px-6 py-8 sm:p-8 transition-all hover:ring-2 hover:ring-pale-night-green/50 md:col-span-4">
 							<svg width="132" height="32" viewBox="0 0 132 32" fill="none"
 							     xmlns="http://www.w3.org/2000/svg" class="h-8 w-auto self-start">
 								<g clip-path="url(#clip0_8215_221)">
@@ -333,8 +333,22 @@
 							</div>
 						</a>
 
+						<a href="https://typeof.net/Iosevka/" target="_blank"
+						   class="glass-pane flex flex-col justify-between rounded-3xl px-6 py-8 sm:p-8 transition-all hover:ring-2 hover:ring-pale-night-teal/50 md:col-span-4">
+							<div class="flex items-center gap-3">
+								<flux:icon.code-bracket class="size-6 text-pale-night-teal"/>
+								<span class="text-pale-night-teal text-xs font-bold uppercase tracking-[0.2em]">Typography</span>
+							</div>
+							<div>
+								<flux:heading level="3" size="lg">Iosevka Font</flux:heading>
+								<p class="text-pale-night-black/60 dark:text-pale-night-white/60 text-xs mt-1">
+									The custom-built monospace typeface powering all my code-spaces, IDEs, and terminals everywhere. Crisp, compact, and designed for code.
+								</p>
+							</div>
+						</a>
+
 						<a href="https://httpie.io/" target="_blank"
-						   class="glass-pane flex flex-col justify-between rounded-3xl px-6 py-8 sm:p-8 transition-all hover:ring-2 hover:ring-pale-night-yellow/50 md:col-span-2">
+						   class="glass-pane flex flex-col justify-between rounded-3xl px-6 py-8 sm:p-8 transition-all hover:ring-2 hover:ring-pale-night-yellow/50 md:col-span-4">
 							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1635.31 470" fill="currentColor"
 							     class="h-8 w-auto self-start text-pale-night-black dark:text-pale-night-white">
 								<g data-name="Layer 2">
@@ -468,7 +482,7 @@
 							</div>
 						</a>
 
-						{{-- Row 6: Humorous Jab --}}
+						{{-- Row 6: Humorous Jab (Commented out)
 						<a href="https://www.apple.com/" target="_blank"
 						   class="group flex flex-col items-center justify-center gap-6 rounded-3xl border border-red-500/20 bg-red-500/5 px-6 py-8 sm:p-8 backdrop-blur-md transition-all hover:bg-red-500/20 md:col-span-12 md:flex-row dark:bg-red-500/10">
 							<div class="relative">
@@ -486,6 +500,7 @@
 								</p>
 							</div>
 						</a>
+						--}}
 					</x-bento-grid>
 				</section>
 
@@ -505,7 +520,9 @@
 								</p>
 							</div>
 							<div
-								class="bg-pale-night-white/70 dark:bg-pale-night-black aspect-square rounded-2xl"></div>
+								class="bg-pale-night-white/70 dark:bg-pale-night-black aspect-square rounded-2xl">
+{{--								<img src="images/me2.jpeg" alt="">--}}
+							</div>
 						</div>
 					</section>
 				</x-gsap-wrapper>
@@ -528,32 +545,16 @@
 		<x-expertise.frontend/>
 	</x-slot>
 	<p>
-		Modern UI must do more than look good—it must <em>think</em> and scale. I approach frontend development through
-		the lens of design systems: component architecture, design tokens, and accessible patterns that provide
-		long-term leverage for engineering teams.
+		Building UIs that aren't just pretty, but genuinely pleasant to work in and maintain over years. I build around solid design systems—reusable components, tokens, and accessible patterns that give engineering teams real leverage.
 	</p>
 	<p>
-		Fluent across the modern reactive landscape. <strong>Vue</strong> for elegant, maintainable codebases.
-		<strong>React</strong> for ambitious product complexity. <strong>TypeScript</strong> throughout because
-		runtime errors are solved problems. <strong>Tailwind</strong> because utility-first CSS is how you actually
-		scale design systems without the fragile naming wars.
+		Comfortable wherever the stack takes me. <strong>Vue</strong> for clean, reactive SPAs. <strong>React</strong> when product complexity demands it. <strong>TypeScript</strong> across the board because chasing runtime bugs gets old fast. And <strong>Tailwind CSS</strong> to keep styling modular without the headache of naming things.
 	</p>
 	<p>
-		But this isn’t just framework knowledge. My roots are in high-fidelity design tools like <strong>Figma</strong>
-		and the <strong>Adobe Creative Cloud</strong>, so I understand the handoff from design to code as a continuity
-		problem, not a translation problem. This
-		means pixel-perfect implementation isn’t an afterthought; it’s baked into the architecture.
+		Because my background includes deep work in <strong>Figma</strong> and the Adobe ecosystem, I treat the design-to-code handoff as a smooth continuum rather than throwing specs over a wall. Pixel-perfect delivery is built into the architecture from day one.
 	</p>
 	<p>
-		A foundation in vanilla <strong>JavaScript</strong> and <strong>Modern CSS</strong> means I’m not
-		framework-dependent. The fundamentals never stopped mattering. Accessibility isn’t a checklist—it’s a design
-		constraint that makes everything better. Responsive systems work because they’re built with
-		constraint-driven thinking, not media-query whack-a-mole.
-	</p>
-	<p>
-		<strong>The Current Reality</strong>: Frontend is infrastructure. I build systems your backend team actually
-		wants to integrate with: design tokens that sync with design tools and component APIs that feel intuitive.
-		This is the era of type-safe frontends talking to type-safe backends.
+		Solid foundations in vanilla JavaScript and modern CSS mean I'm not trapped in framework churn. Good accessibility and responsive layouts come naturally when you design with constraints rather than fighting CSS.
 	</p>
 </x-modal>
 
@@ -562,34 +563,16 @@
 		<x-expertise.api/>
 	</x-slot>
 	<p>
-		Well-designed APIs are read like novels. They are about <em>discovery</em>—a developer should understand your
-		system’s
-		capabilities by exploring your endpoints, not by digging through stale documentation.
+		Good APIs should feel obvious and self-documenting. If a developer has to dig through messy docs just to make a basic request, something's broken. I focus on clean endpoints, semantic HTTP, and predictable behavior.
 	</p>
 	<p>
-		<strong>REST API design</strong> done thoughtfully: semantic HTTP, appropriate status codes, and hypermedia
-		hints
-		where they add value. I build endpoints that compose well, scale in complex read/write patterns, and avoid
-		becoming
-		legacy technical debt.
+		<strong>REST & Security</strong>: Thoughtful endpoint design combined with robust auth flows (PKCE for SPAs, client credentials for microservices) that keep data locked down without making developer onboarding painful.
 	</p>
 	<p>
-		<strong>OAuth & Security</strong> expertise across all flavors—Authorization Code flows with PKCE for SPAs, and
-		client credentials
-		for service-to-service communication. This is security architecture that prioritizes safety without compromising
-		developer experience.
+		<strong>Asynchronous Workflows</strong>: Offloading heavy lifting from web requests into background queues using Redis and workers. Smart retry logic and job structuring ensure nothing drops when traffic spikes.
 	</p>
 	<p>
-		<strong>Event-Driven Architecture</strong> through queues and job systems. I decouple web requests from
-		heavy lifting, designing for the reality of asynchronous operations. Redis queues, time-delayed jobs,
-		and retry strategies that ensure system consistency and resilience.
-	</p>
-	<p>
-		<strong>System Design Thinking</strong>: Analyzing load patterns, failure modes, and recovery strategies. I know
-		when
-		caching provides a boost and when it introduces risk. I build systems that degrade gracefully, maintaining
-		consistency
-		without unnecessary complexity.
+		Pragmatic system architecture: knowing when to cache, how systems degrade under pressure, and keeping things as simple as possible while scaling smoothly.
 	</p>
 </x-modal>
 
@@ -598,27 +581,24 @@
 		<x-expertise.database/>
 	</x-slot>
 	<p>
-		Data persistence is the foundation of any serious application. Choosing the right tool for the access pattern is
-		<em>essential</em>.
+		Data persistence is the backbone of any real-world app. Picking the right storage strategy for the access pattern saves endless headaches down the road.
 	</p>
 	<div class="grid grid-cols-1 gap-4 md:grid-cols-2">
 		<div class="rounded-xl border border-zinc-100 bg-zinc-50 p-4 dark:border-zinc-800 dark:bg-zinc-800/50">
-			<p class="mb-1 font-bold">Relational Ecosystem</p>
+			<p class="mb-1 font-bold">Relational Stores</p>
 			<p class="text-sm opacity-80">
-				PostgreSQL, MySQL, SQL Server, and SQLite for ACID-compliant, structured data requirements.
+				PostgreSQL, MySQL, and SQLite for rock-solid ACID compliance and relational integrity.
 			</p>
 		</div>
 		<div class="rounded-xl border border-zinc-100 bg-zinc-50 p-4 dark:border-zinc-800 dark:bg-zinc-800/50">
-			<p class="mb-1 font-bold">In-Memory & Cache</p>
+			<p class="mb-1 font-bold">Caching & In-Memory</p>
 			<p class="text-sm opacity-80">
-				Redis for session management, real-time counters, leaderboards, and high-velocity rate limiting.
+				Redis for lightning-fast sessions, queues, rate limiting, and real-time state.
 			</p>
 		</div>
 	</div>
 	<p>
-		<strong>Data Layer Thinking</strong>: Schema design that anticipates growth without over-engineering.
-		Indexing as an art—balancing write performance with read velocity. Query optimization that starts with
-		deeply understanding database execution plans and access patterns.
+		<strong>Data Layer Craft</strong>: Designing schemas that scale naturally without premature over-engineering. Indexing intelligently to balance reads and writes, and profiling slow queries before they turn into production fires.
 	</p>
 </x-modal>
 
@@ -627,27 +607,13 @@
 		<x-expertise.devops/>
 	</x-slot>
 	<p>
-		Infrastructure is no longer a separate department—it's part of the application. <strong>Docker</strong> mastery
-		means understanding image
-		optimization, security scanning, and multi-stage builds to ensure lean, secure deployments.
+		Deploying code shouldn't require crossing your fingers. I set up automated pipelines and containerized environments so releasing updates is routine, safe, and completely boring.
 	</p>
 	<p>
-		<strong>CI/CD Automation</strong> is the engine of velocity. GitHub Actions for modern workflows—matrix
-		testing, artifact caching, and automated deployment gates. Ansible for reproducible configuration management
-		that bridges the gap between dev and prod.
+		<strong>Docker & CI/CD</strong>: Clean multi-stage container builds, artifact caching, and GitHub Actions workflows that catch bugs before code ever hits staging.
 	</p>
 	<p>
-		<strong>Infrastructure as Code (IaC)</strong>: Using Terraform for cloud resource management ensures environment
-		parity. Development should mirror production as closely as possible to eliminate "parity drift" bugs.
-	</p>
-	<p>
-		<strong>Deployment Strategies</strong>: Implementing Blue-Green and Canary releases to provide zero-downtime
-		rollouts and gradual confidence. I advocate for decoupling deployments from releases through feature flags.
-	</p>
-	<p>
-		<strong>Zero-Trust Networking</strong>: Leveraging Tailscale for secure, identity-based infrastructure
-		networking. Stop
-		managing brittle firewall rules and start thinking in terms of verified identity.
+		<strong>Infrastructure as Code</strong>: Managing servers and cloud resources with Ansible and Terraform so dev and production stay in lockstep, eliminating drift and deployment surprises.
 	</p>
 </x-modal>
 
@@ -656,31 +622,13 @@
 		<x-expertise.observability/>
 	</x-slot>
 	<p>
-		You can't fix what you can't see. Modern observability is about understanding your
-		system through high-cardinality telemetry, not just pretty dashboards.
+		You can't fix what you can't see. Proper observability means having clear visibility into how your system behaves under real-world traffic, not just guessing when alerts go off.
 	</p>
 	<p>
-		<strong>Grafana Stack</strong> for metrics and visualization. I focus on building dashboards that answer
-		specific operational questions, ensuring scrape intervals and retention policies align with business needs.
+		<strong>Metrics & Tracing</strong>: Setting up Grafana dashboards and OTLP telemetry to trace requests across services.
 	</p>
 	<p>
-		<strong>Distributed Tracing</strong> via OpenTelemetry (OTLP). When a performance issue arises, my observability
-		stack allows for tracing requests across service boundaries—pinpointing bottlenecks in the frontend, API, or
-		database with precision.
-	</p>
-	<p>
-		<strong>Structured Logging</strong> as a mandatory discipline. JSON logs with consistent schemas make
-		aggregation and
-		searching via OpenObserve or Signoz actually effective, allowing for correlation across the entire request
-		journey.
-	</p>
-	<p>
-		<strong>SRE Mindset</strong>: Designing for failure. Timeouts, retries, and circuit breakers are core
-		architectural components. Health checks should inform you of degradation <em>before</em> users experience it.
-	</p>
-	<p>
-		<strong>Outcome-Based Alerting</strong>: Reducing alert fatigue by focusing on user-facing outcomes rather than
-		system symptoms. Don't alert on CPU load—alert when request latency or error rates exceed acceptable thresholds.
+		Alerting on actual user pain points (error rates, latency spikes) rather than drowning in noisy CPU warnings.
 	</p>
 </x-modal>
 
@@ -688,33 +636,17 @@
 	<x-slot name="animation">
 		<x-expertise.engineering/>
 	</x-slot>
-	<p>Engineering excellence starts with professional taste—knowing what "good" looks like and having the discipline to
-		maintain it.</p>
 	<p>
-		<strong>Type Safety</strong> as a non-negotiable foundation. <strong>TypeScript</strong> on the frontend and
-		<strong>PHPStan</strong> (at strict levels) on the backend. Types are documentation that the compiler enforces,
-		communicating intent to both the machine and your future self.
+		Great code is about professional pride and maintainability—writing code that you and your teammates actually enjoy coming back to.
 	</p>
 	<p>
-		<strong>Testing as Design</strong>: Tests aren’t just for coverage; they are a primary design tool. <strong>PHPUnit</strong>
-		and <strong>Pest</strong> for behavior specification, ensuring that refactoring can happen with confidence and
-		speed.
-	</p>
-	<p><strong>SOLID Principles</strong> applied with pragmatic judgment:</p>
-	<ul class="list-disc space-y-2 pl-5">
-		<li><strong>Single Responsibility</strong>: Clear, focused purpose for every class.</li>
-		<li><strong>Open/Closed</strong>: Architecture that welcomes extension without breakage.</li>
-		<li><strong>Liskov Substitution</strong>: Reliable inheritance and contract fulfillment.</li>
-		<li><strong>Interface Segregation</strong>: Lean, specific contracts over bloated ones.</li>
-		<li><strong>Dependency Inversion</strong>: Decoupling via abstractions for testability and flexibility.</li>
-	</ul>
-	<p>
-		<strong>Dependency Management</strong>: Deep fluency in the Composer and NPM ecosystems. Managing version
-		constraints and security advisories is a critical part of maintaining a healthy software supply chain.
+		<strong>Type Safety</strong>: TypeScript on the frontend and strict PHPStan levels on the backend. The compiler catches mistakes so users don't have to.
 	</p>
 	<p>
-		<strong>Collaborative Git Workflows</strong>: PRs as a high-bandwidth communication channel. Commit messages
-		that focus on the <em>why</em> behind a change, enabling team velocity and long-term project archeology.
+		<strong>Testing as Design</strong>: Using Pest and PHPUnit to specify behavior and lock down code so refactoring is fast and fearless.
+	</p>
+	<p>
+		Pragmatic SOLID principles, clean Git history that explains the <em>why</em>, and careful dependency management to keep the supply chain secure.
 	</p>
 </x-modal>
 
@@ -723,16 +655,10 @@
 		<x-expertise.laravel/>
 	</x-slot>
 	<p>
-		You don't stay with a framework for over a decade unless it consistently delivers value. I am a
-		<strong>Laravel veteran since v3.2</strong>, having witnessed the ecosystem’s evolution from a Rails-inspired
-		MVC to a
-		comprehensive, enterprise-ready powerhouse.
+		I've been building with Laravel since version 3.2. Over a decade in the ecosystem means I've seen it grow from a neat Rails-inspired toolkit into a true enterprise powerhouse.
 	</p>
 	<p>
-		My expertise goes beyond surface-level API knowledge. I understand the underlying architectural decisions of the
-		framework, allowing me to extend, optimize, and scale Laravel applications thoughtfully. From complex Eloquent
-		modeling to reactive Livewire components, I build with the grain of the framework to ensure maintainability and
-		performance.
+		I know how to work with the grain of the framework—from complex Eloquent optimizations to reactive Livewire Volt components—extending it cleanly when needed without fighting its architecture.
 	</p>
 </x-modal>
 
