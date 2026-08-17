@@ -46,7 +46,7 @@ class AppServiceProvider extends ServiceProvider
                 }
             }
 
-            if ($key && str_contains($key, 'BEGIN EC PRIVATE KEY')) {
+            if ($key && (str_contains($key, 'BEGIN EC PRIVATE KEY') || str_contains($key, 'BEGIN PRIVATE KEY'))) {
                 $descriptors = [
                     0 => ['pipe', 'r'],
                     1 => ['pipe', 'w'],
@@ -66,11 +66,32 @@ class AppServiceProvider extends ServiceProvider
             }
 
             $privateKeyResource = @openssl_pkey_get_private($key);
-            if ($privateKeyResource !== false) {
-                @openssl_pkey_export($privateKeyResource, $exported);
-                if (!empty($exported)) {
-                    $key = $exported;
+            if ($privateKeyResource === false) {
+                $descriptors = [
+                    0 => ['pipe', 'r'],
+                    1 => ['pipe', 'w'],
+                    2 => ['pipe', 'w'],
+                ];
+                $process = @proc_open('openssl pkcs8 -nocrypt -outform PEM', $descriptors, $pipes);
+                if (is_resource($process)) {
+                    fwrite($pipes[0], $key);
+                    fclose($pipes[0]);
+                    $converted = stream_get_contents($pipes[1]);
+                    fclose($pipes[1]);
+                    fclose($pipes[2]);
+                    if (proc_close($process) === 0 && !empty($converted)) {
+                        $key = $converted;
+                    }
                 }
+                $privateKeyResource = @openssl_pkey_get_private($key);
+            }
+
+            if ($privateKeyResource === false) {
+                $error = '';
+                while ($msg = openssl_error_string()) {
+                    $error .= PHP_EOL . '* ' . $msg;
+                }
+                throw \Lcobucci\JWT\Signer\InvalidKeyProvided::cannotBeParsed($error);
             }
 
             return Configuration::forSymmetricSigner(
