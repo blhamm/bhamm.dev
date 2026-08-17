@@ -36,71 +36,13 @@ class AppServiceProvider extends ServiceProvider
 		$this->app->bind(Configuration::class, function () {
             $key = config('services.apple.private_key') ?? '';
             $key = trim($key, "\"'");
+
+            $decoded = base64_decode($key, true);
+            if ($decoded !== false && base64_encode($decoded) === $key) {
+                $key = trim($decoded, "\"'");
+            }
+
             $key = str_replace(['\n', '\\n'], "\n", $key);
-
-            if ($key && !str_starts_with($key, '-----BEGIN')) {
-                $decoded = base64_decode($key, true);
-                if ($decoded !== false) {
-                    $key = trim($decoded, "\"'");
-                    $key = str_replace(['\n', '\\n'], "\n", $key);
-                }
-            }
-
-            while (openssl_error_string());
-
-            $privateKeyResource = @openssl_pkey_get_private($key);
-
-            if ($privateKeyResource === false && $key && (str_contains($key, 'BEGIN EC PRIVATE KEY') || str_contains($key, 'BEGIN PRIVATE KEY'))) {
-                $descriptors = [
-                    0 => ['pipe', 'r'],
-                    1 => ['pipe', 'w'],
-                    2 => ['pipe', 'w'],
-                ];
-                $process = @proc_open('openssl pkey -outform PEM', $descriptors, $pipes);
-                if (is_resource($process)) {
-                    fwrite($pipes[0], $key);
-                    fclose($pipes[0]);
-                    $converted = stream_get_contents($pipes[1]);
-                    fclose($pipes[1]);
-                    fclose($pipes[2]);
-                    if (proc_close($process) === 0 && !empty($converted)) {
-                        $privateKeyResource = @openssl_pkey_get_private($converted);
-                        if ($privateKeyResource !== false) {
-                            $key = $converted;
-                        }
-                    }
-                }
-            }
-
-            if ($privateKeyResource === false && $key) {
-                $descriptors = [
-                    0 => ['pipe', 'r'],
-                    1 => ['pipe', 'w'],
-                    2 => ['pipe', 'w'],
-                ];
-                $process = @proc_open('openssl pkcs8 -nocrypt -outform PEM', $descriptors, $pipes);
-                if (is_resource($process)) {
-                    fwrite($pipes[0], $key);
-                    fclose($pipes[0]);
-                    $converted = stream_get_contents($pipes[1]);
-                    fclose($pipes[1]);
-                    fclose($pipes[2]);
-                    if (proc_close($process) === 0 && !empty($converted)) {
-                        $privateKeyResource = @openssl_pkey_get_private($converted);
-                        if ($privateKeyResource !== false) {
-                            $key = $converted;
-                        }
-                    }
-                }
-            }
-
-            if ($privateKeyResource === false) {
-                $error = '';
-                while ($msg = openssl_error_string()) {
-                    $error .= PHP_EOL . '* ' . $msg;
-                }
-                throw \Lcobucci\JWT\Signer\InvalidKeyProvided::cannotBeParsed($error);
-            }
 
             return Configuration::forSymmetricSigner(
                 new Sha256(),

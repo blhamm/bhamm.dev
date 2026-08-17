@@ -8,7 +8,7 @@ it('redirects to home with alt_id uuid on socialite callback success', function 
     $socialUser->shouldReceive('getEmail')->andReturn('test@example.com');
     $socialUser->shouldReceive('getName')->andReturn('Test User');
 
-    Socialite::shouldReceive('driver->user')->andReturn($socialUser);
+    Socialite::shouldReceive('driver->stateless->user')->andReturn($socialUser);
 
     $response = $this->get('/auth/github/callback');
 
@@ -48,7 +48,7 @@ it('redirects to home with alt_id uuid on apple post socialite callback success'
     $socialUser->shouldReceive('getEmail')->andReturn('apple-test@example.com');
     $socialUser->shouldReceive('getName')->andReturn('Apple User');
 
-    Socialite::shouldReceive('driver->user')->andReturn($socialUser);
+    Socialite::shouldReceive('driver->stateless->user')->andReturn($socialUser);
 
     $response = $this->post('/auth/apple/callback', [
         'id_token' => 'mock-id-token',

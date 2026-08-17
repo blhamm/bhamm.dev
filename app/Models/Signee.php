@@ -14,6 +14,9 @@ class Signee extends Authenticatable
             if (empty($signee->alt_id) || !\Illuminate\Support\Str::isUuid($signee->alt_id)) {
                 $signee->alt_id = (string) \Illuminate\Support\Str::uuid();
             }
+            if (empty($signee->name)) {
+                $signee->name = 'GuestBook Signee';
+            }
         });
     }
 
@@ -23,10 +26,15 @@ class Signee extends Authenticatable
         'longitude' => 'float',
     ];
 
+    public function setNameAttribute($value): void
+    {
+        $this->attributes['name'] = !empty($value) ? $value : 'GuestBook Signee';
+    }
+
     public function getDisplayNameAttribute(): string
     {
         if (empty($this->name)) {
-            return 'Anonymous';
+            return 'GuestBook Signee';
         }
 
         $parts = explode(' ', $this->name);

@@ -103,3 +103,13 @@ test('guestbook form displays city and state location when present', function ()
     Livewire::test('guestbook-form', ['userId' => $signee->alt_id])
         ->assertSee('Austin, TX');
 });
+
+test('signee can be created without name and defaults correctly', function () {
+    $signee = Signee::create([
+        'email' => 'noname@example.com',
+        'social_auth_type' => 'github',
+    ]);
+
+    expect($signee)->not->toBeNull()
+        ->and($signee->name)->toBe('GuestBook Signee');
+});
