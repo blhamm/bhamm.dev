@@ -37,7 +37,7 @@ class AppServiceProvider extends ServiceProvider
             $key = config('services.apple.private_key') ?? '';
 
             if ($key && !str_starts_with($key, '-----BEGIN')) {
-                $decoded = base64_decode($key);
+                $decoded = base64_decode($key, true);
                 if ($decoded !== false) {
                     $key = $decoded;
                 }
@@ -48,6 +48,32 @@ class AppServiceProvider extends ServiceProvider
                 @openssl_pkey_export($privateKeyResource, $exported);
                 if (!empty($exported)) {
                     $key = $exported;
+                }
+            } else {
+                if ($key && (str_contains($key, 'BEGIN EC PRIVATE KEY') || str_contains($key, 'BEGIN PRIVATE KEY'))) {
+                    $descriptors = [
+                        0 => ['pipe', 'r'],
+                        1 => ['pipe', 'w'],
+                        2 => ['pipe', 'w'],
+                    ];
+                    $process = @proc_open('openssl pkey -outform PEM', $descriptors, $pipes);
+                    if (is_resource($process)) {
+                        fwrite($pipes[0], $key);
+                        fclose($pipes[0]);
+                        $converted = stream_get_contents($pipes[1]);
+                        fclose($pipes[1]);
+                        fclose($pipes[2]);
+                        if (proc_close($process) === 0 && !empty($converted)) {
+                            $key = $converted;
+                            $privateKeyResource = @openssl_pkey_get_private($key);
+                            if ($privateKeyResource !== false) {
+                                @openssl_pkey_export($privateKeyResource, $exported);
+                                if (!empty($exported)) {
+                                    $key = $exported;
+                                }
+                            }
+                        }
+                    }
                 }
             }
 

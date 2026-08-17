@@ -56,7 +56,7 @@ class SocialiteController extends Controller
             'place_id' => $location['place_id'],
         ], fn($value) => $value !== null));
 
-        if (empty($signee->alt_id)) {
+        if (empty($signee->alt_id) || !\Illuminate\Support\Str::isUuid($signee->alt_id)) {
             $signee->alt_id = (string) \Illuminate\Support\Str::uuid();
         }
 
