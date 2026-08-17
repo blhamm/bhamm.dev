@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Signee;
+use App\Services\AppleToken;
+use App\Services\GeocodeService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Laravel\Pennant\Feature;
 use Laravel\Socialite\Facades\Socialite;
 
@@ -19,22 +22,22 @@ class SocialiteController extends Controller
         return Socialite::driver($provider)->redirect();
     }
 
-    public function callback(string $provider, Request $request, \App\Services\GeocodeService $geocodeService)
+    public function callback(string $provider, Request $request, GeocodeService $geocodeService, AppleToken $appleToken)
     {
         if ($provider === 'apple') {
             if (config('services.apple.private_key')) {
                 try {
-                    config(['services.apple.client_secret' => app(\App\Services\AppleToken::class)->generate()]);
+                    config()->set('services.apple.client_secret', app(AppleToken::class)->generate());
                 } catch (\Exception $e) {
-                    \Illuminate\Support\Facades\Log::warning("Failed to generate Apple client secret: " . $e->getMessage());
+                    Log::warning("Failed to generate Apple client secret: " . $e->getMessage());
                 }
             }
         }
 
         try {
-            $socialUser = Socialite::driver($provider)->user();
+            $socialUser = Socialite::driver($provider)->stateless()->user();
         } catch (\Exception $e) {
-            \Illuminate\Support\Facades\Log::error("Socialite callback failed for {$provider}: " . $e->getMessage(), [
+            Log::error("Socialite callback failed for {$provider}: " . $e->getMessage(), [
                 'exception' => $e,
             ]);
             return redirect('/')->with('error', 'Authentication failed.');
