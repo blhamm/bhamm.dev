@@ -22,7 +22,13 @@ class SocialiteController extends Controller
     public function callback(string $provider, Request $request, \App\Services\GeocodeService $geocodeService)
     {
         if ($provider === 'apple') {
-            config(['services.apple.client_secret' => app(\App\Services\AppleToken::class)->generate()]);
+            if (config('services.apple.private_key')) {
+                try {
+                    config(['services.apple.client_secret' => app(\App\Services\AppleToken::class)->generate()]);
+                } catch (\Exception $e) {
+                    \Illuminate\Support\Facades\Log::warning("Failed to generate Apple client secret: " . $e->getMessage());
+                }
+            }
         }
 
         try {
@@ -37,23 +43,24 @@ class SocialiteController extends Controller
         $ip = $request->ip();
         $location = $geocodeService->lookup($ip);
 
-        $signee = Signee::updateOrCreate(
-            ['email' => $socialUser->getEmail()],
-            array_filter([
-                'name' => $socialUser->getName() ?? $socialUser->getNickname(),
-                'social_auth_type' => $provider,
-                'ip_address' => $ip,
-                'city' => $location['city'],
-                'state' => $location['state'],
-                'latitude' => $location['latitude'],
-                'longitude' => $location['longitude'],
-                'place_id' => $location['place_id'],
-            ], fn($value) => $value !== null)
-        );
+        $signee = Signee::firstOrNew(['email' => $socialUser->getEmail()]);
+        
+        $signee->fill(array_filter([
+            'name' => $socialUser->getName() ?? $socialUser->getNickname(),
+            'social_auth_type' => $provider,
+            'ip_address' => $ip,
+            'city' => $location['city'],
+            'state' => $location['state'],
+            'latitude' => $location['latitude'],
+            'longitude' => $location['longitude'],
+            'place_id' => $location['place_id'],
+        ], fn($value) => $value !== null));
 
         if (empty($signee->alt_id)) {
-            $signee->update(['alt_id' => (string) \Illuminate\Support\Str::uuid()]);
+            $signee->alt_id = (string) \Illuminate\Support\Str::uuid();
         }
+
+        $signee->save();
 
         // Authenticate the signee
         Auth::guard('signee')->login($signee);

@@ -10,7 +10,7 @@ class Signee extends Authenticatable
 
     protected static function booted(): void
     {
-        static::creating(function ($signee) {
+        static::saving(function ($signee) {
             if (empty($signee->alt_id)) {
                 $signee->alt_id = (string) \Illuminate\Support\Str::uuid();
             }

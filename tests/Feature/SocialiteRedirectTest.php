@@ -25,6 +25,21 @@ it('redirects to home with alt_id uuid on socialite callback success', function 
 });
 
 it('redirects to home with alt_id uuid on apple post socialite callback success', function () {
+    $res = openssl_pkey_new([
+        "private_key_type" => OPENSSL_KEYTYPE_EC,
+        "curve_name" => "prime256v1",
+    ]);
+    openssl_pkey_export($res, $pkcs8);
+
+    config([
+        'services.apple.team_id' => 'TESTTEAMID',
+        'services.apple.client_id' => 'com.example.client',
+        'services.apple.key_id' => 'TESTKEYID',
+        'services.apple.private_key' => $pkcs8,
+    ]);
+
+    app()->forgetInstance(\Lcobucci\JWT\Configuration::class);
+
     $socialUser = Mockery::mock(\Laravel\Socialite\Two\User::class);
     $socialUser->shouldReceive('getEmail')->andReturn('apple-test@example.com');
     $socialUser->shouldReceive('getName')->andReturn('Apple User');
