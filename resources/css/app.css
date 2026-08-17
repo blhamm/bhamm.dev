@@ -45,7 +45,7 @@ html.lenis body {
  }
 
  @utility glass-pane {
-    @apply bg-pale-night-white/12 dark:bg-pale-night-black/8 backdrop-blur-md border border-pale-night-white/20 dark:border-pale-night-white/5 ring-1 ring-inset ring-white/10 dark:ring-pale-night-black/20;
+    @apply bg-pale-night-white/12 dark:bg-pale-night-black/8 backdrop-blur-md border border-pale-night-black/15 dark:border-pale-night-white/5 ring-1 ring-inset ring-white/10 dark:ring-pale-night-black/20;
  }
 
  @utility bg-animated-gradient {
