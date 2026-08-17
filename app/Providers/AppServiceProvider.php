@@ -46,7 +46,11 @@ class AppServiceProvider extends ServiceProvider
                 }
             }
 
-            if ($key && (str_contains($key, 'BEGIN EC PRIVATE KEY') || str_contains($key, 'BEGIN PRIVATE KEY'))) {
+            while (openssl_error_string());
+
+            $privateKeyResource = @openssl_pkey_get_private($key);
+
+            if ($privateKeyResource === false && $key && (str_contains($key, 'BEGIN EC PRIVATE KEY') || str_contains($key, 'BEGIN PRIVATE KEY'))) {
                 $descriptors = [
                     0 => ['pipe', 'r'],
                     1 => ['pipe', 'w'],
@@ -60,13 +64,15 @@ class AppServiceProvider extends ServiceProvider
                     fclose($pipes[1]);
                     fclose($pipes[2]);
                     if (proc_close($process) === 0 && !empty($converted)) {
-                        $key = $converted;
+                        $privateKeyResource = @openssl_pkey_get_private($converted);
+                        if ($privateKeyResource !== false) {
+                            $key = $converted;
+                        }
                     }
                 }
             }
 
-            $privateKeyResource = @openssl_pkey_get_private($key);
-            if ($privateKeyResource === false) {
+            if ($privateKeyResource === false && $key) {
                 $descriptors = [
                     0 => ['pipe', 'r'],
                     1 => ['pipe', 'w'],
@@ -80,10 +86,12 @@ class AppServiceProvider extends ServiceProvider
                     fclose($pipes[1]);
                     fclose($pipes[2]);
                     if (proc_close($process) === 0 && !empty($converted)) {
-                        $key = $converted;
+                        $privateKeyResource = @openssl_pkey_get_private($converted);
+                        if ($privateKeyResource !== false) {
+                            $key = $converted;
+                        }
                     }
                 }
-                $privateKeyResource = @openssl_pkey_get_private($key);
             }
 
             if ($privateKeyResource === false) {
