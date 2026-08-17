@@ -55,7 +55,9 @@ new class extends Component {
 <div class="space-y-8">
     <div class="flex flex-col md:flex-row md:items-center justify-between gap-8 relative p-4" id="guestbook-header">
         <div class="relative z-10">
-            <h2 class="typing-animation text-pale-night-black dark:text-pale-night-white text-2xl font-bold md:text-4xl bg-clip-text text-transparent bg-gradient-to-r from-pale-night-blue to-pale-night-green">@if(Auth::guard('signee')->check())Thanks, {{ Auth::guard('signee')->user()->first_name }}@else Say Hi Stranger @endif</h2>
+            <h2 class="typing-animation text-pale-night-black dark:text-pale-night-white text-2xl font-bold md:text-4xl">
+                @if(Auth::guard('signee')->check())Thanks, {{ Auth::guard('signee')->user()->first_name }}@else Say Hi Stranger @endif
+            </h2>
             <p class="text-zinc-500 dark:text-zinc-400 mt-2 max-w-xl text-lg leading-relaxed">
                 @if(Auth::guard('signee')->check())
                     I appreciate your support! If you’re enjoying this showcase, you can help me grow by starring the repository on GitHub. I’m always looking to connect with fellow developers in the PHP, Laravel, and Symfony communities!
