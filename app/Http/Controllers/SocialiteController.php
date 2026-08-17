@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Signee;
+use App\Services\AppleToken;
 use App\Services\GeocodeService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -23,6 +24,15 @@ class SocialiteController extends Controller
 
     public function callback(string $provider, Request $request, GeocodeService $geocodeService)
     {
+        if ($provider === 'apple') {
+            if (config('services.apple.private_key')) {
+                try {
+                    config()->set('services.apple.client_secret', app(AppleToken::class)->generate());
+                } catch (\Exception $e) {
+                    Log::warning("Failed to generate Apple client secret: " . $e->getMessage());
+                }
+            }
+        }
 
         try {
             $socialUser = Socialite::driver($provider)->stateless()->user();
