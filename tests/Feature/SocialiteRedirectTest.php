@@ -19,9 +19,13 @@ it('redirects to home with alt_id uuid on socialite callback success', function 
 
     $signee = Signee::where('email', 'test@example.com')->first();
     expect($signee)->not->toBeNull()
-	    ->and($signee->alt_id)->not->toBeNull()
-	    ->and($redirectUrl)->toContain('user_id=' . $signee->alt_id)
-	    ->and($redirectUrl)->not->toContain('user_id=' . $signee->id);
+	    ->and($signee->alt_id)->not->toBeNull();
+
+    $parsedUrl = parse_url($redirectUrl);
+    parse_str($parsedUrl['query'] ?? '', $query);
+
+    expect($query['user_id'])->toBe($signee->alt_id)
+        ->and($query['user_id'])->not->toBe((string) $signee->id);
 });
 
 it('redirects to home with alt_id uuid on apple post socialite callback success', function () {
