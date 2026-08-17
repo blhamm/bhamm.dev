@@ -85,3 +85,38 @@ test('apple token is permitted for apple', function () {
 
     expect($token->isPermittedFor('https://appleid.apple.com'))->toBeTrue();
 });
+
+test('normalizes pkcs1 private key and generates apple jwt token successfully', function () {
+    $res = openssl_pkey_new([
+        "private_key_type" => OPENSSL_KEYTYPE_EC,
+        "curve_name" => "prime256v1",
+    ]);
+    openssl_pkey_export($res, $pkcs8);
+
+    $descriptors = [
+        0 => ["pipe", "r"],
+        1 => ["pipe", "w"],
+        2 => ["pipe", "w"],
+    ];
+    $process = proc_open("openssl ec -outform PEM", $descriptors, $pipes);
+    fwrite($pipes[0], $pkcs8);
+    fclose($pipes[0]);
+    $pkcs1 = stream_get_contents($pipes[1]);
+    fclose($pipes[1]);
+    fclose($pipes[2]);
+    proc_close($process);
+
+    config([
+        'services.apple.team_id' => 'TESTTEAMID',
+        'services.apple.client_id' => 'com.example.client',
+        'services.apple.key_id' => 'TESTKEYID',
+        'services.apple.private_key' => base64_encode($pkcs1),
+    ]);
+
+    app()->forgetInstance(\Lcobucci\JWT\Configuration::class);
+
+    $appleToken = app(\App\Services\AppleToken::class);
+    $tokenString = $appleToken->generate();
+
+    expect($tokenString)->toBeString()->not->toBeEmpty();
+});

@@ -43,6 +43,14 @@ class AppServiceProvider extends ServiceProvider
                 }
             }
 
+            $privateKeyResource = @openssl_pkey_get_private($key);
+            if ($privateKeyResource !== false) {
+                @openssl_pkey_export($privateKeyResource, $exported);
+                if (!empty($exported)) {
+                    $key = $exported;
+                }
+            }
+
             return Configuration::forSymmetricSigner(
                 new Sha256(),
                 InMemory::plainText($key),
