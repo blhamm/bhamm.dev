@@ -10,6 +10,7 @@ use Laravel\Pennant\Feature;
 use Lcobucci\JWT\Configuration;
 use Lcobucci\JWT\Signer\Ecdsa\Sha256;
 use Lcobucci\JWT\Signer\Key\InMemory;
+use SocialiteProviders\Apple\Provider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -18,7 +19,21 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->bind(Configuration::class, function () {
+
+    }
+
+    /**
+     * Bootstrap any application services.
+     */
+    public function boot(): void
+    {
+        Event::listen(function (\SocialiteProviders\Manager\SocialiteWasCalled $event) {
+            $event->extendSocialite('apple', Provider::class);
+        });
+
+        $this->defineFeatures();
+
+		$this->app->bind(Configuration::class, function () {
             $key = config('services.apple.private_key') ?? '';
 
             if ($key && !str_starts_with($key, '-----BEGIN')) {
@@ -33,18 +48,6 @@ class AppServiceProvider extends ServiceProvider
                 InMemory::plainText($key),
             );
         });
-    }
-
-    /**
-     * Bootstrap any application services.
-     */
-    public function boot(): void
-    {
-        Event::listen(function (\SocialiteProviders\Manager\SocialiteWasCalled $event) {
-            $event->extendSocialite('apple', \SocialiteProviders\Apple\Provider::class);
-        });
-
-        $this->defineFeatures();
     }
 
     protected function defineFeatures(): void
