@@ -36,12 +36,12 @@ class AppServiceProvider extends ServiceProvider
 		$this->app->bind(Configuration::class, function () {
             $key = config('services.apple.private_key') ?? '';
 
-            if ($key && !str_starts_with($key, '-----BEGIN')) {
-                $decoded = base64_decode($key, true);
-                if ($decoded !== false) {
-                    $key = $decoded;
-                }
-            }
+//            if ($key && !str_starts_with($key, '-----BEGIN')) {
+//                $decoded = base64_decode($key, true);
+//                if ($decoded !== false) {
+//                    $key = $decoded;
+//                }
+//            }
 
             return Configuration::forSymmetricSigner(
                 new Sha256(),
