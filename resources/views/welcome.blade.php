@@ -515,7 +515,7 @@
 							</div>
 							<div
 								class="bg-pale-night-white/70 dark:bg-pale-night-black aspect-square rounded-2xl">
-{{--								<img src="images/me2.jpeg" alt="">--}}
+								<img class="rounded-3xl" src="images/me2.webp" alt="Me">
 							</div>
 						</div>
 					</section>
