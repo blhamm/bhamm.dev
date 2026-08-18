@@ -1,7 +1,10 @@
 <?php
 
 use App\Models\Signee;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Socialite\Facades\Socialite;
+
+uses(RefreshDatabase::class);
 
 it('redirects to home with alt_id uuid on socialite callback success', function () {
     $socialUser = Mockery::mock(\Laravel\Socialite\Two\User::class);

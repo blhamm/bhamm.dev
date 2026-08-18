@@ -103,3 +103,35 @@ test('guestbook form displays city and state location when present', function ()
     Livewire::test('guestbook-form', ['userId' => $signee->alt_id])
         ->assertSee('Austin, TX');
 });
+
+test('signee defaults to anonymous when name is not provided', function () {
+    $signee = Signee::create([
+        'email' => 'anon@example.com',
+        'social_auth_type' => 'github',
+    ]);
+
+    expect($signee->name)->toBe('Anonymous')
+        ->and($signee->display_name)->toBe('Anonymous')
+        ->and($signee->first_name)->toBe('Anonymous');
+});
+
+test('guestbook form displays optional name input for anonymous signee and allows updating name', function () {
+    $signee = Signee::create([
+        'name' => 'Anonymous',
+        'email' => 'anonform@example.com',
+        'social_auth_type' => 'github',
+    ]);
+
+    Auth::guard('signee')->login($signee);
+
+    Livewire::test('guestbook-form', ['userId' => $signee->alt_id])
+        ->assertSee('Your Name (Optional)')
+        ->set('message', 'Hello from anonymous user!')
+        ->set('name', 'John Doe')
+        ->call('save')
+        ->assertHasNoErrors();
+
+    $signee->refresh();
+    expect($signee->name)->toBe('John Doe')
+        ->and($signee->display_name)->toBe('John D.');
+});

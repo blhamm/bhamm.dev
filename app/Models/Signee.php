@@ -14,6 +14,9 @@ class Signee extends Authenticatable
             if (empty($signee->alt_id)) {
                 $signee->alt_id = (string) \Illuminate\Support\Str::uuid();
             }
+            if (empty($signee->name)) {
+                $signee->name = 'Anonymous';
+            }
         });
     }
 
@@ -25,7 +28,7 @@ class Signee extends Authenticatable
 
     public function getDisplayNameAttribute(): string
     {
-        if (empty($this->name)) {
+        if (empty($this->name) || $this->name === 'Anonymous') {
             return 'Anonymous';
         }
 
@@ -43,8 +46,8 @@ class Signee extends Authenticatable
 
     public function getFirstNameAttribute(): string
     {
-        if (empty($this->name)) {
-            return 'Stranger';
+        if (empty($this->name) || $this->name === 'Anonymous') {
+            return 'Anonymous';
         }
 
         return explode(' ', $this->name)[0];

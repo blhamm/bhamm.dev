@@ -4,8 +4,14 @@
 	x-data="{
         darkMode: document.documentElement.classList.contains('dark'),
         init() {
-            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-                this.darkMode = e.matches;
+            this.$watch('darkMode', (val) => {
+                if (val) {
+                    document.documentElement.classList.add('dark');
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('theme', 'light');
+                }
             });
         },
     }"

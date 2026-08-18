@@ -37,19 +37,30 @@ class SocialiteController extends Controller
         $ip = $request->ip();
         $location = $geocodeService->lookup($ip);
 
-        $signee = Signee::updateOrCreate(
-            ['email' => $socialUser->getEmail()],
-            array_filter([
-                'name' => $socialUser->getName() ?? $socialUser->getNickname(),
-                'social_auth_type' => $provider,
-                'ip_address' => $ip,
-                'city' => $location['city'],
-                'state' => $location['state'],
-                'latitude' => $location['latitude'],
-                'longitude' => $location['longitude'],
-                'place_id' => $location['place_id'],
-            ], fn($value) => $value !== null)
-        );
+        $socialName = $socialUser->getName() ?? $socialUser->getNickname();
+
+        $signee = Signee::where('email', $socialUser->getEmail())->first();
+
+        $attributes = array_filter([
+            'social_auth_type' => $provider,
+            'ip_address' => $ip,
+            'city' => $location['city'],
+            'state' => $location['state'],
+            'latitude' => $location['latitude'],
+            'longitude' => $location['longitude'],
+            'place_id' => $location['place_id'],
+        ], fn($value) => $value !== null);
+
+        if (!$signee) {
+            $attributes['email'] = $socialUser->getEmail();
+            $attributes['name'] = !empty($socialName) ? $socialName : 'Anonymous';
+            $signee = Signee::create($attributes);
+        } else {
+            if (!empty($socialName) && ($signee->name === 'Anonymous' || empty($signee->name))) {
+                $attributes['name'] = $socialName;
+            }
+            $signee->update($attributes);
+        }
 
         if (empty($signee->alt_id)) {
             $signee->update(['alt_id' => (string) \Illuminate\Support\Str::uuid()]);
