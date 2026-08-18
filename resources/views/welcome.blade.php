@@ -18,7 +18,7 @@
 	:class="{ dark: darkMode }"
 >
 <head>
-	@include('partials.head', ['title' => 'Brandon Hamm | blhamm.com'])
+	@include('partials.head', ['title' => 'Brandon Hamm | ' . config('app.name')])
 </head>
 <body class="min-h-screen antialiased">
 <canvas id="particles" class="pointer-events-none fixed inset-0 z-0" aria-hidden="true"></canvas>
