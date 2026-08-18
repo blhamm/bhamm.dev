@@ -1,4 +1,4 @@
-<div class="expertise-animation-container absolute inset-0 z-0 opacity-70 dark:opacity-60 scale-125 origin-bottom-right translate-x-12 translate-y-6 md:translate-x-20 md:translate-y-10" data-type="devops">
+<div class="expertise-animation-container absolute inset-0 z-0 opacity-70 dark:opacity-60 scale-80 md:scale-100 origin-bottom-right translate-x-12 translate-y-6 md:translate-x-20 md:translate-y-10" data-type="devops">
     <svg viewBox="0 0 400 300" class="h-full w-full" preserveAspectRatio="xMaxYMax slice">
         <defs>
             <filter id="devops-glow" x="-100%" y="-100%" width="300%" height="300%">
