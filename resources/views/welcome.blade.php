@@ -28,11 +28,11 @@
 	<section id="hero" class="relative flex h-screen flex-col items-center justify-end overflow-hidden">
 		{{-- Avatar and Helper text container --}}
 		<div class="z-20 mb-8 md:mb-4 flex flex-col items-center gap-4 text-center">
-			<div class="avatar-container relative scale-0 opacity-0">
+			<div class="avatar-container relative w-40 h-40 md:w-48 md:h-48 scale-0 opacity-0">
 				<div class="gradient opacity-0"></div>
 				<div id="avatar" class="opacity-0">
 					<img
-						src="images/me.webp"
+						src="images/me2.webp"
 						alt="Brandon Hamm"
 						width="auto"
 						height="auto"
@@ -256,7 +256,7 @@
 							<div class="absolute inset-0 z-0 bg-linear-to-l from-pale-night-teal/50 dark:from-pale-night-purple/40">
 {{--								<div--}}
 {{--									class="absolute inset-0 z-10"></div>--}}
-								<img src="/images/MacBook-Pro.webp" alt="MacBook Pro"
+								<img src="/images/kit/MacBook-Pro.webp" alt="MacBook Pro"
 								     class="h-full w-full object-contain scale-75 transition-transform duration-700 group-hover:scale-125 relative -top-16 md:-top-8 left-40"/>
 							</div>
 							<div class="relative z-20 space-y-2">
@@ -501,7 +501,7 @@
 				<x-gsap-wrapper animation="scale-up" :scrub="true">
 					<section
 						id="about"
-						class="bg-pale-night-black/5 ring-pale-night-black/10 rounded-3xl border border-zinc-200 px-6 py-12 sm:p-12 ring-1 ring-inset dark:border-zinc-800"
+						class="bg-pale-night-darker/20 ring-pale-night-black/10 rounded-4xl border border-zinc-200 px-6 py-12 sm:p-12 ring-1 ring-inset dark:border-zinc-800"
 					>
 						<div class="grid items-center gap-12 md:grid-cols-2">
 							<div>
@@ -514,7 +514,7 @@
 								</p>
 							</div>
 							<div
-								class="bg-pale-night-white/70 dark:bg-pale-night-black aspect-square rounded-2xl">
+								class="bg-pale-night-white/70 dark:bg-pale-night-darker aspect-square rounded-2xl">
 								<img class="rounded-3xl" src="images/me2.webp" alt="Me">
 							</div>
 						</div>
