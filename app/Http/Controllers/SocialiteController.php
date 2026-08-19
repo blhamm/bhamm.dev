@@ -84,7 +84,7 @@ class SocialiteController extends Controller
         Auth::guard('signee')->login($signee);
 
         // We redirect back to home with a parameter to trigger the Guestbook modal
-        return redirect('/?guestbook=1&user_id='.$signee->alt_id);
+        return redirect('/?guestbook=1&alt_id='.$signee->alt_id);
     }
 
     public function logout(Request $request): RedirectResponse
