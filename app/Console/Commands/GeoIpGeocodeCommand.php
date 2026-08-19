@@ -127,11 +127,18 @@ class GeoIpGeocodeCommand extends Command
 
             foreach ($chunks as $chunk) {
                 try {
+                    /** @var array<string, mixed> $results */
                     $results = $geocodioService->batchGeocode($chunk);
 
-                    if (isset($results['results'])) {
+                    if (isset($results['results']) && is_array($results['results'])) {
                         foreach ($results['results'] as $index => $locationResult) {
-                            $query = $chunk[$index];
+                            if (! is_array($locationResult)) {
+                                continue;
+                            }
+                            $query = $chunk[$index] ?? null;
+                            if ($query === null) {
+                                continue;
+                            }
 
                             if (! empty($locationResult['response']['results'])) {
                                 $data = $locationResult['response']['results'][0];

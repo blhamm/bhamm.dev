@@ -15,11 +15,17 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
  */
 class Visitor extends Model
 {
+    /**
+     * @var list<string>
+     */
     protected $fillable = [
         'ip_address',
         'last_seen_at',
     ];
 
+    /**
+     * @var array<string, string>
+     */
     protected $casts = [
         'last_seen_at' => 'datetime',
     ];
@@ -55,6 +61,9 @@ class Visitor extends Model
         }
     }
 
+    /**
+     * @return MorphOne<Location, $this>
+     */
     public function location(): MorphOne
     {
         return $this->morphOne(Location::class, 'locationable');

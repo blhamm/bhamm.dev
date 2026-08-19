@@ -23,6 +23,9 @@ class Signee extends Authenticatable
         'private' => 'boolean',
     ];
 
+    /**
+     * @return MorphOne<Location, $this>
+     */
     public function location(): MorphOne
     {
         return $this->morphOne(Location::class, 'locationable');

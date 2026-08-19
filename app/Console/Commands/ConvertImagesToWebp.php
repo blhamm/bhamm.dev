@@ -15,12 +15,13 @@ class ConvertImagesToWebp extends Command
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(): int
     {
         $dir = $this->option('dir');
         $directory = base_path($dir);
         $keepOriginals = $this->option('keep');
-        $quality = (int) $this->option('quality');
+        /** @var int<1, 100> $quality */
+        $quality = max(1, min(100, (int) $this->option('quality')));
 
         if (! File::isDirectory($directory)) {
             $this->error("Directory {$directory} does not exist.");
@@ -106,12 +107,12 @@ class ConvertImagesToWebp extends Command
     /**
      * Format bytes to human readable format.
      */
-    private function formatBytes($bytes, $precision = 2)
+    private function formatBytes(int|float $bytes, int $precision = 2): string
     {
         $units = ['B', 'KB', 'MB', 'GB', 'TB'];
 
         $bytes = max($bytes, 0);
-        $pow = floor(($bytes ? log($bytes) : 0) / log(1024));
+        $pow = (int) floor(($bytes ? log($bytes) : 0) / log(1024));
         $pow = min($pow, count($units) - 1);
 
         $bytes /= pow(1024, $pow);

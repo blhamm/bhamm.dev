@@ -12,6 +12,7 @@ class MaxMindGeocodingService implements GeocodingInterface
      * Lookup location data for an IP address using MaxMind GeoIP2.
      *
      * @param  string|null  $query  IP address
+     * @return array<string, string|float|null>
      */
     public function lookup(?string $query): array
     {

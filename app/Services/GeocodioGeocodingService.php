@@ -9,7 +9,8 @@ use Illuminate\Support\Facades\Log;
 class GeocodioGeocodingService implements GeocodingInterface
 {
     /**
-     * Geocode an address query using Geocodio API.
+     * @return array<string, string|float|null> $items
+     *                                          Geocode an address query using Geocodio API.
      */
     public function lookup(string $query): array
     {
@@ -60,7 +61,9 @@ class GeocodioGeocodingService implements GeocodingInterface
     }
 
     /**
-     * Batch geocode multiple queries.
+     * @param  array<string, string|null>|list<string>  $queries
+     * @return array<string, mixed>
+     *                              Batch geocode multiple queries.
      */
     public function batchGeocode(array $queries): array
     {

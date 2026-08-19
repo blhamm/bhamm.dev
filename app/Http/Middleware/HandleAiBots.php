@@ -22,17 +22,25 @@ class HandleAiBots
             $path = public_path('llms-full.txt');
 
             if (file_exists($path)) {
-                return response(file_get_contents($path), 200, [
-                    'Content-Type' => 'text/markdown; charset=UTF-8',
-                ]);
+                $content = file_get_contents($path);
+                if ($content !== false) {
+                    return response($content, 200, [
+                        'Content-Type' => 'text/markdown; charset=UTF-8',
+                    ]);
+                }
             }
         }
 
         return $next($request);
     }
 
+    /**
+     * @param  array<string>|string|null  $accept
+     */
     public function isAIUserAgentRequest(array|string|null $accept, string $userAgent): bool
     {
-        return str_contains($accept, 'text/markdown') || str_contains($userAgent, 'gptbot') || str_contains($userAgent, 'claudebot') || str_contains($userAgent, 'perplexitybot');
+        $acceptString = is_array($accept) ? implode(', ', $accept) : ($accept ?? '');
+
+        return str_contains($acceptString, 'text/markdown') || str_contains($userAgent, 'gptbot') || str_contains($userAgent, 'claudebot') || str_contains($userAgent, 'perplexitybot');
     }
 }

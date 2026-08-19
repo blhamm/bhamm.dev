@@ -21,6 +21,9 @@ class Location extends Model
         'longitude' => 'float',
     ];
 
+    /**
+     * @return MorphTo<Model, $this>
+     */
     public function locationable(): MorphTo
     {
         return $this->morphTo();

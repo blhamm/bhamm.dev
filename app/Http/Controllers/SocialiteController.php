@@ -11,10 +11,11 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Laravel\Pennant\Feature;
 use Laravel\Socialite\Facades\Socialite;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class SocialiteController extends Controller
 {
-    public function redirect(string $provider)
+    public function redirect(string $provider): RedirectResponse
     {
         if (Feature::inactive("auth-{$provider}")) {
             return redirect('/')->with('error', "Authentication via {$provider} is currently unavailable.");
@@ -23,7 +24,7 @@ class SocialiteController extends Controller
         return Socialite::driver($provider)->redirect();
     }
 
-    public function callback(string $provider, Request $request, GeocodeService $geocodeService)
+    public function callback(string $provider, Request $request, GeocodeService $geocodeService): RedirectResponse
     {
         if ($provider === 'apple') {
             config(['services.apple.client_secret' => app(AppleToken::class)->generate()]);
@@ -86,7 +87,7 @@ class SocialiteController extends Controller
         return redirect('/?guestbook=1&user_id='.$signee->alt_id);
     }
 
-    public function logout(Request $request)
+    public function logout(Request $request): RedirectResponse
     {
         Auth::guard('signee')->logout();
 
