@@ -147,7 +147,8 @@ class GeoIpGeocodeCommand extends Command
                                 $formattedAddress = $data['formatted_address'];
 
                                 foreach ($locationsToGeocode[$query] as $record) {
-                                    $ipInfo = $ipToLocation[$record->ip_address] ?? [];
+                                    $ip = $record->ip_address;
+                                    $ipInfo = (is_string($ip) && isset($ipToLocation[$ip])) ? $ipToLocation[$ip] : [];
                                     $updateData = [
                                         'latitude' => $lat,
                                         'longitude' => $lng,

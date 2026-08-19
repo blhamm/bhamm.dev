@@ -18,7 +18,7 @@ class ConvertImagesToWebp extends Command
     public function handle(): int
     {
         $dir = $this->option('dir');
-        $directory = base_path($dir);
+        $directory = base_path(is_string($dir) ? $dir : 'public/images');
         $keepOriginals = $this->option('keep');
         /** @var int<1, 100> $quality */
         $quality = max(1, min(100, (int) $this->option('quality')));
@@ -49,7 +49,11 @@ class ConvertImagesToWebp extends Command
             }
 
             $path = $file->getRealPath();
-            $outputPath = preg_replace('/\.'.$extension.'$/i', '.webp', $path);
+            if ($path === false) {
+                $skippedCount++;
+
+                continue;
+            }
 
             $this->comment("Converting: {$file->getRelativePathname()}");
 
@@ -61,6 +65,12 @@ class ConvertImagesToWebp extends Command
                     ->quality($quality);
 
                 $webpData = $image->toBytes();
+                $outputPath = preg_replace('/\.'.$extension.'$/i', '.webp', $path);
+                if (! is_string($outputPath)) {
+                    $errorCount++;
+
+                    continue;
+                }
                 File::put($outputPath, $webpData);
                 $convertedSize = strlen($webpData);
 
