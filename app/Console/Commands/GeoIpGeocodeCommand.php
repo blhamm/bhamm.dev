@@ -28,29 +28,43 @@ class GeoIpGeocodeCommand extends Command
      */
     public function handle(GeocodeService $geocodeService): int
     {
-        if (!config('geoip.geocoding_enabled')) {
+        if (! config('geoip.geocoding_enabled')) {
             $this->warn('Geocoding is disabled in config.');
+
             return 0;
         }
 
         $dbPath = config('geoip.maxmind.database_path');
-        if (!file_exists($dbPath)) {
-            $this->error('MaxMind database not found at ' . $dbPath . '. Run geoip:download first.');
+        if (! file_exists($dbPath)) {
+            $this->error('MaxMind database not found at '.$dbPath.'. Run geoip:download first.');
+
             return 1;
         }
 
         $this->info('Fetching records missing coordinates...');
 
-        $signees = Signee::whereNull('latitude')->orWhereNull('longitude')->get();
-        $visitors = Visitor::whereNull('latitude')->orWhereNull('longitude')->get();
+        $signees = Signee::where(function ($query) {
+            $query->whereDoesntHave('location')
+                ->orWhereHas('location', function ($q) {
+                    $q->whereNull('latitude')->orWhereNull('longitude');
+                });
+        })->get();
+
+        $visitors = Visitor::where(function ($query) {
+            $query->whereDoesntHave('location')
+                ->orWhereHas('location', function ($q) {
+                    $q->whereNull('latitude')->orWhereNull('longitude');
+                });
+        })->get();
 
         if ($signees->isEmpty() && $visitors->isEmpty()) {
             $this->info('No records need geocoding.');
+
             return 0;
         }
 
         $recordsToGeocode = $signees->concat($visitors);
-        $this->info('Processing ' . $recordsToGeocode->count() . ' records...');
+        $this->info('Processing '.$recordsToGeocode->count().' records...');
 
         try {
             $geocodioService = $geocodeService->geocodio();
@@ -60,7 +74,9 @@ class GeoIpGeocodeCommand extends Command
 
             foreach ($recordsToGeocode as $record) {
                 $ip = $record->ip_address;
-                if (!$ip) continue;
+                if (! $ip) {
+                    continue;
+                }
 
                 $locationQuery = $ip; // Default to IP if MaxMind fails
 
@@ -75,16 +91,14 @@ class GeoIpGeocodeCommand extends Command
                     $updateData = [
                         'latitude' => $lat,
                         'longitude' => $lng,
+                        'city' => $city,
+                        'state' => $state,
+                        'country' => $country,
                     ];
 
-                    if ($record instanceof Visitor) {
-                        $updateData['city'] = $city;
-                        $updateData['state'] = $state;
-                        $updateData['country'] = $country;
-                    }
-
-                    $record->update($updateData);
+                    $record->location()->updateOrCreate([], $updateData);
                     $this->info("Geocoded $ip via MaxMind.");
+
                     continue;
                 }
 
@@ -102,57 +116,59 @@ class GeoIpGeocodeCommand extends Command
 
             if (empty($locationsToGeocode)) {
                 $this->warn('No valid locations found for batch geocoding.');
+
                 return 0;
             }
 
             $uniqueQueries = array_keys($locationsToGeocode);
-            $this->info('Geocoding ' . count($uniqueQueries) . ' unique locations/IPs via Geocodio...');
+            $this->info('Geocoding '.count($uniqueQueries).' unique locations/IPs via Geocodio...');
 
             $chunks = array_chunk($uniqueQueries, 100);
 
             foreach ($chunks as $chunk) {
                 try {
                     $results = $geocodioService->batchGeocode($chunk);
-                    
+
                     if (isset($results['results'])) {
                         foreach ($results['results'] as $index => $locationResult) {
                             $query = $chunk[$index];
-                            
-                            if (!empty($locationResult['response']['results'])) {
+
+                            if (! empty($locationResult['response']['results'])) {
                                 $data = $locationResult['response']['results'][0];
                                 $lat = $data['location']['lat'];
                                 $lng = $data['location']['lng'];
                                 $formattedAddress = $data['formatted_address'];
 
                                 foreach ($locationsToGeocode[$query] as $record) {
+                                    $ipInfo = $ipToLocation[$record->ip_address] ?? [];
                                     $updateData = [
                                         'latitude' => $lat,
                                         'longitude' => $lng,
+                                        'city' => $ipInfo['city'] ?? $record->city,
+                                        'state' => $ipInfo['state'] ?? $record->state,
+                                        'country' => $ipInfo['country'] ?? $record->country,
                                     ];
 
                                     if ($record instanceof Signee) {
                                         $updateData['place_id'] = $formattedAddress;
-                                    } else if ($record instanceof Visitor) {
-                                        $ipInfo = $ipToLocation[$record->ip_address] ?? [];
-                                        $updateData['city'] = $ipInfo['city'] ?? null;
-                                        $updateData['state'] = $ipInfo['state'] ?? null;
-                                        $updateData['country'] = $ipInfo['country'] ?? null;
                                     }
 
-                                    $record->update($updateData);
+                                    $record->location()->updateOrCreate([], $updateData);
                                 }
                             }
                         }
                     }
                 } catch (\Exception $e) {
-                    $this->error('Geocodio batch request failed: ' . $e->getMessage());
+                    $this->error('Geocodio batch request failed: '.$e->getMessage());
                 }
             }
 
             $this->info('Geocoding complete.');
+
             return 0;
         } catch (\Exception $e) {
-            $this->error('An error occurred: ' . $e->getMessage());
+            $this->error('An error occurred: '.$e->getMessage());
+
             return 1;
         }
     }
