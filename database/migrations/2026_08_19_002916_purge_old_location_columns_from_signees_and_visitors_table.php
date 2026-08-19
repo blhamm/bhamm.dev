@@ -6,16 +6,16 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-	protected array $columns = [
-		'latitude',
-		'longitude',
-		'lat',
-		'long',
-		'city',
-		'state',
-		'country',
-		'place_id'
-	];
+    protected array $columns = [
+        'latitude',
+        'longitude',
+        'lat',
+        'long',
+        'city',
+        'state',
+        'country',
+        'place_id',
+    ];
 
     /**
      * Run the migrations.
@@ -23,9 +23,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('signees', function (Blueprint $table) {
-			$columns = collect($this->columns)->filter(
-				fn($col) => Schema::hasColumn('signees', $col)
-			);
+            $columns = collect($this->columns)->filter(
+                fn ($col) => Schema::hasColumn('signees', $col)
+            );
 
             if ($columns->isNotEmpty()) {
                 $table->dropColumn($columns->all());
@@ -34,8 +34,8 @@ return new class extends Migration
 
         Schema::table('visitors', function (Blueprint $table) {
             $columns = collect($this->columns)->filter(
-				fn($col) => Schema::hasColumn('visitors', $col)
-			);
+                fn ($col) => Schema::hasColumn('visitors', $col)
+            );
 
             if ($columns->isNotEmpty()) {
                 $table->dropColumn($columns->all());
