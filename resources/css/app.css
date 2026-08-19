@@ -169,6 +169,11 @@ html.dark canvas#particles {
 .avatar-container {
   width: 160px;
   height: 160px;
+  filter: drop-shadow(0 10px 25px rgba(0, 0, 0, 0.15));
+}
+
+html.dark .avatar-container {
+  filter: drop-shadow(0 12px 30px rgba(0, 0, 0, 0.45));
 }
 
 @media (min-width: 768px) {
