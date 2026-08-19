@@ -36,7 +36,7 @@
         </x-slot>
 
         <x-slot name="description">
-            <div class="text-pale-night-black dark:text-pale-night-white font-medium text-lg md:text-xl leading-relaxed">{{ $description }}</div>
+            <div class="pr-12 pb-12 text-pale-night-black dark:text-pale-night-white font-bold text-lg md:text-xl leading-relaxed">{{ $description }}</div>
         </x-slot>
 
         @if ($buttonText)

@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        if (!Schema::hasColumn('signees', 'alt_id')) {
+        if (! Schema::hasColumn('signees', 'alt_id')) {
             Schema::table('signees', function (Blueprint $table) {
                 $table->uuid('alt_id')->unique()->nullable()->after('id');
             });
         }
 
-        if (!Schema::hasColumn('signees', 'city')) {
+        if (! Schema::hasColumn('signees', 'city')) {
             Schema::table('signees', function (Blueprint $table) {
                 $table->string('city')->nullable();
                 $table->string('state')->nullable();

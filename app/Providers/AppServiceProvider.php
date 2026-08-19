@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-use App\Services\AppleToken;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
@@ -11,6 +10,7 @@ use Lcobucci\JWT\Configuration;
 use Lcobucci\JWT\Signer\Ecdsa\Sha256;
 use Lcobucci\JWT\Signer\Key\InMemory;
 use SocialiteProviders\Apple\Provider;
+use SocialiteProviders\Manager\SocialiteWasCalled;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,7 +19,21 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+        $this->app->bind(Configuration::class, function () {
+            $key = config('services.apple.private_key') ?? '';
 
+            if ($key && ! str_starts_with($key, '-----BEGIN')) {
+                $decoded = base64_decode($key, true);
+                if ($decoded !== false) {
+                    $key = $decoded;
+                }
+            }
+
+            return Configuration::forSymmetricSigner(
+                new Sha256,
+                InMemory::plainText($key),
+            );
+        });
     }
 
     /**
@@ -27,28 +41,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Event::listen(function (\SocialiteProviders\Manager\SocialiteWasCalled $event) {
+        Event::listen(function (SocialiteWasCalled $event) {
             $event->extendSocialite('apple', Provider::class);
         });
 
         $this->defineFeatures();
-
-		$this->app->bind(Configuration::class, function () {
-            $key = config('services.apple.private_key') ?? '';
-            $key = trim($key, "\"'");
-
-            $decoded = base64_decode($key, true);
-            if ($decoded !== false && base64_encode($decoded) === $key) {
-                $key = trim($decoded, "\"'");
-            }
-
-            $key = str_replace(['\n', '\\n'], "\n", $key);
-
-            return Configuration::forSymmetricSigner(
-                new Sha256(),
-                InMemory::plainText($key),
-            );
-        });
     }
 
     protected function defineFeatures(): void

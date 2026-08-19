@@ -4,15 +4,21 @@
 	x-data="{
         darkMode: document.documentElement.classList.contains('dark'),
         init() {
-            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-                this.darkMode = e.matches;
+            this.$watch('darkMode', (val) => {
+                if (val) {
+                    document.documentElement.classList.add('dark');
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('theme', 'light');
+                }
             });
         },
     }"
 	:class="{ dark: darkMode }"
 >
 <head>
-	@include('partials.head', ['title' => 'Brandon Hamm | blhamm.com'])
+	@include('partials.head', ['title' => 'Brandon Hamm | ' . config('app.name')])
 </head>
 <body class="min-h-screen antialiased">
 <canvas id="particles" class="pointer-events-none fixed inset-0 z-0" aria-hidden="true"></canvas>
@@ -22,11 +28,11 @@
 	<section id="hero" class="relative flex h-screen flex-col items-center justify-end overflow-hidden">
 		{{-- Avatar and Helper text container --}}
 		<div class="z-20 mb-8 md:mb-4 flex flex-col items-center gap-4 text-center">
-			<div class="avatar-container relative scale-0 opacity-0">
+			<div class="avatar-container relative w-40 h-40 md:w-48 md:h-48 scale-0 opacity-0">
 				<div class="gradient opacity-0"></div>
 				<div id="avatar" class="opacity-0">
 					<img
-						src="images/me.webp"
+						src="images/me2.webp"
 						alt="Brandon Hamm"
 						width="auto"
 						height="auto"
@@ -77,11 +83,22 @@
 						</x-slot>
 
 						<x-project-card
+							title="Laravel & PHP Expertise"
+							description="Building with Laravel for over a decade. From robust Eloquent models to high throughput queues, I know the framework inside and out."
+							size="w-80 md:w-xl"
+							modal="laravel-modal"
+							titleClass="text-gradient-laravel"
+							buttonClass="hover-theme-laravel"
+						>
+							<x-slot name="animation">
+								<x-expertise.laravel/>
+							</x-slot>
+						</x-project-card>
+
+						<x-project-card
 							title="API & Backend System Design"
 							description="Building clean, reliable APIs that just work. Deep experience with OAuth2, event-driven architecture, and backends designed to handle scale smoothly."
-							{{-- image="/images/cloud.webp" --}}
-{{--							:tags="['REST', 'OAuth', 'Redis', 'Event-Driven']"--}}
-							size="w-80 md:w-sm"
+							size="w-80 md:w-xl"
 							modal="api-modal"
 							titleClass="text-gradient-api"
 							buttonClass="hover-theme-api"
@@ -94,9 +111,7 @@
 						<x-project-card
 							title="Database Mastery & Data Layer"
 							description="Getting databases to behave under load. From complex relational modeling in PostgreSQL to low-latency Redis caching, I focus on query efficiency and data integrity."
-							{{-- image="/images/db.webp" --}}
-{{--							:tags="['PostgreSQL', 'MySQL', 'Redis', 'SQLite']"--}}
-							size="w-80 md:w-sm"
+							size="w-80 md:w-xl"
 							modal="database-modal"
 							titleClass="text-gradient-db"
 							buttonClass="hover-theme-db"
@@ -109,9 +124,7 @@
 						<x-project-card
 							title="Observability & System Reliability"
 							description="Catching issues before users do. Setting up solid telemetry, structured logging, and distributed tracing so bottlenecks and production fires are diagnosed in seconds."
-							{{-- image="/images/observability.webp" --}}
-{{--							:tags="['Grafana', 'OTLP', 'Observability', 'SRE']"--}}
-							size="w-80 md:w-sm"
+							size="w-80 md:w-xl"
 							modal="observability-modal"
 							titleClass="text-gradient-obs"
 							buttonClass="hover-theme-obs"
@@ -124,9 +137,7 @@
 						<x-project-card
 							title="Deployment & Infrastructure"
 							description="Shipping code with zero downtime. Automating deployments, containerized environments, and cloud infrastructure so releases are boring, predictable, and reliable."
-							{{-- image="/images/devops.webp" --}}
-{{--							:tags="['Docker', 'AWS', 'GitHub Actions']"--}}
-							size="w-80 md:w-sm"
+							size="w-80 md:w-xl"
 							modal="devops-modal"
 							titleClass="text-gradient-devops"
 							buttonClass="hover-theme-devops"
@@ -137,26 +148,9 @@
 						</x-project-card>
 
 						<x-project-card
-							title="Laravel & PHP Expertise"
-							description="Building with Laravel for over a decade. From robust Eloquent models to reactive Livewire Volt components, I know the framework inside and out."
-							{{-- image="/images/php.webp" --}}
-{{--							:tags="['Laravel', 'PHP', 'Eloquent', 'Livewire']"--}}
-							size="w-80 md:w-sm"
-							modal="laravel-modal"
-							titleClass="text-gradient-laravel"
-							buttonClass="hover-theme-laravel"
-						>
-							<x-slot name="animation">
-								<x-expertise.laravel/>
-							</x-slot>
-						</x-project-card>
-
-						<x-project-card
 							title="Engineering Standards & Craft"
 							description="Writing maintainable code you actually enjoy coming back to. Heavy focus on SOLID principles, static analysis, and treating Pest/PHPUnit tests as core design tools."
-							{{-- image="/images/gradial.webp" --}}
-{{--							:tags="['Testing', 'SOLID', 'PHPStan', 'TypeScript']"--}}
-							size="w-80 md:w-sm"
+							size="w-80 md:w-xl"
 							modal="engineering-modal"
 							titleClass="text-gradient-eng"
 							buttonClass="hover-theme-eng"
@@ -169,9 +163,7 @@
 						<x-project-card
 							title="Frontend Architecture & Design Systems"
 							description="Bridging design and code. Translating Figma wireframes into pixel-perfect, accessible interfaces using Tailwind CSS and modern reactive components."
-							{{-- image="/images/front-end.webp" --}}
-{{--							:tags="['Vue', 'React', 'TypeScript', 'Tailwind']"--}}
-							size="w-80 md:w-sm"
+							size="w-80 md:w-xl"
 							modal="frontend-modal"
 							titleClass="text-gradient-fe"
 							buttonClass="hover-theme-fe"
@@ -264,7 +256,7 @@
 							<div class="absolute inset-0 z-0 bg-linear-to-l from-pale-night-teal/50 dark:from-pale-night-purple/40">
 {{--								<div--}}
 {{--									class="absolute inset-0 z-10"></div>--}}
-								<img src="/images/MacBook-Pro.webp" alt="MacBook Pro"
+								<img src="/images/kit/MacBook-Pro.webp" alt="MacBook Pro"
 								     class="h-full w-full object-contain scale-75 transition-transform duration-700 group-hover:scale-125 relative -top-16 md:-top-8 left-40"/>
 							</div>
 							<div class="relative z-20 space-y-2">
@@ -453,7 +445,7 @@
 						</div>
 
 						<a href="https://www.adobe.com/creativecloud.html" target="_blank"
-						   class="glass-pane flex flex-col justify-between rounded-3xl px-4 py-6 sm:p-6 transition-all hover:ring-2 hover:ring-pale-night-purple/50 md:col-span-4">
+						   class="glass-pane flex flex-col justify-between rounded-3xl px-4 py-6 sm:p-6 transition-all hover:ring-2 hover:ring-pale-night-red/50 md:col-span-4">
 							<div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
 								<div class="flex items-center gap-3 shrink-0">
 									<img src="/images/kit/creative-cloud-64.svg" alt="Adobe CC" class="size-10"/>
@@ -509,7 +501,7 @@
 				<x-gsap-wrapper animation="scale-up" :scrub="true">
 					<section
 						id="about"
-						class="bg-pale-night-black/5 ring-pale-night-black/10 rounded-3xl border border-zinc-200 px-6 py-12 sm:p-12 ring-1 ring-inset dark:border-zinc-800"
+						class="bg-pale-night-darker/20 ring-pale-night-black/10 rounded-4xl border border-zinc-200 px-6 py-12 sm:p-12 ring-1 ring-inset dark:border-zinc-800"
 					>
 						<div class="grid items-center gap-12 md:grid-cols-2">
 							<div>
@@ -522,8 +514,8 @@
 								</p>
 							</div>
 							<div
-								class="bg-pale-night-white/70 dark:bg-pale-night-black aspect-square rounded-2xl">
-{{--								<img src="images/me2.jpeg" alt="">--}}
+								class="bg-pale-night-white/70 dark:bg-pale-night-darker aspect-square rounded-2xl">
+								<img class="rounded-3xl" src="images/me2.webp" alt="Me">
 							</div>
 						</div>
 					</section>
@@ -652,7 +644,7 @@
 	</p>
 </x-modal>
 
-<x-modal name="laravel-modal" title="Laravel & PHP Expertise" titleClass="text-gradient-laravel" :tags="['Laravel', 'PHP', 'Eloquent', 'Livewire', 'Volt', 'Pest']">
+<x-modal name="laravel-modal" title="Laravel & PHP Expertise" titleClass="text-gradient-laravel" :tags="['Laravel', 'PHP', 'Eloquent', 'Pest', 'Tenancy']">
 	<x-slot name="animation">
 		<x-expertise.laravel/>
 	</x-slot>
@@ -660,7 +652,7 @@
 		I've been building with Laravel since version 3.2. Over a decade in the ecosystem means I've seen it grow from a neat Rails-inspired toolkit into a true enterprise powerhouse.
 	</p>
 	<p>
-		I know how to work with the grain of the framework—from complex Eloquent optimizations to reactive Livewire Volt components—extending it cleanly when needed without fighting its architecture.
+		I know how to work with the grain of the framework—from complex enterprise Eloquent optimizations to high throughput redis queues—extending it cleanly when needed without fighting its architecture.
 	</p>
 </x-modal>
 

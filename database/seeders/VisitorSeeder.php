@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Visitor;
 use Illuminate\Database\Seeder;
 
 class VisitorSeeder extends Seeder
@@ -115,10 +115,19 @@ class VisitorSeeder extends Seeder
             ['ip_address' => '181.30.150.100', 'city' => 'Buenos Aires', 'state' => 'B', 'country' => 'AR', 'latitude' => -34.6037, 'longitude' => -58.3816],
         ];
 
-        foreach ($visitors as $visitor) {
-            \App\Models\Visitor::create(array_merge($visitor, [
-                'last_seen_at' => now()->subMinutes(rand(0, 10080)), // Last 7 days
-            ]));
+        foreach ($visitors as $visitorData) {
+            $visitor = Visitor::create([
+                'ip_address' => $visitorData['ip_address'],
+                'last_seen_at' => now()->subMinutes(rand(0, 10080)),
+            ]);
+
+            $visitor->location()->create([
+                'city' => $visitorData['city'] ?? null,
+                'state' => $visitorData['state'] ?? null,
+                'country' => $visitorData['country'] ?? null,
+                'latitude' => $visitorData['latitude'] ?? null,
+                'longitude' => $visitorData['longitude'] ?? null,
+            ]);
         }
     }
 }

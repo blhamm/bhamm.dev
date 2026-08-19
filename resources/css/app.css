@@ -45,7 +45,7 @@ html.lenis body {
  }
 
  @utility glass-pane {
-    @apply bg-pale-night-white/12 dark:bg-pale-night-black/8 backdrop-blur-md border border-pale-night-black/15 dark:border-pale-night-white/5 ring-1 ring-inset ring-white/10 dark:ring-pale-night-black/20;
+    @apply bg-pale-night-white/5 dark:bg-pale-night-black/8 backdrop-blur-xs border border-pale-night-black/10 dark:border-pale-night-white/5 ring-1 ring-inset ring-white/10 dark:ring-pale-night-black/20;
  }
 
  @utility bg-animated-gradient {
@@ -166,12 +166,33 @@ html.dark canvas#particles {
   position: relative;
 }
 
+.avatar-container {
+  width: 160px;
+  height: 160px;
+  filter: drop-shadow(0 10px 25px rgba(0, 0, 0, 0.15));
+}
+
+html.dark .avatar-container {
+  filter: drop-shadow(0 12px 30px rgba(0, 0, 0, 0.45));
+}
+
+@media (min-width: 768px) {
+  .avatar-container {
+    width: 192px;
+    height: 192px;
+  }
+}
+
 .gradient {
-  width: 128px;
-  height: 128px;
-  box-decoration-break: clone;
+  position: absolute;
+  inset: 0;
+  border-radius: 100%;
+  margin: 9px;
+  padding: 9px;
   background-image: linear-gradient(108deg,#0090f7 8.25%,#ba62fc,#f2416b 66%,#FA4616);
-  border-radius: 50%;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
   z-index: 1;
 }
 
@@ -181,12 +202,14 @@ html.dark canvas#particles {
 
 #avatar {
   position: absolute;
-  top: 8px;
-  left: 8px;
-  width: calc(100% - 16px);
-  height: calc(100% - 16px);
+  top: 9px;
+  left: 9px;
+  width: calc(100% - 18px);
+  height: calc(100% - 18px);
   border-radius: 50%;
   overflow: hidden;
+  background: transparent;
+  z-index: 2;
 }
 
 #avatar img {

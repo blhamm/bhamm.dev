@@ -11,7 +11,7 @@ class HandleAiBots
     /**
      * Handle an incoming request.
      *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     * @param  Closure(Request): (Response)  $next
      */
     public function handle(Request $request, Closure $next): Response
     {
@@ -31,13 +31,8 @@ class HandleAiBots
         return $next($request);
     }
 
-	/**
-	 * @param array|string|null $accept
-	 * @param string $userAgent
-	 * @return bool
-	 */
-	public function isAIUserAgentRequest(array|string|null $accept, string $userAgent): bool
-	{
-		return str_contains($accept, 'text/markdown') || str_contains($userAgent, 'gptbot') || str_contains($userAgent, 'claudebot') || str_contains($userAgent, 'perplexitybot');
-	}
+    public function isAIUserAgentRequest(array|string|null $accept, string $userAgent): bool
+    {
+        return str_contains($accept, 'text/markdown') || str_contains($userAgent, 'gptbot') || str_contains($userAgent, 'claudebot') || str_contains($userAgent, 'perplexitybot');
+    }
 }

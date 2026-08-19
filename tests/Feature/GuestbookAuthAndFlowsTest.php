@@ -25,7 +25,7 @@ test('socialite redirect redirects to home with error when feature is inactive',
 });
 
 test('socialite callback handles exception gracefully and redirects with error', function () {
-    Socialite::shouldReceive('driver->user')->andThrow(new \Exception('OAuth error'));
+    Socialite::shouldReceive('driver->user')->andThrow(new Exception('OAuth error'));
 
     $response = $this->get('/auth/github/callback');
 
@@ -85,8 +85,8 @@ test('guestbook form updates message and toggles privacy successfully', function
     $signee->refresh();
 
     expect($signee->message)
-	    ->toBe('Hello from updated test message!')
-	    ->and($signee->private)->toBeTrue();
+        ->toBe('Hello from updated test message!')
+        ->and($signee->private)->toBeTrue();
 });
 
 test('guestbook form displays city and state location when present', function () {
@@ -94,6 +94,8 @@ test('guestbook form displays city and state location when present', function ()
         'name' => 'Geocoded User',
         'email' => 'geo@example.com',
         'social_auth_type' => 'github',
+    ]);
+    $signee->location()->create([
         'city' => 'Austin',
         'state' => 'TX',
     ]);
@@ -104,12 +106,34 @@ test('guestbook form displays city and state location when present', function ()
         ->assertSee('Austin, TX');
 });
 
-test('signee can be created without name and defaults correctly', function () {
+test('signee defaults to anonymous when name is not provided', function () {
     $signee = Signee::create([
-        'email' => 'noname@example.com',
+        'email' => 'anon@example.com',
         'social_auth_type' => 'github',
     ]);
 
-    expect($signee)->not->toBeNull()
-        ->and($signee->name)->toBe('GuestBook Signee');
+    expect($signee->name)->toBe('Anonymous')
+        ->and($signee->display_name)->toBe('Anonymous')
+        ->and($signee->first_name)->toBe('Anonymous');
+});
+
+test('guestbook form displays optional name input for anonymous signee and allows updating name', function () {
+    $signee = Signee::create([
+        'name' => 'Anonymous',
+        'email' => 'anonform@example.com',
+        'social_auth_type' => 'github',
+    ]);
+
+    Auth::guard('signee')->login($signee);
+
+    Livewire::test('guestbook-form', ['userId' => $signee->alt_id])
+        ->assertSee('Your Name (Optional)')
+        ->set('message', 'Hello from anonymous user!')
+        ->set('name', 'John Doe')
+        ->call('save')
+        ->assertHasNoErrors();
+
+    $signee->refresh();
+    expect($signee->name)->toBe('John Doe')
+        ->and($signee->display_name)->toBe('John D.');
 });

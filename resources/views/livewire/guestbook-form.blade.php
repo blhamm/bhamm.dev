@@ -8,6 +8,8 @@ new class extends Component {
     public Signee $user;
     public string $message = '';
     public bool $private = false;
+    public string $name = '';
+    public bool $isAnonymous = false;
 
     public function mount(string $userId)
     {
@@ -20,6 +22,8 @@ new class extends Component {
 
         $this->message = $this->user->message ?? '';
         $this->private = (bool) ($this->user->private ?? false);
+        $this->isAnonymous = empty($this->user->name) || $this->user->name === 'Anonymous';
+        $this->name = $this->isAnonymous ? '' : $this->user->name;
     }
 
     public function save()
@@ -32,12 +36,19 @@ new class extends Component {
         $this->validate([
             'message' => 'required|string|max:1000',
             'private' => 'boolean',
+            'name' => 'nullable|string|max:255',
         ]);
 
-        $this->user->update([
+        $updateData = [
             'message' => $this->message,
             'private' => $this->private,
-        ]);
+        ];
+
+        if (!empty(trim($this->name))) {
+            $updateData['name'] = trim($this->name);
+        }
+
+        $this->user->update($updateData);
 
         $this->dispatch('guestbook-signed');
         
@@ -63,7 +74,16 @@ new class extends Component {
         </p>
     </div>
 
-    <flux:textarea 
+    @if(empty($user->name) || $user->name === 'Anonymous')
+        <flux:input 
+            wire:model="name" 
+            label="Your Name (Optional)" 
+            placeholder="Enter your name if you'd like to share it" 
+            description="Since your login didn't provide a name, you're listed as Anonymous by default."
+        />
+    @endif
+
+    <flux:textarea
         wire:model="message" 
         label="Message" 
         placeholder="What's on your mind?" 

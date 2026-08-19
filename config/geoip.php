@@ -32,8 +32,8 @@ return [
     |
     */
     'maxmind' => [
-		'account_id' => env('MAXMIND_ACCOUNT_ID'),
-	    'license_key' => env('MAXMIND_LICENSE_KEY'),
+        'account_id' => env('MAXMIND_ACCOUNT_ID'),
+        'license_key' => env('MAXMIND_LICENSE_KEY'),
         'database_path' => database_path('geoip/GeoLite2-City.mmdb'),
         'download_url' => 'https://download.maxmind.com/geoip/databases/GeoLite2-City/download?suffix=tar.gz',
     ],

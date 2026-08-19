@@ -26,3 +26,8 @@ yarn-error.log
 .junie/plans
 docs/us_capitals.csv
 public/images/me2.jpeg
+/.claude
+/.junie
+CLAUDE.MD
+boost.json
+.mcp.json

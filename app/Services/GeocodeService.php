@@ -13,9 +13,6 @@ class GeocodeService implements GeocodingInterface
 
     /**
      * Lookup location data for an IP address or query.
-     *
-     * @param string|null $query
-     * @return array
      */
     public function lookup(?string $query): array
     {

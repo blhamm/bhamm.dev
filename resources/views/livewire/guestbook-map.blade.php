@@ -62,7 +62,7 @@ new class extends Component {
                 @if(Auth::guard('signee')->check())
                     I appreciate your support! If you’re enjoying this showcase, you can help me grow by starring the repository on GitHub. I’m always looking to connect with fellow developers in the PHP, Laravel, and Symfony communities!
                 @else
-                    I'd love for you to leave your mark on the map. This is a technical showcase of human connections, brought to life through batch geocoding and interactive mapping.
+                    Drop a pin, say hello, and leave your mark on the map. A technical showcase of human connections powered by batch geocoding and interactive mapping.
                 @endif
             </p>
         </div>

@@ -10,8 +10,8 @@ uses(TestCase::class);
 
 test('geocoding services implement GeocodingInterface', function () {
     expect(app(MaxMindGeocodingService::class))->toBeInstanceOf(GeocodingInterface::class)
-	    ->and(app(GeocodioGeocodingService::class))->toBeInstanceOf(GeocodingInterface::class)
-	    ->and(app(GeocodeService::class))->toBeInstanceOf(GeocodingInterface::class);
+        ->and(app(GeocodioGeocodingService::class))->toBeInstanceOf(GeocodingInterface::class)
+        ->and(app(GeocodeService::class))->toBeInstanceOf(GeocodingInterface::class);
 });
 
 test('geocode service delegates lookup to maxmind service', function () {
