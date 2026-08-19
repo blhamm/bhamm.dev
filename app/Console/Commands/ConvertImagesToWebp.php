@@ -2,11 +2,11 @@
 
 namespace App\Console\Commands;
 
+use Illuminate\Console\Attributes\Description;
+use Illuminate\Console\Attributes\Signature;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Image;
-use Illuminate\Console\Attributes\Description;
-use Illuminate\Console\Attributes\Signature;
 
 #[Signature('images:convert-to-webp {--dir=public/images : The directory to scan for images} {--keep : Keep the original images} {--quality=80 : The quality of the converted WebP images}')]
 #[Description('Convert all images in a directory to WebP format')]
@@ -22,8 +22,9 @@ class ConvertImagesToWebp extends Command
         $keepOriginals = $this->option('keep');
         $quality = (int) $this->option('quality');
 
-        if (!File::isDirectory($directory)) {
+        if (! File::isDirectory($directory)) {
             $this->error("Directory {$directory} does not exist.");
+
             return 1;
         }
 
@@ -39,24 +40,25 @@ class ConvertImagesToWebp extends Command
 
         foreach ($files as $file) {
             $extension = strtolower($file->getExtension());
-            
-            if (!in_array($extension, $supportedExtensions)) {
+
+            if (! in_array($extension, $supportedExtensions)) {
                 $skippedCount++;
+
                 continue;
             }
 
             $path = $file->getRealPath();
-            $outputPath = preg_replace('/\.' . $extension . '$/i', '.webp', $path);
+            $outputPath = preg_replace('/\.'.$extension.'$/i', '.webp', $path);
 
             $this->comment("Converting: {$file->getRelativePathname()}");
 
             try {
                 $originalSize = File::size($path);
-                
+
                 $image = Image::fromPath($path)
                     ->toWebp()
                     ->quality($quality);
-                
+
                 $webpData = $image->toBytes();
                 File::put($outputPath, $webpData);
                 $convertedSize = strlen($webpData);
@@ -64,25 +66,25 @@ class ConvertImagesToWebp extends Command
                 $savings = $originalSize - $convertedSize;
                 $savingsPercent = ($originalSize > 0) ? round(($savings / $originalSize) * 100, 2) : 0;
 
-                if (!$keepOriginals) {
+                if (! $keepOriginals) {
                     File::delete($path);
                     $this->line("  <info>✔</info> Converted: {$this->formatBytes($originalSize)} -> {$this->formatBytes($convertedSize)} (<info>-{$savingsPercent}%</info>)");
                 } else {
                     $this->line("  <info>✔</info> Converted and kept original: {$this->formatBytes($originalSize)} -> {$this->formatBytes($convertedSize)} (<info>-{$savingsPercent}%</info>)");
                 }
-                
+
                 $totalOriginalSize += $originalSize;
                 $totalConvertedSize += $convertedSize;
                 $convertedCount++;
             } catch (\Exception $e) {
-                $this->error("  <error>✘</error> Failed to convert {$file->getFilename()}: " . $e->getMessage());
+                $this->error("  <error>✘</error> Failed to convert {$file->getFilename()}: ".$e->getMessage());
                 $errorCount++;
             }
         }
 
         $this->newLine();
-        $this->info("Conversion Complete!");
-        
+        $this->info('Conversion Complete!');
+
         $totalSavings = $totalOriginalSize - $totalConvertedSize;
         $totalSavingsPercent = ($totalOriginalSize > 0) ? round(($totalSavings / $totalOriginalSize) * 100, 2) : 0;
 
@@ -94,7 +96,7 @@ class ConvertImagesToWebp extends Command
                 ['Errors', $errorCount],
                 ['Original Size', $this->formatBytes($totalOriginalSize)],
                 ['Converted Size', $this->formatBytes($totalConvertedSize)],
-                ['Total Savings', $this->formatBytes($totalSavings) . " (-{$totalSavingsPercent}%)"],
+                ['Total Savings', $this->formatBytes($totalSavings)." (-{$totalSavingsPercent}%)"],
             ]
         );
 
@@ -114,6 +116,6 @@ class ConvertImagesToWebp extends Command
 
         $bytes /= pow(1024, $pow);
 
-        return round($bytes, $precision) . ' ' . $units[$pow];
+        return round($bytes, $precision).' '.$units[$pow];
     }
 }

@@ -25,7 +25,7 @@ test('socialite redirect redirects to home with error when feature is inactive',
 });
 
 test('socialite callback handles exception gracefully and redirects with error', function () {
-    Socialite::shouldReceive('driver->user')->andThrow(new \Exception('OAuth error'));
+    Socialite::shouldReceive('driver->user')->andThrow(new Exception('OAuth error'));
 
     $response = $this->get('/auth/github/callback');
 
@@ -85,8 +85,8 @@ test('guestbook form updates message and toggles privacy successfully', function
     $signee->refresh();
 
     expect($signee->message)
-	    ->toBe('Hello from updated test message!')
-	    ->and($signee->private)->toBeTrue();
+        ->toBe('Hello from updated test message!')
+        ->and($signee->private)->toBeTrue();
 });
 
 test('guestbook form displays city and state location when present', function () {
@@ -94,6 +94,8 @@ test('guestbook form displays city and state location when present', function ()
         'name' => 'Geocoded User',
         'email' => 'geo@example.com',
         'social_auth_type' => 'github',
+    ]);
+    $signee->location()->create([
         'city' => 'Austin',
         'state' => 'TX',
     ]);

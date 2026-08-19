@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Middleware\CaptureVisitorIp;
+use App\Http\Middleware\PreviewModeMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -13,9 +15,9 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->trustProxies(at: '*');
         $middleware->web(append: [
-            \App\Http\Middleware\PreviewModeMiddleware::class,
+            PreviewModeMiddleware::class,
         ]);
-        $middleware->append(\App\Http\Middleware\CaptureVisitorIp::class);
+        $middleware->append(CaptureVisitorIp::class);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

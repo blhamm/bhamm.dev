@@ -11,8 +11,7 @@ class MaxMindGeocodingService implements GeocodingInterface
     /**
      * Lookup location data for an IP address using MaxMind GeoIP2.
      *
-     * @param string|null $query IP address
-     * @return array
+     * @param  string|null  $query  IP address
      */
     public function lookup(?string $query): array
     {
@@ -25,18 +24,18 @@ class MaxMindGeocodingService implements GeocodingInterface
             'place_id' => null,
         ];
 
-        if (!config('geoip.geocoding_enabled')) {
+        if (! config('geoip.geocoding_enabled')) {
             return $defaultResult;
         }
 
         $dbPath = config('geoip.maxmind.database_path');
-        if (!file_exists($dbPath)) {
+        if (! file_exists($dbPath)) {
             return $defaultResult;
         }
 
         try {
             $reader = new Reader($dbPath);
-            $lookupIp = ($query === '127.0.0.1' || !$query) ? '8.8.8.8' : $query;
+            $lookupIp = ($query === '127.0.0.1' || ! $query) ? '8.8.8.8' : $query;
             $recordData = $reader->city($lookupIp);
 
             $city = $recordData->city->name ?? null;
@@ -61,7 +60,8 @@ class MaxMindGeocodingService implements GeocodingInterface
                 'place_id' => $placeId,
             ];
         } catch (\Exception $e) {
-            Log::warning("MaxMind lookup failed for IP {$query}: " . $e->getMessage());
+            Log::warning("MaxMind lookup failed for IP {$query}: ".$e->getMessage());
+
             return $defaultResult;
         }
     }

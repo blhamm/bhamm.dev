@@ -10,9 +10,6 @@ class GeocodioGeocodingService implements GeocodingInterface
 {
     /**
      * Geocode an address query using Geocodio API.
-     *
-     * @param string $query
-     * @return array
      */
     public function lookup(string $query): array
     {
@@ -25,17 +22,17 @@ class GeocodioGeocodingService implements GeocodingInterface
             'place_id' => null,
         ];
 
-        if (!config('geoip.geocoding_enabled')) {
+        if (! config('geoip.geocoding_enabled')) {
             return $defaultResult;
         }
 
         $apiKey = config('services.geocodio.key');
-        if (!$apiKey) {
+        if (! $apiKey) {
             return $defaultResult;
         }
 
         try {
-            $geocodio = new Geocodio();
+            $geocodio = new Geocodio;
             $geocodio->setApiKey($apiKey);
             $response = $geocodio->geocode($query);
 
@@ -56,7 +53,7 @@ class GeocodioGeocodingService implements GeocodingInterface
                 ];
             }
         } catch (\Exception $e) {
-            Log::warning("Geocodio lookup failed for query {$query}: " . $e->getMessage());
+            Log::warning("Geocodio lookup failed for query {$query}: ".$e->getMessage());
         }
 
         return $defaultResult;
@@ -64,27 +61,26 @@ class GeocodioGeocodingService implements GeocodingInterface
 
     /**
      * Batch geocode multiple queries.
-     *
-     * @param array $queries
-     * @return array
      */
     public function batchGeocode(array $queries): array
     {
-        if (empty($queries) || !config('geoip.geocoding_enabled')) {
+        if (empty($queries) || ! config('geoip.geocoding_enabled')) {
             return [];
         }
 
         $apiKey = config('services.geocodio.key');
-        if (!$apiKey) {
+        if (! $apiKey) {
             return [];
         }
 
         try {
-            $geocodio = new Geocodio();
+            $geocodio = new Geocodio;
             $geocodio->setApiKey($apiKey);
+
             return $geocodio->geocode($queries);
         } catch (\Exception $e) {
-            Log::error("Geocodio batch request failed: " . $e->getMessage());
+            Log::error('Geocodio batch request failed: '.$e->getMessage());
+
             return [];
         }
     }

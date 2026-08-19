@@ -22,8 +22,9 @@ class ToggleFeatureCommand extends Command
         $definedFeatures = config('pennant.features', []);
 
         foreach ($featureNames as $name) {
-            if (!in_array($name, $definedFeatures)) {
+            if (! in_array($name, $definedFeatures)) {
                 $this->error("Feature [$name] is not defined in config/pennant.php.");
+
                 continue;
             }
 
