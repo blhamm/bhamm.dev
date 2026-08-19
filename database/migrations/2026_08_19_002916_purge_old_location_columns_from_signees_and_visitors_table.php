@@ -6,32 +6,39 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+	protected array $columns = [
+		'latitude',
+		'longitude',
+		'lat',
+		'long',
+		'city',
+		'state',
+		'country',
+		'place_id'
+	];
+
     /**
      * Run the migrations.
      */
     public function up(): void
     {
         Schema::table('signees', function (Blueprint $table) {
-            $columns = [];
-            foreach (['latitude', 'longitude', 'lat', 'long', 'city', 'state', 'place_id'] as $col) {
-                if (Schema::hasColumn('signees', $col)) {
-                    $columns[] = $col;
-                }
-            }
-            if (! empty($columns)) {
-                $table->dropColumn($columns);
+			$columns = collect($this->columns)->filter(
+				fn($col) => Schema::hasColumn('signees', $col)
+			);
+
+            if ($columns->isNotEmpty()) {
+                $table->dropColumn($columns->all());
             }
         });
 
         Schema::table('visitors', function (Blueprint $table) {
-            $columns = [];
-            foreach (['latitude', 'longitude', 'lat', 'lng', 'city', 'state', 'country'] as $col) {
-                if (Schema::hasColumn('visitors', $col)) {
-                    $columns[] = $col;
-                }
-            }
-            if (! empty($columns)) {
-                $table->dropColumn($columns);
+            $columns = collect($this->columns)->filter(
+				fn($col) => Schema::hasColumn('visitors', $col)
+			);
+
+            if ($columns->isNotEmpty()) {
+                $table->dropColumn($columns->all());
             }
         });
     }
