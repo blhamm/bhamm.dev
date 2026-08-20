@@ -155,17 +155,14 @@ new class extends Component {
         </div>
     </div>
 
-    <div class="glass-pane guestbook-map-container relative isolate rounded-3xl border border-white/10"
-         style="height: 500px;"
+    <div class="glass-pane guestbook-map-container relative isolate rounded-3xl border border-white/10 overflow-hidden"
+         style="height: 500px; clip-path: inset(0 round 1.5rem); contain: paint;"
          x-data="guestbookMap(@js($points))"
          x-effect="points = @js($points)"
          x-on:click="isActivated = true"
          x-on:click.away="isActivated = false">
 
-        <div class="h-full w-full overflow-hidden rounded-3xl"
-             style="mask-image: linear-gradient(white, white); -webkit-mask-image: -webkit-radial-gradient(white, black); clip-path: inset(0 round 1.5rem); transform: translateZ(0);">
-            <div x-ref="map" class="h-full w-full z-0 bg-pale-night-white dark:bg-pale-night-black" wire:ignore></div>
-        </div>
+        <div x-ref="map" class="absolute inset-0 h-full w-full bg-pale-night-white dark:bg-pale-night-black rounded-3xl overflow-hidden z-0" wire:ignore style="clip-path: inset(0 round 1.5rem); contain: paint;"></div>
 
         {{-- Click to Interact Overlay --}}
         <div x-show="!isActivated"
@@ -220,22 +217,30 @@ new class extends Component {
     @push('styles')
         <style>
             /* MapKit JS Custom Styles */
-            .mk-map-view {
-                background: transparent !important;
-            }
-
-            /* Force hardware-accelerated map to respect rounded corners */
             .guestbook-map-container {
+                overflow: hidden !important;
+                border-radius: 1.5rem !important;
+                clip-path: inset(0 round 1.5rem) !important;
+                -webkit-clip-path: inset(0 round 1.5rem) !important;
+                contain: paint !important;
                 isolation: isolate;
             }
 
-            .guestbook-map-container > div:first-child {
-                /* WebKit specific hack for border-radius clipping */
-                -webkit-mask-image: -webkit-radial-gradient(white, black);
+            .guestbook-map-container [x-ref="map"],
+            .guestbook-map-container .mk-map-view,
+            .guestbook-map-container canvas {
+                background: transparent !important;
+                overflow: hidden !important;
+                border-radius: 1.5rem !important;
+                /* WebKit specific mask clipping */
+                -webkit-mask-image: linear-gradient(white, white);
                 /* Firefox fix for overflow: hidden with hardware acceleration */
                 mask-image: linear-gradient(white, white);
                 /* Modern browsers clip path */
-                clip-path: inset(0 round 1.5rem);
+                clip-path: inset(0 round 1.5rem) !important;
+                -webkit-clip-path: inset(0 round 1.5rem) !important;
+                /* Paint containment */
+                contain: paint !important;
                 /* Force composite layer */
                 transform: translateZ(0);
             }

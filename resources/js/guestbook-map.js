@@ -143,9 +143,25 @@ window.guestbookMap = function (points) {
                     );
                 }
 
-                // Handle resize
+                // Handle resize and dynamic canvas clipping
+                const applyClipping = () => {
+                    el.querySelectorAll('canvas, .mk-map-view, .mk-container, div').forEach(node => {
+                        node.style.borderRadius = '1.5rem';
+                        node.style.overflow = 'hidden';
+                        node.style.clipPath = 'inset(0 round 1.5rem)';
+                        node.style.webkitClipPath = 'inset(0 round 1.5rem)';
+                    });
+                };
+
+                applyClipping();
+
+                const mutationObserver = new MutationObserver(() => {
+                    applyClipping();
+                });
+                mutationObserver.observe(el, { childList: true, subtree: true });
+
                 this.observer = new ResizeObserver(() => {
-                    // MapKit JS generally handles resize well internally
+                    applyClipping();
                 });
                 this.observer.observe(el);
 
