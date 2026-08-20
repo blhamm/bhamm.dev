@@ -14,6 +14,8 @@
             const wrapper = this.$el;
             const img = this.$refs.img;
             const mask = this.$refs.mask;
+            const elephant = this.$refs.elephant;
+            const elephantImg = this.$refs.elephantImg;
 
             const getStartScale = () => {
                 const vw = window.innerWidth;
@@ -31,12 +33,22 @@
                 scrollTrigger: {
                     trigger: wrapper,
                     start: 'top top',
-                    end: '+=250%', // Extended for the mask reveal
+                    end: '+=350%', // Extended to accommodate sequential mask reveal + elephant run
                     scrub: 1, // Smoothing catch-up
                     pin: true,
                     pinSpacing: true,
                     invalidateOnRefresh: true,
                     anticipatePin: 1,
+                    onUpdate: (self) => {
+                        // Flip elephant orientation based on scroll direction (scrolling up vs down)
+                        if (elephantImg) {
+                            if (self.direction === -1) {
+                                gsap.to(elephantImg, { scaleX: -1, duration: 0.1, overwrite: 'auto' });
+                            } else {
+                                gsap.to(elephantImg, { scaleX: 1, duration: 0.1, overwrite: 'auto' });
+                            }
+                        }
+                    },
                 },
             });
 
@@ -58,6 +70,8 @@
 
             // Initial state for the mask (zoomed to cover viewport without exceeding GPU limits)
             gsap.set(mask, { scale: 20, transformOrigin: 'center center', force3D: false });
+            // Initial state for the fast elephant (off-screen right)
+            gsap.set(elephant, { x: '120vw' });
 
             tl.fromTo(
                 img,
@@ -123,6 +137,32 @@
                 0.8,
             );
 
+            // Phase 3: Fast Elephant Running Animation across the screen AFTER the mask has fully scaled down (at 2.3)
+            tl.fromTo(
+                elephant,
+                { x: '120vw', scale: 0.9 },
+                {
+                    x: '-120vw',
+                    scale: 1.15,
+                    ease: 'power1.inOut',
+                    duration: 1.5,
+                },
+                2.3, // Starts right after mask reveal finishes at 2.3
+            );
+
+            // Add cartoonish vertical bounce/bobbing during the elephant run (starting at 2.3)
+            tl.to(
+                elephant,
+                {
+                    y: '-=35',
+                    repeat: 3,
+                    yoyo: true,
+                    ease: 'sine.inOut',
+                    duration: 0.35,
+                },
+                2.3,
+            );
+
             // Ensure all scroll triggers are recalculated after the pinning setup
             setTimeout(() => ScrollTrigger.refresh(), 100);
         },
@@ -185,5 +225,16 @@
         </div>
 
         <div class="from-pale-night-black/20 pointer-events-none absolute inset-0 bg-linear-to-t to-transparent"></div>
+    </div>
+
+    {{-- Fast PHP Elephant (Runs Right to Left across the screen as mask reaches final scale) --}}
+    <div x-ref="elephant" class="pointer-events-none absolute top-1/2 z-30 flex items-center will-change-transform">
+        {{-- Elephant Image & Whimsical Badge --}}
+        <div class="relative flex items-center">
+            <div class="absolute -top-10 -left-6 md:-top-12 md:-left-8 glass-pane font-brand text-pale-night-black dark:text-pale-night-white text-xs md:text-sm font-extrabold px-4 py-2 rounded-2xl shadow-xl whitespace-nowrap animate-bounce">
+                🐘 WITH PHP!
+            </div>
+            <img x-ref="elephantImg" src="/images/fast_elephant.webp" alt="Fast PHP Elephant" class="w-32 md:w-52 h-auto object-contain drop-shadow-[0_20px_30px_rgba(0,0,0,0.3)]" />
+        </div>
     </div>
 </div>
