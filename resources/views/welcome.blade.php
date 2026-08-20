@@ -249,6 +249,7 @@
 					<h2 class="typing-animation text-pale-night-black dark:text-pale-night-white text-2xl font-bold md:mb-6 md:text-4xl">
 						My Tool Kit
 					</h2>
+					<x-gsap-wrapper animation="scale-up" :scrub="true">
 					<x-bento-grid>
 						{{-- Row 1: The Core --}}
 						<a href="https://www.apple.com/macbook-pro/" target="_blank"
@@ -496,17 +497,18 @@
 						</a>
 						--}}
 					</x-bento-grid>
+					</x-gsap-wrapper>
 				</section>
 
 				<x-gsap-wrapper animation="scale-up" :scrub="true">
 					<section
 						id="about"
-						class="bg-pale-night-darker/20 ring-pale-night-black/10 rounded-4xl border border-zinc-200 px-6 py-12 sm:p-12 ring-1 ring-inset dark:border-zinc-800"
+						class="bg-zinc-100 dark:bg-pale-night-darker/20 ring-pale-night-black/10 rounded-4xl border border-zinc-200 px-6 py-12 sm:p-12 ring-1 ring-inset dark:border-zinc-800"
 					>
 						<div class="grid items-center gap-12 md:grid-cols-2">
 							<div>
 								<flux:heading level="2" size="xl" class="typing-animation mb-4">About Me</flux:heading>
-								<p class="text-pale-night-black/75 dark:text-pale-night-white/70 text-lg leading-relaxed">
+								<p class="text-pale-night-black/75 dark:text-pale-night-white/40 text-lg leading-relaxed">
 									I’ve been building for the web since 2008—long enough to remember when Flash was the
 									future and IE6 was the final boss. I specialize in turning messy business
 									requirements into clean, high-performance digital products. I'm the developer who
