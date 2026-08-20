@@ -2,16 +2,26 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Attributes\Description;
-use Illuminate\Console\Attributes\Signature;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Image;
 
-#[Signature('images:convert-to-webp {--dir=public/images : The directory to scan for images} {--keep : Keep the original images} {--quality=80 : The quality of the converted WebP images}')]
-#[Description('Convert all images in a directory to WebP format')]
 class ConvertImagesToWebp extends Command
 {
+    /**
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
+    protected $signature = 'images:convert-to-webp {--dir=public/images : The directory to scan for images} {--keep : Keep the original images} {--quality=80 : The quality of the converted WebP images}';
+
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
+    protected $description = 'Convert all images in a directory to WebP format';
+
     /**
      * Execute the console command.
      */
