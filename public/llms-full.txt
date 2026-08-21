@@ -1,4 +1,4 @@
-# Brandon Hamm - Full Technical Context & Portfolio
+# Brandon Hamm - Full Technical Context
 
 > Senior Software Engineer & Full-Stack Architect specializing in enterprise Laravel systems, extensive full-stack JavaScript engineering, and robust cloud infrastructure.
 
