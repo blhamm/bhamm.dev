@@ -32,3 +32,6 @@ CLAUDE.MD
 boost.json
 .mcp.json
 docs/
+/.junie/
+/.ai/
+/.claude/
