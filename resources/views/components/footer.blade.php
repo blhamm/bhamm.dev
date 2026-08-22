@@ -11,7 +11,7 @@
                         <span class="sr-only">LinkedIn</span>
                         <flux:icon.linkedin class="h-6 w-6" />
                     </a>
-                    <a href="https://pinkary.com/@brandonH" class="text-zinc-400 hover:text-zinc-500">
+                    <a href="https://pinkary.com/@blhamm" class="text-zinc-400 hover:text-zinc-500">
                         <span class="sr-only">Pinkary</span>
                         <x-icon-pinkary class="h-6 w-6" />
                     </a>
