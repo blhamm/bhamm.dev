@@ -26,51 +26,31 @@ new class extends Component {
 
             if (Feature::active('guestbook-signees')) {
                 $signees = Signee::query()
-                    ->join('locations', function ($join): void {
-                        $join
-                            ->on('locations.locationable_id', '=', 'signees.id')
-                            ->where('locations.locationable_type', (new Signee)->getMorphClass());
-                    })
-                    ->where('signees.private', false)
-                    ->whereNotNull('locations.latitude')
-                    ->whereNotNull('locations.longitude')
-                    ->latest('signees.created_at')
+                    ->where('private', false)
+                    ->whereHas('location', fn (Builder $query) => $query->whereNotNull(['latitude', 'longitude']))
+                    ->with('location')
+                    ->latest('created_at')
                     ->limit(200)
-                    ->get([
-                        'signees.name',
-                        'signees.message',
-                        'locations.latitude',
-                        'locations.longitude',
-                    ])
-                    ->map(fn ($signee) => [
+                    ->get()
+                    ->map(fn (Signee $signee) => [
                         'type' => 'signee',
-                        'name' => str($signee->name)->before(' ')->toString(),
+                        'name' => $signee->display_name,
                         'message' => $signee->message,
-                        'lat' => (float) $signee->latitude,
-                        'lng' => (float) $signee->longitude,
+                        'lat' => $signee->latitude,
+                        'lng' => $signee->longitude,
                     ]);
             }
 
             $visitors = Visitor::query()
-                ->join('locations', function ($join): void {
-                    $join
-                        ->on('locations.locationable_id', '=', 'visitors.id')
-                        ->where('locations.locationable_type', (new Visitor)->getMorphClass());
-                })
-                ->whereNotNull('locations.latitude')
-                ->whereNotNull('locations.longitude')
-                ->latest('visitors.created_at')
+                ->whereHas('location', fn (Builder $query) => $query->whereNotNull(['latitude', 'longitude']))
+                ->with('location')
+                ->latest('created_at')
                 ->limit(200)
-                ->get([
-                    'locations.latitude',
-                    'locations.longitude',
-                    'locations.city',
-                    'locations.state',
-                ])
-                ->map(fn ($visitor) => [
+                ->get()
+                ->map(fn (Visitor $visitor) => [
                     'type' => 'visitor',
-                    'lat' => (float) $visitor->latitude,
-                    'lng' => (float) $visitor->longitude,
+                    'lat' => $visitor->latitude,
+                    'lng' => $visitor->longitude,
                     'city' => $visitor->city,
                     'state' => $visitor->state,
                 ]);

@@ -45,6 +45,17 @@ test('guestbook map caches points for 5 minutes', function () {
     expect($initialPoints)->toHaveCount(2)
         ->and(Cache::has('guestbook_map_points_with_signees'))->toBeTrue();
 
+    $pointsArray = $initialPoints->toArray();
+    expect($pointsArray[0]['type'])->toBe('signee')
+        ->and($pointsArray[0]['name'])->toBe('Alice A.')
+        ->and($pointsArray[0]['lat'])->toBe(30.2672)
+        ->and($pointsArray[0]['lng'])->toBe(-97.7431)
+        ->and($pointsArray[1]['type'])->toBe('visitor')
+        ->and($pointsArray[1]['lat'])->toBe(37.7749)
+        ->and($pointsArray[1]['lng'])->toBe(-122.4194)
+        ->and($pointsArray[1]['city'])->toBe('San Francisco')
+        ->and($pointsArray[1]['state'])->toBe('CA');
+
     // Create a new visitor in the database
     $newVisitor = Visitor::create([
         'ip_address' => '198.51.100.20',
