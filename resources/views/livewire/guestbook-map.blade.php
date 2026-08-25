@@ -4,49 +4,82 @@ use App\Models\Signee;
 use App\Models\Visitor;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Laravel\Pennant\Feature;
 use Livewire\Attributes\On;
 use Livewire\Volt\Component;
 
 new class extends Component {
     #[On('guestbook-signed')]
-    public function refreshMap()
+    public function refreshMap(): void
     {
-        // This will trigger a re-render
+        Cache::forget('guestbook_map_points_with_signees');
+        Cache::forget('guestbook_map_points_without_signees');
     }
 
     public function with(): array
     {
-        $signees = collect();
+        $featureKey = Feature::active('guestbook-signees') ? 'with_signees' : 'without_signees';
 
-        if (Feature::active('guestbook-signees')) {
-            $signees = Signee::where('private', false)
-                ->whereHas('location', fn(Builder $query) => $query->whereNotNull(['latitude', 'longitude']))
-                ->latest()
-                ->get()
-                ->map(fn($user) => [
-                    'type' => 'signee',
-                    'name' => $user->display_name,
-                    'message' => $user->message,
-                    'lat' => $user->latitude,
-                    'lng' => $user->longitude,
+        $points = Cache::remember("guestbook_map_points_{$featureKey}", now()->addMinutes(5), function () {
+            $signees = collect();
+
+            if (Feature::active('guestbook-signees')) {
+                $signees = Signee::query()
+                    ->join('locations', function ($join): void {
+                        $join
+                            ->on('locations.locationable_id', '=', 'signees.id')
+                            ->where('locations.locationable_type', (new Signee)->getMorphClass());
+                    })
+                    ->where('signees.private', false)
+                    ->whereNotNull('locations.latitude')
+                    ->whereNotNull('locations.longitude')
+                    ->latest('signees.created_at')
+                    ->limit(200)
+                    ->get([
+                        'signees.name',
+                        'signees.message',
+                        'locations.latitude',
+                        'locations.longitude',
+                    ])
+                    ->map(fn ($signee) => [
+                        'type' => 'signee',
+                        'name' => str($signee->name)->before(' ')->toString(),
+                        'message' => $signee->message,
+                        'lat' => (float) $signee->latitude,
+                        'lng' => (float) $signee->longitude,
+                    ]);
+            }
+
+            $visitors = Visitor::query()
+                ->join('locations', function ($join): void {
+                    $join
+                        ->on('locations.locationable_id', '=', 'visitors.id')
+                        ->where('locations.locationable_type', (new Visitor)->getMorphClass());
+                })
+                ->whereNotNull('locations.latitude')
+                ->whereNotNull('locations.longitude')
+                ->latest('visitors.created_at')
+                ->limit(200)
+                ->get([
+                    'locations.latitude',
+                    'locations.longitude',
+                    'locations.city',
+                    'locations.state',
+                ])
+                ->map(fn ($visitor) => [
+                    'type' => 'visitor',
+                    'lat' => (float) $visitor->latitude,
+                    'lng' => (float) $visitor->longitude,
+                    'city' => $visitor->city,
+                    'state' => $visitor->state,
                 ]);
-        }
 
-        $visitors = Visitor::latest()
-            ->whereHas('location', fn(Builder $query) => $query->whereNotNull(['latitude', 'longitude']))
-            ->limit(200) // Keep it performant
-            ->get()
-            ->map(fn($visitor) => [
-                'type' => 'visitor',
-                'lat' => $visitor->latitude,
-                'lng' => $visitor->longitude,
-                'city' => $visitor->city,
-                'state' => $visitor->state,
-            ]);
+            return $signees->concat($visitors);
+        });
 
         return [
-            'points' => $signees->concat($visitors),
+            'points' => $points,
         ];
     }
 }; ?>

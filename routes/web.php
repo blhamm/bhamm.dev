@@ -4,7 +4,6 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SocialiteController;
 use App\Http\Middleware\HandleAiBots;
 use Illuminate\Support\Facades\Route;
-use Livewire\Volt\Volt;
 
 Route::get('/', HomeController::class)->middleware(HandleAiBots::class)->name('home');
 
