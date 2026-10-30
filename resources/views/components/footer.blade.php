@@ -11,9 +11,20 @@
                         <span class="sr-only">LinkedIn</span>
                         <flux:icon.linkedin class="h-6 w-6" />
                     </a>
-                    <a href="https://pinkary.com/@blhamm" class="text-zinc-400 hover:text-zinc-500">
-                        <span class="sr-only">Pinkary</span>
-                        <x-icon-pinkary class="h-6 w-6" />
+                    <a href="https://dev-null.sh/@blhamm" class="text-zinc-400 hover:text-zinc-500">
+                        <span class="sr-only">dev/null</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="1.6 1.5 45 45" class="h-6 w-6" aria-hidden="true">
+                            <style>
+                                .ink { fill: #121417; }
+                                .accent { fill: #d9480f; }
+                                @media (prefers-color-scheme: dark) {
+                                    .ink { fill: #ececec; }
+                                    .accent { fill: #ff8a4c; }
+                                }
+                            </style>
+                            <path class="ink" d="M2 42h10L26 6H16Z" />
+                            <path class="accent" fill-rule="evenodd" clip-rule="evenodd" d="M17.81 43.5h13.22L46.19 4.5H32.97ZM22.19 40.5l12.84-33h6.78l-12.84 33Z" />
+                        </svg>
                     </a>
                 </div>
                 <div class="mt-8 md:order-1 md:mt-0">
