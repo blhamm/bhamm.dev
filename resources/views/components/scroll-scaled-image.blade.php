@@ -15,6 +15,7 @@
             const img = this.$refs.img;
             const mask = this.$refs.mask;
             const elephant = this.$refs.elephant;
+            const elephantBob = this.$refs.elephantBob;
             const elephantImg = this.$refs.elephantImg;
 
             const getStartScale = () => {
@@ -42,20 +43,22 @@
                     invalidateOnRefresh: true,
                     anticipatePin: 0,
                     onUpdate: (self) => {
-                        // Flip elephant orientation only when scroll direction changes (prevents per-frame tween churn)
+                        // Flip elephant orientation instantly on direction change without tween allocation / RAF desync
                         if (elephantImg && self.direction !== currentDirection) {
                             currentDirection = self.direction;
-                            gsap.to(elephantImg, {
+                            gsap.set(elephantImg, {
                                 scaleX: currentDirection === -1 ? -1 : 1,
-                                duration: 0.15,
-                                overwrite: 'auto',
                             });
                         }
                     },
                 },
             });
 
-            // A single, smooth 'Ken Burns' zoom out transition
+            // Initial states
+            gsap.set(mask, { scale: 16, transformOrigin: 'center center', force3D: true });
+            gsap.set(elephant, { autoAlpha: 0, x: '120vw' });
+
+            // Phase 1: Framing zoom out (0.0 -> 0.8)
             tl.fromTo(
                 container,
                 {
@@ -67,31 +70,27 @@
                     scale: 1,
                     borderRadius: '2.5rem',
                     ease: 'power2.inOut',
-                    duration: 1,
+                    duration: 0.8,
                 },
+                0,
             );
-
-            // Initial state for the mask (zoomed to cover viewport without exceeding GPU limits)
-            gsap.set(mask, { scale: 20, transformOrigin: 'center center', force3D: false });
-            // Initial state for the fast elephant (off-screen right)
-            gsap.set(elephant, { x: '120vw' });
 
             tl.fromTo(
                 img,
                 {
-                    scale: 2, // Start with a deeper zoom
+                    scale: 2,
                     yPercent: -10,
                 },
                 {
-                    scale: 1.2, // Mid-point zoom
+                    scale: 1.2,
                     yPercent: 0,
                     ease: 'power2.inOut',
-                    duration: 1,
+                    duration: 0.8,
                 },
-                0, // Start at same time as container
+                0,
             );
 
-            // Move space clearing to 'y' on the container to avoid jitter on pinned element
+            // Container downward translation for header clearance (0.0 -> 2.3)
             tl.fromTo(
                 container,
                 { y: 0 },
@@ -103,20 +102,19 @@
                 0,
             );
 
-            // Phase 2: Mask reveal (The 'Flying through the mask' effect)
-            // Starts slightly before phase 1 ends for a seamless flow
+            // Phase 2: Mask reveal (The 'Flying through the mask' effect) (0.8 -> 2.3)
             tl.to(
                 mask,
                 {
                     scale: 1,
-                    force3D: false,
+                    force3D: true,
                     ease: 'power2.inOut',
                     duration: 1.5,
                 },
                 0.8,
             );
 
-            // Final image settling zoom
+            // Final image settling zoom (0.8 -> 2.3)
             tl.to(
                 img,
                 {
@@ -127,8 +125,7 @@
                 0.8,
             );
 
-            // Settle the container slightly for depth
-            // Maintain consistent transformOrigin to avoid position jumps
+            // Settle container slightly for depth (0.8 -> 2.3)
             tl.to(
                 container,
                 {
@@ -140,7 +137,11 @@
                 0.8,
             );
 
-            // Phase 3: Fast Elephant Running Animation across the screen AFTER the mask has fully scaled down (at 2.3)
+            // Phase 3: Fast Elephant Running Animation (2.3 -> 3.8)
+            // Make visible right before entering screen
+            tl.set(elephant, { autoAlpha: 1 }, 2.25);
+
+            // X-axis translation & scaling on outer elephant container
             tl.fromTo(
                 elephant,
                 { x: '120vw', scale: 0.9 },
@@ -150,23 +151,27 @@
                     ease: 'power1.inOut',
                     duration: 1.5,
                 },
-                2.3, // Starts right after mask reveal finishes at 2.3
+                2.3,
             );
 
-            // Add cartoonish vertical bounce/bobbing during the elephant run (starting at 2.3)
-            tl.to(
-                elephant,
+            // Y-axis bobbing on inner elephantBob wrapper (isolates transforms and prevents matrix conflicts)
+            tl.fromTo(
+                elephantBob,
+                { y: 0 },
                 {
-                    y: '-=35',
+                    y: -28,
                     repeat: 3,
                     yoyo: true,
                     ease: 'sine.inOut',
-                    duration: 0.35,
+                    duration: 0.375, // 0.375 * 4 = 1.5s exactly matches the run duration
                 },
                 2.3,
             );
 
-            // Ensure all scroll triggers are recalculated after the pinning setup
+            // Hide offscreen elephant after run finishes
+            tl.set(elephant, { autoAlpha: 0 }, 3.85);
+
+            // Recalculate ScrollTrigger measurements
             setTimeout(() => ScrollTrigger.refresh(), 100);
         },
     }"
@@ -180,7 +185,7 @@
         <img x-ref="img" src="{{ $src }}" alt="{{ $alt }}" class="h-full w-full object-cover" />
 
         {{-- The Theme Background Mask --}}
-        <div x-ref="mask" class="pointer-events-none absolute inset-0 z-10" aria-hidden="true">
+        <div x-ref="mask" class="pointer-events-none absolute inset-0 z-10 will-change-transform" aria-hidden="true">
             <svg viewBox="0 0 2000 1000" preserveAspectRatio="xMidYMid slice" class="h-full w-full" shape-rendering="geometricPrecision" style="
                     overflow: hidden;
                 ">
@@ -230,13 +235,14 @@
     </div>
 
     {{-- Fast PHP Elephant (Runs Right to Left across the screen as mask reaches final scale) --}}
-    <div x-ref="elephant" class="pointer-events-none absolute top-1/2 z-30 flex items-center will-change-transform">
-        {{-- Elephant Image & Whimsical Badge --}}
-        <div class="relative flex items-center">
-            <div class="absolute -top-10 -left-6 md:-top-12 md:-left-8 glass-pane font-brand text-pale-night-black dark:text-pale-night-white text-xs md:text-sm font-extrabold px-4 py-2 rounded-2xl shadow-xl whitespace-nowrap animate-bounce">
+    <div x-ref="elephant" class="pointer-events-none absolute top-1/2 z-30 flex items-center will-change-transform opacity-0">
+        {{-- Bobbing wrapper to isolate Y transforms from X translation --}}
+        <div x-ref="elephantBob" class="relative flex items-center will-change-transform">
+            {{-- Fast, lightweight badge without backdrop-filter or continuous CSS animation overhead --}}
+            <div class="absolute -top-10 -left-6 md:-top-12 md:-left-8 bg-white/95 dark:bg-pale-night-darker/95 border border-zinc-200/80 dark:border-zinc-700/80 shadow-lg font-brand text-pale-night-black dark:text-pale-night-white text-xs md:text-sm font-extrabold px-3.5 py-1.5 md:px-4 md:py-2 rounded-2xl whitespace-nowrap">
                 🐘 WITH PHP!
             </div>
-            <img x-ref="elephantImg" src="/images/fast_elephant.webp" alt="Fast PHP Elephant" class="w-32 md:w-52 h-auto object-contain drop-shadow-[0_20px_30px_rgba(0,0,0,0.3)]" />
+            <img x-ref="elephantImg" src="/images/fast_elephant.webp" alt="Fast PHP Elephant" class="w-32 md:w-52 h-auto object-contain" />
         </div>
     </div>
 </div>
