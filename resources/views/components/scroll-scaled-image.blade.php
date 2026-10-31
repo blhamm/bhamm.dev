@@ -13,10 +13,18 @@
             const container = this.$refs.imgContainer;
             const wrapper = this.$el;
             const img = this.$refs.img;
-            const mask = this.$refs.mask;
+            const maskText = this.$refs.maskText;
             const elephant = this.$refs.elephant;
             const elephantBob = this.$refs.elephantBob;
             const elephantImg = this.$refs.elephantImg;
+            const maskScale = { value: 16 };
+
+            const setMaskTransform = () => {
+                maskText.setAttribute(
+                    'transform',
+                    `translate(1000 500) scale(${maskScale.value}) translate(-1000 -500)`,
+                );
+            };
 
             const getStartScale = () => {
                 const vw = window.innerWidth;
@@ -55,7 +63,7 @@
             });
 
             // Initial states
-            gsap.set(mask, { scale: 16, transformOrigin: 'center center', force3D: true });
+            setMaskTransform();
             gsap.set(elephant, { autoAlpha: 0, x: '120vw' });
 
             // Phase 1: Framing zoom out (0.0 -> 0.8)
@@ -64,11 +72,9 @@
                 {
                     scale: () => getStartScale(),
                     transformOrigin: 'top center',
-                    borderRadius: '0rem',
                 },
                 {
                     scale: 1,
-                    borderRadius: '2.5rem',
                     ease: 'power2.inOut',
                     duration: 0.8,
                 },
@@ -104,12 +110,12 @@
 
             // Phase 2: Mask reveal (The 'Flying through the mask' effect) (0.8 -> 2.3)
             tl.to(
-                mask,
+                maskScale,
                 {
-                    scale: 1,
-                    force3D: true,
+                    value: 1,
                     ease: 'power2.inOut',
                     duration: 1.5,
+                    onUpdate: setMaskTransform,
                 },
                 0.8,
             );
@@ -119,18 +125,6 @@
                 img,
                 {
                     scale: 1,
-                    ease: 'power2.inOut',
-                    duration: 1.5,
-                },
-                0.8,
-            );
-
-            // Settle container slightly for depth (0.8 -> 2.3)
-            tl.to(
-                container,
-                {
-                    scale: 0.96,
-                    transformOrigin: 'top center',
                     ease: 'power2.inOut',
                     duration: 1.5,
                 },
@@ -180,50 +174,61 @@
 >
     <div
         x-ref="imgContainer"
-        class="relative h-[60vh] w-[94%] max-w-7xl overflow-hidden rounded-[2.5rem] will-change-transform md:h-[80vh]"
+        class="relative h-[60vh] w-[94%] max-w-7xl overflow-hidden bg-pale-night-white will-change-transform dark:bg-pale-night-black md:h-[80vh]"
     >
-        <img x-ref="img" src="{{ $src }}" alt="{{ $alt }}" class="h-full w-full object-cover" />
+        <div class="absolute inset-px overflow-hidden">
+            <img x-ref="img" src="{{ $src }}" alt="{{ $alt }}" class="h-full w-full object-cover" />
+        </div>
 
         {{-- The Theme Background Mask --}}
-        <div x-ref="mask" class="pointer-events-none absolute inset-0 z-10 will-change-transform" aria-hidden="true">
-            <svg viewBox="0 0 2000 1000" preserveAspectRatio="xMidYMid slice" class="h-full w-full" shape-rendering="geometricPrecision" style="
-                    overflow: hidden;
-                ">
+        <div class="pointer-events-none absolute -inset-2 z-10" aria-hidden="true">
+            <svg viewBox="0 0 2000 1000" preserveAspectRatio="xMidYMid slice" class="block h-full w-full overflow-visible" shape-rendering="geometricPrecision">
                 <defs>
-                    <mask id="{{ $maskId }}">
-                        <rect x="-10" y="-10" width="2100" height="1100" fill="white" />
-                        <text
-                            x="1000"
-                            y="500"
-                            text-anchor="middle"
-                            dominant-baseline="middle"
-                            fill="black"
-                            font-size="300"
-                            class="text-[120px] md:text-[300px]"
-                            font-weight="900"
-                            style="
-                                font-family:
-                                    ui-sans-serif,
-                                    system-ui,
-                                    -apple-system,
-                                    BlinkMacSystemFont,
-                                    'Segoe UI',
-                                    Roboto,
-                                    'Helvetica Neue',
-                                    Arial,
-                                    sans-serif;
-                            "
-                        >
-                            SHIP IT!
-                        </text>
+                    <mask
+                        id="{{ $maskId }}"
+                        maskUnits="userSpaceOnUse"
+                        maskContentUnits="userSpaceOnUse"
+                        x="-200"
+                        y="-200"
+                        width="2400"
+                        height="1400"
+                        style="mask-type: luminance;"
+                    >
+                        <rect x="-200" y="-200" width="2400" height="1400" fill="white" />
+                        <g x-ref="maskText">
+                            <text
+                                x="1000"
+                                y="500"
+                                text-anchor="middle"
+                                dy=".35em"
+                                fill="black"
+                                font-size="300"
+                                class="text-[120px] md:text-[300px]"
+                                font-weight="900"
+                                style="
+                                    font-family:
+                                        ui-sans-serif,
+                                        system-ui,
+                                        -apple-system,
+                                        BlinkMacSystemFont,
+                                        'Segoe UI',
+                                        Roboto,
+                                        'Helvetica Neue',
+                                        Arial,
+                                        sans-serif;
+                                "
+                            >
+                                SHIP IT!
+                            </text>
+                        </g>
                     </mask>
                 </defs>
                 {{-- currentColor resolves to the theme bg colors via Tailwind classes --}}
                 <rect
-                    x="-10"
-                    y="-10"
-                    width="2100"
-                    height="1100"
+                    x="-200"
+                    y="-200"
+                    width="2400"
+                    height="1400"
                     fill="currentColor"
                     mask="url(#{{ $maskId }})"
                     class="text-pale-night-white dark:text-pale-night-black"
@@ -232,6 +237,7 @@
         </div>
 
         <div class="from-pale-night-black/20 pointer-events-none absolute inset-0 bg-linear-to-t to-transparent"></div>
+
     </div>
 
     {{-- Fast PHP Elephant (Runs Right to Left across the screen as mask reaches final scale) --}}
