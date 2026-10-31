@@ -32,8 +32,8 @@
         <circle class="api-node fill-pale-night-teal" cx="370" cy="215" r="2" filter="url(#api-glow)" />
 
         <!-- Data packets (will be animated) -->
-        <circle class="packet fill-pale-night-teal opacity-0" r="2" filter="url(#api-glow)" />
-        <circle class="packet fill-pale-night-blue opacity-0" r="2" filter="url(#api-glow)" />
-        <circle class="packet fill-pale-night-purple opacity-0" r="2" filter="url(#api-glow)" />
+        <circle class="packet fill-pale-night-teal opacity-0" r="2.5" />
+        <circle class="packet fill-pale-night-blue opacity-0" r="2.5" />
+        <circle class="packet fill-pale-night-purple opacity-0" r="2.5" />
     </svg>
 </div>

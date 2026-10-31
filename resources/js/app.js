@@ -23,9 +23,9 @@ const targetFPS = 60;
 const frameInterval = 1000 / targetFPS;
 const lenis = new Lenis({
     lerp: 0.1,
+    smoothWheel: true,
     syncTouch: false,
     autoRaf: false,
-    normalizeWheel: true
 });
 window.lenis = lenis;
 window.initExpertiseAnimations = initExpertiseAnimations;
@@ -35,7 +35,9 @@ let lastTime = performance.now();
 let particlesOn = true;
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin, Draggable, MotionPathPlugin);
-gsap.ticker.lagSmoothing(500, 33);
+
+// Disable lag smoothing in GSAP to prevent lag/stutter in scroll animations with Lenis
+gsap.ticker.lagSmoothing(0);
 
 // Sync Lenis with ScrollTrigger
 lenis.on('scroll', ScrollTrigger.update);
@@ -44,7 +46,6 @@ lenis.on('scroll', ScrollTrigger.update);
 gsap.ticker.add((time, deltaTime, frame) => {
   lenis.raf(time * 1000);
   
-  // Throttle particles if needed, or just run them every frame
   if (particlesOn) {
     particleUp(deltaTime, trace);
   }
@@ -118,7 +119,8 @@ function typeText(el, onComplete = null, initialDelay = 0.75, textOverride = nul
 
   el.classList.add('visible');
 
-  const text = textOverride || el.getAttribute('data-typing-text') || el.innerText;
+  const rawText = textOverride || el.getAttribute('data-typing-text') || el.innerText;
+  const text = rawText ? rawText.trim() : '';
   
   // Only set data-typing-text if we're not using an override (to preserve original text for sections)
   if (!el.hasAttribute('data-typing-text') && !textOverride) {

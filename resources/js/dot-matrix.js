@@ -1,86 +1,116 @@
-import gsap from 'gsap';
-
 export function initDotMatrix() {
     const canvas = document.getElementById('dot-matrix-canvas');
     if (!canvas) return;
 
     const ctx = canvas.getContext('2d');
-    let width, height;
+    let width = 0, height = 0;
     let dots = [];
-    const spacing = 16;
+    const spacing = 18;
     const colors = ['#c3e88d', '#ffcb6b', '#f07178', '#82aaff', '#c792ea', '#89ddff'];
     let waves = [];
+    let isVisible = false;
+    let animFrameId = null;
+    let waveTimeoutId = null;
 
     function resize() {
-        const rect = canvas.parentNode.getBoundingClientRect();
-        if (!rect) return;
-        width = canvas.width = rect.width;
-        height = canvas.height = rect.height;
+        const parent = canvas.parentNode;
+        if (!parent) return;
+        const rect = parent.getBoundingClientRect();
+        if (rect.width === 0 || rect.height === 0) return;
+        width = canvas.width = Math.floor(rect.width);
+        height = canvas.height = Math.floor(rect.height);
         initDots();
+        renderStaticGrid();
     }
 
     function initDots() {
         dots = [];
         for (let x = spacing / 2; x < width; x += spacing) {
             for (let y = spacing / 2; y < height; y += spacing) {
-                // Jitter slightly for organic feel
                 dots.push({
-                    x: x + (Math.random() - 0.5) * 2,
-                    y: y + (Math.random() - 0.5) * 2,
-                    baseRadius: 0.7 + Math.random() * 0.4,
+                    x: x + (Math.random() - 0.5) * 1.5,
+                    y: y + (Math.random() - 0.5) * 1.5,
+                    baseRadius: 0.8 + Math.random() * 0.3,
                 });
             }
         }
     }
 
     function triggerWave() {
-        waves.push({
-            x: Math.random() * width,
-            y: Math.random() * height,
-            color: colors[Math.floor(Math.random() * colors.length)],
-            startTime: performance.now(),
-            duration: 3000,
-            speed: 350,
-            thickness: 200
-        });
-
-        setTimeout(triggerWave, 2000 + Math.random() * 3000);
+        if (isVisible && width > 0 && height > 0) {
+            waves.push({
+                x: Math.random() * width,
+                y: Math.random() * height,
+                color: colors[Math.floor(Math.random() * colors.length)],
+                startTime: performance.now(),
+                duration: 2500,
+                speed: 380,
+                thickness: 180
+            });
+            startAnimationLoop();
+        }
+        waveTimeoutId = setTimeout(triggerWave, 3000 + Math.random() * 3000);
     }
 
-    let isVisible = false;
-    const observer = new IntersectionObserver((entries) => {
-        isVisible = entries[0].isIntersecting;
-    }, { threshold: 0.01 });
-    observer.observe(canvas);
+    function renderStaticGrid() {
+        if (!ctx || width === 0 || height === 0) return;
+        ctx.clearRect(0, 0, width, height);
+        const isDark = document.documentElement.classList.contains('dark');
+        const baseColor = isDark ? 'rgba(130, 170, 255, 0.2)' : 'rgba(41, 45, 62, 0.25)';
+
+        ctx.fillStyle = baseColor;
+        ctx.beginPath();
+        for (let i = 0; i < dots.length; i++) {
+            const dot = dots[i];
+            ctx.moveTo(dot.x + dot.baseRadius, dot.y);
+            ctx.arc(dot.x, dot.y, dot.baseRadius, 0, Math.PI * 2);
+        }
+        ctx.fill();
+    }
 
     function draw() {
         if (!isVisible) {
-            requestAnimationFrame(draw);
+            animFrameId = null;
             return;
         }
-        ctx.clearRect(0, 0, width, height);
+
         const now = performance.now();
-        const isDark = document.documentElement.classList.contains('dark');
-        const baseColor = isDark ? 'rgba(130, 170, 255, 0.2)' : 'rgba(41, 45, 62, 0.25)';
-        
         waves = waves.filter(w => now - w.startTime < w.duration);
 
-        dots.forEach(dot => {
+        if (waves.length === 0) {
+            renderStaticGrid();
+            animFrameId = null;
+            return;
+        }
+
+        ctx.clearRect(0, 0, width, height);
+        const isDark = document.documentElement.classList.contains('dark');
+        const baseColor = isDark ? 'rgba(130, 170, 255, 0.2)' : 'rgba(41, 45, 62, 0.25)';
+
+        // Draw unaffected base dots in a single batch
+        ctx.fillStyle = baseColor;
+        ctx.beginPath();
+        
+        const activeWaveDots = [];
+
+        for (let i = 0; i < dots.length; i++) {
+            const dot = dots[i];
             let maxStrength = 0;
             let waveColor = null;
 
-            waves.forEach(w => {
+            for (let j = 0; j < waves.length; j++) {
+                const w = waves[j];
                 const elapsed = (now - w.startTime) / 1000;
                 const waveRadius = w.speed * elapsed;
                 
                 const dx = dot.x - w.x;
                 const dy = dot.y - w.y;
-                const distSquared = dx*dx + dy*dy;
+                const distSquared = dx * dx + dy * dy;
                 
                 const inner = Math.max(0, waveRadius - w.thickness);
                 const outer = waveRadius + w.thickness;
 
-                if (distSquared > inner*inner && distSquared < outer*outer) {
+                if (distSquared > inner * inner && distSquared < outer * outer) {
                     const dist = Math.sqrt(distSquared);
                     const diff = Math.abs(dist - waveRadius);
                     const strength = Math.pow(1 - (diff / w.thickness), 3);
@@ -89,26 +119,59 @@ export function initDotMatrix() {
                         waveColor = w.color;
                     }
                 }
-            });
-
-            ctx.beginPath();
-            ctx.arc(dot.x, dot.y, dot.baseRadius + (maxStrength * 1.5), 0, Math.PI * 2);
-            
-            if (maxStrength > 0) {
-                ctx.fillStyle = waveColor;
-                ctx.globalAlpha = 0.3 + (maxStrength * 0.7);
-            } else {
-                ctx.fillStyle = baseColor;
-                ctx.globalAlpha = 1;
             }
-            
+
+            if (maxStrength > 0) {
+                activeWaveDots.push({
+                    x: dot.x,
+                    y: dot.y,
+                    r: dot.baseRadius + (maxStrength * 1.5),
+                    color: waveColor,
+                    alpha: 0.3 + (maxStrength * 0.7)
+                });
+            } else {
+                ctx.moveTo(dot.x + dot.baseRadius, dot.y);
+                ctx.arc(dot.x, dot.y, dot.baseRadius, 0, Math.PI * 2);
+            }
+        }
+        ctx.fill();
+
+        // Draw wave-affected dots
+        for (let i = 0; i < activeWaveDots.length; i++) {
+            const aw = activeWaveDots[i];
+            ctx.beginPath();
+            ctx.fillStyle = aw.color;
+            ctx.globalAlpha = aw.alpha;
+            ctx.arc(aw.x, aw.y, aw.r, 0, Math.PI * 2);
             ctx.fill();
-        });
-        requestAnimationFrame(draw);
+        }
+        ctx.globalAlpha = 1;
+
+        animFrameId = requestAnimationFrame(draw);
     }
+
+    function startAnimationLoop() {
+        if (!animFrameId && isVisible) {
+            animFrameId = requestAnimationFrame(draw);
+        }
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+        isVisible = entries[0].isIntersecting;
+        if (isVisible) {
+            if (waves.length > 0) {
+                startAnimationLoop();
+            } else {
+                renderStaticGrid();
+            }
+        } else if (animFrameId) {
+            cancelAnimationFrame(animFrameId);
+            animFrameId = null;
+        }
+    }, { threshold: 0.01 });
+    observer.observe(canvas);
 
     window.addEventListener('resize', resize);
     resize();
-    draw();
     setTimeout(triggerWave, 1000);
 }

@@ -29,24 +29,27 @@
                 return Math.max(vw / width, vh / height);
             };
 
+            let currentDirection = 1;
+
             const tl = gsap.timeline({
                 scrollTrigger: {
                     trigger: wrapper,
                     start: 'top top',
                     end: '+=350%', // Extended to accommodate sequential mask reveal + elephant run
-                    scrub: 1, // Smoothing catch-up
+                    scrub: true, // Direct 1:1 sync with Lenis smooth scroll (avoids compound lag)
                     pin: true,
                     pinSpacing: true,
                     invalidateOnRefresh: true,
-                    anticipatePin: 1,
+                    anticipatePin: 0,
                     onUpdate: (self) => {
-                        // Flip elephant orientation based on scroll direction (scrolling up vs down)
-                        if (elephantImg) {
-                            if (self.direction === -1) {
-                                gsap.to(elephantImg, { scaleX: -1, duration: 0.1, overwrite: 'auto' });
-                            } else {
-                                gsap.to(elephantImg, { scaleX: 1, duration: 0.1, overwrite: 'auto' });
-                            }
+                        // Flip elephant orientation only when scroll direction changes (prevents per-frame tween churn)
+                        if (elephantImg && self.direction !== currentDirection) {
+                            currentDirection = self.direction;
+                            gsap.to(elephantImg, {
+                                scaleX: currentDirection === -1 ? -1 : 1,
+                                duration: 0.15,
+                                overwrite: 'auto',
+                            });
                         }
                     },
                 },
@@ -173,12 +176,11 @@
     <div
         x-ref="imgContainer"
         class="relative h-[60vh] w-[94%] max-w-7xl overflow-hidden rounded-[2.5rem] will-change-transform md:h-[80vh]"
-        style="-webkit-mask-image: -webkit-radial-gradient(white, black)"
     >
         <img x-ref="img" src="{{ $src }}" alt="{{ $alt }}" class="h-full w-full object-cover" />
 
         {{-- The Theme Background Mask --}}
-        <div x-ref="mask" class="pointer-events-none absolute inset-0 z-10 perspective-origin-center perspective-[1500px]" aria-hidden="true">
+        <div x-ref="mask" class="pointer-events-none absolute inset-0 z-10" aria-hidden="true">
             <svg viewBox="0 0 2000 1000" preserveAspectRatio="xMidYMid slice" class="h-full w-full" shape-rendering="geometricPrecision" style="
                     overflow: hidden;
                 ">

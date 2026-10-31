@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!--suppress ALL -->
 <html
 	lang="{{ str_replace('_', '-', app()->getLocale()) }}"
 	x-data="{
@@ -21,7 +22,7 @@
 	@include('partials.head', ['title' => 'Brandon Hamm | ' . config('app.name')])
 </head>
 <body class="min-h-screen antialiased">
-<canvas id="particles" class="pointer-events-none fixed inset-0 z-0" aria-hidden="true"></canvas>
+<canvas id="particles" class="pointer-events-none absolute top-0 left-0 h-screen w-full z-0" aria-hidden="true"></canvas>
 
 <main id="app" class="relative z-10">
 	{{-- Intro Section --}}
@@ -255,8 +256,6 @@
 						<a href="https://www.apple.com/macbook-pro/" target="_blank"
 						   class="group relative flex min-h-[350px] flex-col justify-end overflow-hidden rounded-3xl border border-pale-night-black/15 dark:border-white/10 px-6 py-8 sm:p-8 md:col-span-8 md:row-span-2 transition-all hover:ring-2 hover:ring-pale-night-teal dark:hover:ring-pale-night-purple">
 							<div class="absolute inset-0 z-0 bg-linear-to-l from-pale-night-teal/50 dark:from-pale-night-purple/40">
-{{--								<div--}}
-{{--									class="absolute inset-0 z-10"></div>--}}
 								<img src="/images/kit/MacBook-Pro.webp" alt="MacBook Pro"
 								     class="h-full w-full object-contain scale-75 transition-transform duration-700 group-hover:scale-125 relative -top-16 md:-top-8 left-40"/>
 							</div>
@@ -276,7 +275,6 @@
 						   class="glass-pane flex flex-col items-center justify-center space-y-6 rounded-3xl px-6 py-8 sm:p-8 text-center transition-all hover:ring-2 hover:ring-pale-night-blue/50 md:col-span-4">
 							<img src="/images/kit/PhpStorm.svg" alt="PhpStorm" class="h-20 w-auto"/>
 							<div>
-								{{--                                <flux:heading level="3" size="lg">PhpStorm</flux:heading>--}}
 								<p class="text-pale-night-black/60 dark:text-pale-night-white/60 text-sm">
 									Material Pale Night (Lite). Deeply customized for peak velocity.
 								</p>
@@ -339,7 +337,6 @@
 								</defs>
 							</svg>
 							<div>
-								{{--                                <flux:heading level="4" size="md">Ghostty + Zsh</flux:heading>--}}
 								<p class="text-pale-night-black/60 dark:text-pale-night-white/60 mt-1 text-xs">
 									The ultimate GPU-accelerated terminal experience.
 								</p>
@@ -386,7 +383,6 @@
 								</g>
 							</svg>
 							<div>
-								{{--                                <flux:heading level="4" size="md">HTTPie</flux:heading>--}}
 								<p class="text-pale-night-black/60 dark:text-pale-night-white/60 mt-1 text-xs">
 									Architecting and testing APIs with elegance.
 								</p>
@@ -451,7 +447,6 @@
 								<div class="flex items-center gap-3 shrink-0">
 									<img src="/images/kit/creative-cloud-64.svg" alt="Adobe CC" class="size-10"/>
 									<img src="/images/kit/creator-studio.webp" alt="Adobe CC" class="size-10"/>
-									{{--                                    <flux:icon.swatch class="size-8 text-pale-night-blue" />--}}
 								</div>
 								<div>
 									<flux:heading level="3" size="md">Creative Stack</flux:heading>
@@ -476,26 +471,6 @@
 								</p>
 							</div>
 						</a>
-
-						{{-- Row 6: Humorous Jab (Commented out)
-						<a href="https://www.apple.com/" target="_blank"
-						   class="group flex flex-col items-center justify-center gap-6 rounded-3xl border border-red-500/20 bg-red-500/5 px-6 py-8 sm:p-8 backdrop-blur-md transition-all hover:bg-red-500/20 md:col-span-12 md:flex-row dark:bg-red-500/10">
-							<div class="relative">
-								<flux:icon.no-symbol
-									class="size-16 text-red-500 transition-transform duration-500 group-hover:rotate-90"/>
-								<div class="absolute inset-0 bg-red-500 opacity-20 blur-2xl"></div>
-							</div>
-							<div class="text-center md:text-left">
-								<flux:heading level="3" size="lg"
-								              class="font-black uppercase tracking-[0.3em] text-red-500">Microsoft
-									Restricted Zone
-								</flux:heading>
-								<p class="mt-1 text-sm font-medium text-red-500/80">
-									No Microsoft software used, allowed, or even considered.
-								</p>
-							</div>
-						</a>
-						--}}
 					</x-bento-grid>
 					</x-gsap-wrapper>
 				</section>
@@ -730,5 +705,6 @@
 
 @fluxScripts
 @stack('scripts')
+
 </body>
 </html>

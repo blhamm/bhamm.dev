@@ -60,6 +60,8 @@ new class extends Component {
 
         return [
             'points' => $points,
+            'authenticated' => Auth::guard('signee')->check(),
+            'signee' => Auth::guard('signee')->user()
         ];
     }
 }; ?>
@@ -68,14 +70,14 @@ new class extends Component {
     <div class="flex flex-col md:flex-row md:items-center justify-between gap-8 relative p-4" id="guestbook-header">
         <div class="relative z-10">
             <h2 class="typing-animation text-pale-night-black dark:text-pale-night-white text-2xl font-bold md:text-4xl">
-                @if(Auth::guard('signee')->check())
-                    Thanks, {{ Auth::guard('signee')->user()->first_name }}
+                @if($authenticated)
+                    Thanks, {{ $signee->first_name }}
                 @else
                     Say Hi Stranger
                 @endif
             </h2>
             <p class="text-zinc-500 dark:text-zinc-400 mt-2 max-w-xl text-lg leading-relaxed">
-                @if(Auth::guard('signee')->check())
+                @if($authenticated)
                     I appreciate your support! If you’re enjoying this showcase, you can help me grow by starring the
                     repository on GitHub. I’m always looking to connect with fellow developers in the PHP, Laravel, and
                     Symfony communities!
@@ -88,10 +90,10 @@ new class extends Component {
 
         <div class="relative z-10 flex flex-col items-center justify-center gap-6 w-full md:w-auto">
 
-            @if(Auth::guard('signee')->check())
+            @if($authenticated)
                 <div
                     class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 relative z-10 w-full sm:w-auto">
-                    @if(Auth::guard('signee')->user()->social_auth_type === 'github')
+                    @if($signee->social_auth_type === 'github')
                         <x-button href="https://github.com/blhamm/bhamm.dev" target="_blank"
                                   class="bg-pale-night-black/5 dark:bg-white/5 text-pale-night-black dark:text-pale-night-white ring-pale-night-black/10 dark:ring-white/20 hover:bg-pale-night-black/10 dark:hover:bg-white/10 w-full sm:w-auto">
                             <flux:icon.star class="mr-2 size-4"/>
@@ -154,7 +156,7 @@ new class extends Component {
                     </button>
                 </flux:modal.trigger>
 
-                @if(Auth::guard('signee')->check())
+                @if($authenticated)
                     <span class="text-zinc-500 dark:text-zinc-400 text-xs relative z-10">|</span>
                     <form method="POST" action="{{ route('signee.logout') }}" class="inline relative z-10">
                         @csrf

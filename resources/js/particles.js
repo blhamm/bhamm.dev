@@ -9,6 +9,42 @@ const PARTICLE_SPAWN_RATE = (1000 / 60);
 const burstMax = (PARTICLE_MAX * 2);
 const CELL_SIZE = 80 * DPR;
 const particleBitmapCache = new Map();
+const BITMAP_WARMUP_BATCH_SIZE = 2;
+const PARTICLE_CHARS = [
+	'\\u0025',               // %
+	'\\u0024',               // $
+	'\\u0040',               // @
+	'\\u002A',               // *
+	'\\u0026',               // &
+	'\\u0023',               // #
+	'\\u0027',               // '
+	'\\u0022',               // "
+	// '\\u007C',               // |
+	'\\u003B',               // ;
+	'\\u002C',               // ,
+	'\\u003A',               // :
+	'\\u0028\\u0029',        // ()
+	'\\u003F\\u003F',        // ?? (nullish coalescing)
+	'\\u0021\\u0021',        // ! (logical NOT
+	'\\u003D\\u003E',        // => (arrow func operator)
+	'\\u0026\\u0026',        // && (logical AND)
+	// '\\u007C\\u007C',        // || (logical OR)
+	'\\u005E',               // ^ (bitwise XOR)
+	'\\u007E',               // ~ (bitwise NOT)
+	'\\u003C\\u003C',        // <<
+	'\\u003E\\u003E',        // >>
+	'\\u002B\\u002B',        // ++
+	'\\u002D\\u002D',        // --
+	'\\u002B\\u003D',        // +=
+	'\\u002D\\u003D',        // -=
+	'\\u003D\\u003D',        // ==
+	'\\u003D\\u003D\\u003D', // ===
+	'\\u0021\\u003D',        // !=
+	'\\u0021\\u003D\\u003D', // !==
+	'\\u005B\\u005D',        // []
+	'\\u007B\\u007D',        // {}
+	'\\u003C\\u002F\\u003E', // </>  (self-closing tag placeholder)
+];
 let traces = [];
 let logTimer = 0;
 let physicsAccumulator = 0;
@@ -25,6 +61,11 @@ let lastTime = 16.66;
 let cw = 0;
 let ch = 0;
 let isHeroVisible = true;
+let bitmapWarmupFrame = null;
+let bitmapWarmupIndex = 0;
+let bitmapWarmupComplete = false;
+let bitmapFontsReady = false;
+let bitmapFontsWaiting = false;
 
 // Intersection Observer for viewport visibility culling (zero CPU when hero is out of view)
 const heroEl = document.getElementById('hero');
@@ -33,7 +74,7 @@ if (heroEl && typeof IntersectionObserver !== 'undefined') {
 		entries.forEach(entry => {
 			isHeroVisible = entry.isIntersecting;
 		});
-	}, { threshold: 0.05 });
+	}, { threshold: 0 });
 	heroObserver.observe(heroEl);
 }
 
@@ -123,9 +164,8 @@ const outOfBounds = (p) => {
 
 function resizeCanvas() {
 	if (!canvas || !ctx) return;
-	const r = canvas.getBoundingClientRect();
-	cw = r.width * DPR;
-	ch = r.height * DPR;
+	cw = Math.floor(window.innerWidth * DPR);
+	ch = Math.floor(window.innerHeight * DPR);
 	canvas.width = cw;
 	canvas.height = ch;
 	ctx.setTransform(1, 0, 0, 1, 0, 0);
@@ -137,6 +177,8 @@ function resizeCanvas() {
 	}
 
 	initGrid();
+	resetBitmapWarmup();
+	scheduleBitmapWarmup();
 }
 
 resizeCanvas();
@@ -299,7 +341,7 @@ function tracePerformance(end, start) {
 	}
 }
 
-export function particleUp(deltaTime = 0, trace = true) {
+export function particleUp(deltaTime = 0, trace = false) {
 	if (!ctx || !isHeroVisible) return;
 	
 	if (particleCount === 0) {
@@ -307,40 +349,30 @@ export function particleUp(deltaTime = 0, trace = true) {
 			ctx.clearRect(0, 0, cw, ch);
 			needsClear = false;
 		}
-		physicsAccumulator = 0;
 		return;
 	}
 	
 	needsClear = true;
 	const start = trace ? performance.now() : null;
 	
-	// Aggressive smoothing (95/5) to ignore Safari's erratic RAF timing
-	const clampedDelta = Math.min(deltaTime, 33.33); 
-	lastTime = (lastTime * 0.95) + (clampedDelta * 0.05);
-	physicsAccumulator += lastTime;
-
+	// Smooth delta time clamped between 4ms (~240Hz) and 33.33ms (~30Hz)
+	const dt = Math.max(4, Math.min(deltaTime, 33.33));
+	
 	ctx.clearRect(0, 0, cw, ch);
 	
-	// Use fixed-step physics accumulator with while loop to prevent time loss / stutter on Safari rAF jitter
-	while (physicsAccumulator >= PHYSICS_STEP) {
-		const physicsDelta = PHYSICS_STEP;
-		physicsAccumulator -= PHYSICS_STEP;
-		
-		let write = 0;
-		for (let i = 0; i < particleCount; i++) {
-			const p = particles[i];
-			if (outOfBounds(p)) continue;
-			handleMovement(p, physicsDelta);
-			particles[write++] = p;
-		}
-		particleCount = write;
-		
-		updatePhysics(physicsDelta);
+	let write = 0;
+	for (let i = 0; i < particleCount; i++) {
+		const p = particles[i];
+		if (outOfBounds(p)) continue;
+		handleMovement(p, dt);
+		particles[write++] = p;
 	}
+	particleCount = write;
 	
+	updatePhysics(dt);
 	drawParticles();
 	
-	trace ? tracePerformance(performance.now(), start) : null;
+	if (trace) tracePerformance(performance.now(), start);
 }
 
 
@@ -403,43 +435,8 @@ function drawParticle(p) {
 }
 
 function getRandomChar() {
-	const codeChars = [
-		'\\u0025',               // %
-		'\\u0024',               // $
-		'\\u0040',               // @
-		'\\u002A',               // *
-		'\\u0026',               // &
-		'\\u0023',               // #
-		'\\u0027',               // '
-		'\\u0022',               // "
-		// '\\u007C',               // |
-		'\\u003B',               // ;
-		'\\u002C',               // ,
-		'\\u003A',               // :
-		'\\u0028\\u0029',        // ()
-		'\\u003F\\u003F',        // ?? (nullish coalescing)
-		'\\u0021\\u0021',        // ! (logical NOT
-		'\\u003D\\u003E',        // => (arrow func operator)
-		'\\u0026\\u0026',        // && (logical AND)
-		// '\\u007C\\u007C',        // || (logical OR)
-		'\\u005E',               // ^ (bitwise XOR)
-		'\\u007E',               // ~ (bitwise NOT)
-		'\\u003C\\u003C',        // << (left shift)
-		'\\u003E\\u003E',        // >> (right shift)
-		'\\u002B\\u002B',        // ++ (increment)
-		'\\u002D\\u002D',        // -- (decrement)
-		'\\u002B\\u003D',        // += (addition assignment)
-		'\\u002D\\u003D',        // -= (subtraction assignment)
-		'\\u003D\\u003D',        // == (loose equality)
-		'\\u003D\\u003D\\u003D', // === (strict equality)
-		'\\u0021\\u003D',        // != (loose inequality)
-		'\\u0021\\u003D\\u003D', // !== (strict inequality)
-		'\\u005B\\u005D',        // [] (empty array literal)
-		'\\u007B\\u007D',        // {} (empty object literal)
-		'\\u003C\\u002F\\u003E', // </>  (self‑closing tag placeholder)
-	];
-	const charsLength = codeChars.length;
-	return decodeEscapes(codeChars[Math.floor(Math.random() * charsLength)])
+	const charsLength = PARTICLE_CHARS.length;
+	return decodeEscapes(PARTICLE_CHARS[Math.floor(Math.random() * charsLength)]);
 }
 
 function getParticleBitmap(txt) {
@@ -448,33 +445,98 @@ function getParticleBitmap(txt) {
 	const scale = { width: 20, height: 16 };
 	const width = scale.width * factor;
 	const height = scale.height * factor;
-	
-	let canvasEl, bitmap;
+	let bitmap = null;
 
 	if (typeof OffscreenCanvas !== 'undefined') {
-		const off = new OffscreenCanvas(width, height);
-		const octx = off.getContext('2d');
-		octx.font = `${12 * factor}px BrandDisplay, monospace, monospace`;
-		octx.textBaseline = 'middle';
-		octx.antialias = 'subpixel';
-		octx.fillStyle = getRandomColor();
-		octx.fillText(txt, 0, height / 2);
-		bitmap = off.transferToImageBitmap();
-	} else {
-		canvasEl = document.createElement('canvas');
-		canvasEl.width = width;
-		canvasEl.height = height;
-		const octx = canvasEl.getContext('2d');
-		octx.font = `${12 * factor}px BrandDisplay, monospace, monospace`;
-		octx.textBaseline = 'middle';
-		octx.antialias = 'subpixel';
-		octx.fillStyle = getRandomColor();
-		octx.fillText(txt, 0, height / 2);
-		bitmap = canvasEl;
+		try {
+			const off = new OffscreenCanvas(width, height);
+			if (typeof off.transferToImageBitmap === 'function' && renderParticleBitmap(off, txt, factor, height)) {
+				bitmap = off.transferToImageBitmap();
+			}
+		} catch {
+			bitmap = null;
+		}
 	}
 
-	particleBitmapCache.set(txt, bitmap);
+	if (!bitmap) {
+		try {
+			const canvasEl = document.createElement('canvas');
+			canvasEl.width = width;
+			canvasEl.height = height;
+			if (renderParticleBitmap(canvasEl, txt, factor, height)) {
+				bitmap = canvasEl;
+			}
+		} catch {
+			bitmap = null;
+		}
+	}
+
+	if (bitmap) particleBitmapCache.set(txt, bitmap);
 	return bitmap;
+}
+
+function renderParticleBitmap(target, txt, factor, height) {
+	const targetContext = target.getContext('2d');
+	if (!targetContext) return false;
+
+	targetContext.font = `${12 * factor}px BrandDisplay, monospace, monospace`;
+	targetContext.textBaseline = 'middle';
+	targetContext.antialias = 'subpixel';
+	targetContext.fillStyle = getRandomColor();
+	targetContext.fillText(txt, 0, height / 2);
+
+	return true;
+}
+
+function resetBitmapWarmup() {
+	if (bitmapWarmupFrame !== null) {
+		cancelAnimationFrame(bitmapWarmupFrame);
+		bitmapWarmupFrame = null;
+	}
+
+	bitmapWarmupIndex = 0;
+	bitmapWarmupComplete = false;
+}
+
+function scheduleBitmapWarmup() {
+	if (!ctx || bitmapWarmupComplete || bitmapWarmupFrame !== null || bitmapFontsWaiting) return;
+
+	if (!bitmapFontsReady) {
+		const fontsReady = document.fonts?.ready;
+		if (fontsReady && typeof fontsReady.then === 'function') {
+			bitmapFontsWaiting = true;
+			fontsReady.then(() => {
+				bitmapFontsReady = true;
+				bitmapFontsWaiting = false;
+				scheduleBitmapWarmup();
+			}, () => {
+				bitmapFontsReady = true;
+				bitmapFontsWaiting = false;
+				scheduleBitmapWarmup();
+			});
+			return;
+		}
+
+		bitmapFontsReady = true;
+	}
+
+	bitmapWarmupFrame = requestAnimationFrame(warmParticleBitmapBatch);
+}
+
+function warmParticleBitmapBatch() {
+	bitmapWarmupFrame = null;
+	const end = Math.min(bitmapWarmupIndex + BITMAP_WARMUP_BATCH_SIZE, PARTICLE_CHARS.length);
+
+	while (bitmapWarmupIndex < end) {
+		getParticleBitmap(decodeEscapes(PARTICLE_CHARS[bitmapWarmupIndex]));
+		bitmapWarmupIndex++;
+	}
+
+	if (bitmapWarmupIndex < PARTICLE_CHARS.length) {
+		scheduleBitmapWarmup();
+	} else {
+		bitmapWarmupComplete = true;
+	}
 }
 
 function decodeEscapes(esc) {
@@ -503,3 +565,5 @@ function getRandomColor() {
 		Math.floor(Math.random() * materialLighterColors.length)
   ];
 }
+
+scheduleBitmapWarmup();
