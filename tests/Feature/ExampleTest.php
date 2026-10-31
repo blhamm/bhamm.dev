@@ -16,8 +16,14 @@ it('returns a welcome page', function () {
     $response->assertSee('bg-pale-night-white dark:bg-pale-night-black', false);
     $response->assertSee('class="absolute inset-px overflow-hidden"', false);
     $response->assertSee('class="block h-full w-full overflow-visible"', false);
+    $response->assertSee('srcset="/images/gradial-2048.webp 2048w, /images/gradial.webp 3024w"', false);
+    $response->assertSee('sizes="94vw"', false);
+    expect(file_exists(public_path('images/gradial-2048.webp')))->toBeTrue();
     $response->assertSee('x-ref="maskText"', false);
     $response->assertSee('pointer-events-none absolute -inset-2 z-10', false);
+    $response->assertSee('srcset="/images/fast_elephant-768.webp 768w, /images/fast_elephant.webp 3024w"', false);
+    $response->assertSee('sizes="(min-width: 768px) 208px, 128px"', false);
+    expect(file_exists(public_path('images/fast_elephant-768.webp')))->toBeTrue();
     $response->assertSee('const maskScale = { value: 16 };', false);
     $response->assertSee('maskText.setAttribute(', false);
     $response->assertSee("'transform'", false);

@@ -243,7 +243,12 @@
 			</section>
 
 			{{-- Scroll Scaled Image Section --}}
-			<x-scroll-scaled-image src="/images/gradial.webp" alt="Ship It!"/>
+			<x-scroll-scaled-image
+				src="/images/gradial.webp"
+				srcset="/images/gradial-2048.webp 2048w, /images/gradial.webp 3024w"
+				sizes="94vw"
+				alt="Ship It!"
+			/>
 
 			<div class="relative mx-auto w-full max-w-7xl space-y-24 px-4 sm:px-6 lg:px-8">
 				<section id="kit" class="space-y-8">
